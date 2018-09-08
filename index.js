@@ -1,8 +1,8 @@
-var express = require('express');
-var app = express();
+const express = require('express');
+const app = express();
 
 app.get('/test-:id', function(req, res) {
-    var options = {
+    const options = {
         root: __dirname + '/public/',
         // dotfiles: 'deny',
         // headers: {
@@ -16,13 +16,12 @@ app.get('/test-:id', function(req, res) {
             console.log("error : " + err);
         }
     });
-    var text = req.params.id;
-
+    // const text = req.params.id; //для шаблонизатора
 });
 
 app.get('/public/:filename', function(req,res) {
-    var filename = req.params.filename;
-    console.log(filename);
+    const filename = req.params.filename;
+    console.log("download file " + filename);
     res.sendFile(filename, {root: __dirname + '/public/'}, function(err) {
         if (err){
             console.log("error : " + err);
@@ -30,5 +29,5 @@ app.get('/public/:filename', function(req,res) {
     });
 });
 
-app.listen(8080);
+app.listen(8080, () => console.log("Server started on port: " + 8080));
 
