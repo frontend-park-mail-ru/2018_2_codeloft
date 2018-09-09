@@ -1,0 +1,83 @@
+body {
+	background-image: url(../img/background.jpg)
+}
+
+.head-label {
+	font-size: 40px;
+	font-style: italic;
+	text-align: center;
+}
+
+.footer-label {
+	color: orange;
+	vertical-align: bottom;
+	position: fixed;
+	left: 0; bottom: 0;
+	font-size: 20px;
+}
+
+.footer-link {
+	font-size: 20px;
+	padding-left: 20px;
+}
+
+.menu-offset {
+	margin-top: 200px;
+}
+
+.menu-button {
+  display: inline-block;
+  color: black;
+  font-size: 20px;
+  user-select: none;
+  padding: .5em 2em;
+  outline: none;
+  border: 2px solid;
+  border-radius: 1px;
+  transition: 0.2s;
+  margin-bottom: 20px;
+  width: 200px;
+} 
+menu-button:hover { background: rgba(255,255,255,.2); }
+menu-button:active { background: white; }
+
+.rules-text {
+	margin-top: 100px;
+	background-color: rgb(200, 200, 200);
+	width: 700px;
+	font-size: 20px;
+	margin-left: 600px;
+	text-align: center;
+	border: 2px solid;
+	color: black;
+}
+
+.login-form {
+  position: relative;
+  margin-top: 200px;
+  font-size: 20px;
+  text-align: center;
+}
+
+.login-input {
+   width: 300px;
+   height: 40px;
+   border: 2px solid;
+   font-size: 20px;
+}
+
+.login-button {
+  display: inline-block;
+  color: black;
+  font-size: 20px;
+  user-select: none;
+  padding: .5em 2em;
+  outline: none;
+  border: 2px solid;
+  border-radius: 1px;
+  transition: 0.2s;
+  margin-bottom: 20px;
+  width: 300px;
+} 
+login-button:hover { background: rgba(255,255,255,.2); }
+login-button:active { background: white; }
