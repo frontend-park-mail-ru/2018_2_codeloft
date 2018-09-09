@@ -42,7 +42,7 @@ menu-button:hover { background: rgba(255,255,255,.2); }
 menu-button:active { background: white; }
 
 .rules-text {
-	margin-top: 100px;
+	margin-top: 200px;
 	background-color: rgb(200, 200, 200);
 	width: 700px;
 	font-size: 20px;
@@ -81,3 +81,16 @@ menu-button:active { background: white; }
 } 
 login-button:hover { background: rgba(255,255,255,.2); }
 login-button:active { background: white; }
+
+.score-table {
+  margin-top: 100px;
+  margin-left: 500px;
+  border: 1px solid black;
+  width: 900px;
+  background-color: rgb(200, 200, 200);
+}
+
+.score-row {
+  text-align: center;
+  border: 1px solid black;
+}
