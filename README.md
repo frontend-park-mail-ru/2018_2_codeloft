@@ -2,6 +2,7 @@
 
 - [Серверная часть](https://github.com/go-park-mail-ru/2018_2_codeloft)
 - [Ветка разработки](https://github.com/frontend-park-mail-ru/2018_2_codeloft/tree/testing)
+- [Release ветка](https://github.com/frontend-park-mail-ru/2018_2_codeloft/tree/master)
 
 ## Участники:
 - [Анохин Данил](https://github.com/Malefaro), backend  
