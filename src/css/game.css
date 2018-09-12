@@ -79,8 +79,13 @@ menu-button:active { background: white; }
   margin-bottom: 20px;
   width: 300px;
 } 
-login-button:hover { background: rgba(255,255,255,.2); }
-login-button:active { background: white; }
+login-button:hover {
+    background: rgba(255,255,255,.2);
+}
+
+login-button:active {
+    background: white;
+}
 
 .score-table {
   margin-top: 100px;
