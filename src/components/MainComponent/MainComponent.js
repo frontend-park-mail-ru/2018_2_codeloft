@@ -32,4 +32,8 @@ export default class MainComponent {
     remove() {
         this.element.parentElement.removeChild(this.element);
     }
+
+    append(element) {
+        this.element.appendChild(element);
+    }
 }
