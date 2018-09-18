@@ -5,6 +5,8 @@ import Button from '../../components/Button/Button.js';
 import MainComponent from "../../components/MainComponent/MainComponent.js";
 import About from "../About/About.js";
 import SignIn from "../SignIn/SignIn.js";
+import SignUp from "../SignUp/SignUp.js";
+import HighScore from "../HighScore/HighScore.js";
 
 export default class Main extends MainComponent {
     constructor() {
@@ -16,6 +18,7 @@ export default class Main extends MainComponent {
         const signUpBtn = new Button('SignUp', ['buttonGame'], 'signUpBtn').render();
         const aboutBtn = new Button('About', ['buttonGame'], 'aboutBtn').render();
         const scoreBtn = new Button('High-Score', ['buttonGame'], 'rulesBtn').render();
+        const profileBtn = new Button('Profile', ['buttonGame'], 'profileBtn').render();
 
         aboutBtn.addEventListener('click', () => {
             this.hide();
@@ -27,10 +30,21 @@ export default class Main extends MainComponent {
             new SignIn().build();
         });
 
+        signUpBtn.addEventListener('click', () => {
+            this.hide();
+            new SignUp().build();
+        });
+
+        scoreBtn.addEventListener('click', () => {
+            this.hide();
+            new HighScore().build();
+        })
+
         this.append(signInBtn);
         this.append(signUpBtn);
         this.append(aboutBtn);
         this.append(scoreBtn);
+        this.append(profileBtn);
         document.getElementById('main').appendChild(this.render());
     }
 }
