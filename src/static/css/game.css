@@ -1,5 +1,5 @@
 body {
-	background-image: url(../img/background.jpg)
+	/*background-image: url(../img/background.jpg)*/
 }
 
 .head-label {
@@ -93,4 +93,15 @@ login-button:active { background: white; }
 .score-row {
   text-align: center;
   border: 1px solid black;
+}
+
+.buttonGame {
+    margin-bottom: 5px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 40px;
+    color: black;
+    cursor: pointer;
+    text-align: center;
+    width: 30%;
 }
