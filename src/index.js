@@ -2,4 +2,6 @@
 
 import Main from "./views/Main/Main.js";
 
-new Main().build();
+let block = new Main().build();
+
+document.getElementById('main').appendChild(block);

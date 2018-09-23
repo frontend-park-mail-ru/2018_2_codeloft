@@ -3,8 +3,9 @@
 import MainComponent from '../MainComponent/MainComponent.js';
 
 export default class Button extends MainComponent {
-    constructor(text = 'Button', classes = [], id) {
-        super('div', classes, {id: id});
-        this.innerHTML(text);
+    compile(data) {
+        this.template = Handlebars.compile(`<div class = {{class}}>{{text}}</div>`);
+        this.template(data);
+        super.compile(data);
     }
 }
