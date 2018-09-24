@@ -1,13 +1,11 @@
 FROM ubuntu:16.04
 MAINTAINER User (email@mail.com)
 
-ARG BUILD
-
 RUN apt-get update -y
 RUN apt-get install -y nginx curl supervisor
 RUN chown -R www-data:www-data /var/lib/nginx
 
-COPY /etc/nginx/sites-available/test-nginx.conf /etc/nginx/sites-enabled/
+COPY /etc/nginx/sites-available/codeloft.conf /etc/nginx/sites-enabled/
 COPY /etc/nginx/nginx.conf /etc/nginx/
 RUN echo "\ndaemon off;" >> /etc/nginx/nginx.conf
 
