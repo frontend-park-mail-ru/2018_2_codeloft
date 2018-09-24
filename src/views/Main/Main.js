@@ -1,12 +1,6 @@
 'use strict';
 
-import Input from '../../components/Input/Input.js';
-import Button from '../../components/Button/Button.js';
 import BaseView from "../BaseView/BaseView.js";
-import About from "../About/About.js";
-import SignIn from "../SignIn/SignIn.js";
-import SignUp from "../SignUp/SignUp.js";
-import HighScore from "../HighScore/HighScore.js";
 import tagParser from "../../modules/TagParser/TagParser.js";
 
 
