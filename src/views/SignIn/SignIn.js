@@ -1,28 +1,22 @@
 'use strict';
 
-import Button from '../../components/Button/Button.js';
-import MainComponent from "../../components/MainComponent/MainComponent.js";
-import Input from "../../components/Input/Input.js"
+import BaseView from "../BaseView/BaseView.js";
+import tagParser from "../../modules/TagParser/TagParser.js";
 
-export default class SignIn extends MainComponent {
-    constructor() {
-        super('div', ['signIn-page__menu'], {});
-    }
+
+export default class SignIn extends BaseView {
 
     build() {
-        const email = new Input('text', 'Email', ['game-input'], 'Enter your email').render();
-        const password = new Input('password', 'Password', ['game-input'], 'Enter your password').render();
-        const submitBtn = new Button('Sign in!', ['buttonGame'], 'signInSubmit').render();
-        const backBtn = new Button('Back', ['buttonGame'], 'signInBack').render();
-
-        backBtn.addEventListener('click', () => {
-            this.hide();
-        });
-
-        this.append(email);
-        this.append(password);
-        this.append(submitBtn);
-        this.append(backBtn);
-        document.getElementById('main').appendChild(this.render());
+        this.template = `<div class="signIn-page__menu">
+                         <Input {{class=game-input}} {{placeholder=Enter your email}}>
+                         <Input {{class=game-input}} {{placeholder=Enter your password}}>
+                         <Button {{class=buttonGame}} {{text=Sign in!}}>
+                         <Button {{class=buttonGame}} {{text=Back}}>
+                         </div>`;
+        let div = document.createElement('div');
+        this.template = tagParser.toHTML(this.template);
+        div.innerHTML = this.template;
+        this.element = div.lastChild;
     }
+
 }
