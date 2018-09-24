@@ -1,0 +1,30 @@
+{
+  "name": "2018_2_codeloft",
+  "version": "1.0.0",
+  "description": "tron",
+  "main": "index.js",
+  "scripts": {
+    "docker-rebuild": "docker build -t mynginx .",
+    "start": "node server/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frontend-park-mail-ru/2018_2_codeloft.git"
+  },
+  "keywords": [
+    "tron",
+    "game",
+    "front"
+  ],
+  "author": "codeloft",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/frontend-park-mail-ru/2018_2_codeloft/issues"
+  },
+  "homepage": "https://github.com/frontend-park-mail-ru/2018_2_codeloft#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "handlebars": "^4.0.12"
+  }
+}
