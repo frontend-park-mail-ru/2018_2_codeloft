@@ -1,9 +1,16 @@
 ## Многопользовательская браузерная игра Tron Remastered
 
+- [Ссылки](#references)
 - [Описание](#description)
 - [Стек технологий](#stack)
-- [Ссылки](#references)
 - [Участники](#authors)
+- [Backend](#back)
+
+## Приложение доступно по хостам: <a name="references"></a>
+
+- [Ветка разработки](https://github.com/frontend-park-mail-ru/2018_2_codeloft/tree/testing)
+- [Release ветка](https://github.com/frontend-park-mail-ru/2018_2_codeloft/tree/master)
+- [Деплой](codeloft.now.sh)
 
 ## Описание <a name="description"></a>
 
@@ -20,15 +27,11 @@
 - Golang
 - Canvas API
 
-## Ссылки <a name="references"></a>
-
-- [Серверная часть](https://github.com/go-park-mail-ru/2018_2_codeloft)
-- [Ветка разработки](https://github.com/frontend-park-mail-ru/2018_2_codeloft/tree/testing)
-- [Release ветка](https://github.com/frontend-park-mail-ru/2018_2_codeloft/tree/master)
-- [Деплой](codeloft.now.sh)
-
 ## Участники <a name="authors"></a>
 - [Анохин Данил](https://github.com/Malefaro), backend  
 - [Рязанов Максим](https://github.com/RyazMax), backend  
 - [Дыров Игорь](https://github.com/igor-dyrov), frontend  
 - [Саркисян Артур](https://github.com/Arthurunique24), fullstack  
+
+## Backend <a name="back"></a>
+- [Backend repository](https://github.com/go-park-mail-ru/2018_2_codeloft)
