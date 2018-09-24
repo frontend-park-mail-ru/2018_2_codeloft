@@ -1,16 +1,9 @@
 'use strict';
 
 export default class MainComponent {
-    constructor(defaultTag = 'div', classes = [], attr = {}) {
-        this.element = document.createElement(defaultTag);
-
-        classes.forEach(className => {
-            this.element.classList.add(className);
-        });
-
-        for (let attrName in attr) {
-            this.element.setAttribute(attrName, attr[attrName])
-        }
+    constructor() {
+        this.element = null;
+        this.template = null;
     }
 
     render() {
@@ -33,7 +26,10 @@ export default class MainComponent {
         this.element.parentElement.removeChild(this.element);
     }
 
-    append(element) {
-        this.element.appendChild(element);
+    compile(data) {
+        const parent = document.createElement('div');
+        parent.innerHTML = this.template(data);
+        this.element = parent.lastChild;
+        //this.element.appendChild(element);
     }
 }

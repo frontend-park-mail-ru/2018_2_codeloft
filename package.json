@@ -23,7 +23,8 @@
     "url": "https://github.com/frontend-park-mail-ru/2018_2_codeloft/issues"
   },
   "homepage": "https://github.com/frontend-park-mail-ru/2018_2_codeloft#readme",
-  "dependencies": {
-    "express": "^4.16.3"
+  "dependencies": {},
+  "devDependencies": {
+    "handlebars": "^4.0.12"
   }
 }

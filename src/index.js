@@ -2,4 +2,8 @@
 
 import Main from "./views/Main/Main.js";
 
-new Main().build();
+const block = new Main();
+
+block.build();
+
+document.getElementById('main').appendChild(block.render());
