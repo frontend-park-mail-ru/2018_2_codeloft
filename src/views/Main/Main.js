@@ -18,6 +18,7 @@ export default class Main extends BaseView {
                          <Button {{class=buttonGame}} {{text=Sign up}}>
                          <Button {{class=buttonGame}} {{text=Rules}}>
                          <Button {{class=buttonGame}} {{text=High score}}>
+                         <Button {{class=buttonGame}} {{text=Profile}}>
                          </div>`;
         let div = document.createElement('div');
         this.template = tagParser.toHTML(this.template);
