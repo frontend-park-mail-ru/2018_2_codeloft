@@ -8,18 +8,14 @@ class TagParser {
         this.tags = [];
 
         this.tagMap = {
-            "Button" : () => new Button()
+            Button: () => new Button()
         };
     }
 
     toHTML(template) {
-
-    }
-
-    _getTags(template) {
         let tagResult;
         let html = template;
-        while(tagResult = this.tagExpr.exec(template)) {
+        while (tagResult = this.tagExpr.exec(template)) {
             let object = {};
             object.tag = tagResult[1];
             let contextResult;
@@ -42,5 +38,5 @@ class TagParser {
 
 }
 
-let tagParser = new TagParser();
+const tagParser = new TagParser();
 export default tagParser;

@@ -5,9 +5,7 @@ export default class BaseView {
     }
 
     render(data) {
-        const div = document.createElement(('div'));
-        div.innerHTML = this.template(data);
-        this.element = div.lastChild;
+        return this.element;
     }
 
     show() {

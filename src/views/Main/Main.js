@@ -10,23 +10,19 @@ import HighScore from "../HighScore/HighScore.js";
 import tagParser from "../../modules/TagParser/TagParser.js";
 
 
-export default class Main {
-    constructor() {
-        this.element = null;
-    }
-
-    render() {
-        this.template = Handlebars.complie(`<Button {{class="buttonGame"}} {{text="Sign in"}}>`);
-    }
+export default class Main extends BaseView {
 
     build() {
-        this.template = `<Button {{class=buttonGame}} {{text=Sign in}}>
+        this.template = `<div class="main-page__menu">
+                         <Button {{class=buttonGame}} {{text=Sign in}}>
                          <Button {{class=buttonGame}} {{text=Sign up}}>
                          <Button {{class=buttonGame}} {{text=Rules}}>
-                         <Button {{class=buttonGame}} {{text=High score}}>`;
+                         <Button {{class=buttonGame}} {{text=High score}}>
+                         </div>`;
         let div = document.createElement('div');
-        this.template = tagParser._getTags(this.template);
+        this.template = tagParser.toHTML(this.template);
         div.innerHTML = this.template;
-        return div;
+        this.element = div.lastChild;
     }
+
 }
