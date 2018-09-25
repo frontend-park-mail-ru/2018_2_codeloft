@@ -3,7 +3,7 @@
 import Main from "./views/Main/Main.js";
 import About from "./views/About/About.js";
 
-const block = new About();
+const block = new Main();
 
 block.build();
 
