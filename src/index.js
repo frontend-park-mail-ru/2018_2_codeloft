@@ -1,9 +1,9 @@
 'use strict';
 
 import Main from "./views/Main/Main.js";
-import About from "./views/About/About.js";
+import SignIn from "./views/SignIn/SignIn.js";
 
-const block = new Main();
+const block = new SignIn();
 
 block.build();
 
