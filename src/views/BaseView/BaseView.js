@@ -4,7 +4,7 @@ export default class BaseView {
         this.element = null;
     }
 
-    render(data) {
+    render() {
         return this.element;
     }
 

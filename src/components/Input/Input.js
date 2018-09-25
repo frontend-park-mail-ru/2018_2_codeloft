@@ -3,7 +3,9 @@
 import MainComponent from '../MainComponent/MainComponent.js';
 
 export default class Input extends MainComponent {
-    constructor(type = 'text', name, classes = [], placeholder) {
-        super('input', classes, {type: type, placeholder: placeholder, name: name});
+    compile(data) {
+        this.template = Handlebars.compile(`<input class="{{class}}" type="{{type}}" placeholder="{{placeholder}}">`);
+        this.template(data);
+        super.compile(data);
     }
 }
