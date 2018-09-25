@@ -4,10 +4,10 @@ import BaseView from "../BaseView/BaseView.js";
 import tagParser from "../../modules/TagParser/TagParser.js";
 
 
-export default class SignIn extends BaseView {
+export default class SignUp extends BaseView {
 
     build() {
-        this.template = `<div class="signIn-page__menu">
+        this.template = `<div class="signUp-page__menu">
                          <Input {{class=game-input}} {{placeholder=Enter your email}}>
                          <Input {{class=game-input}} {{placeholder=Enter your password}} {{type=password}}>
                          <Button {{class=buttonGame}} {{text=Sign in!}}>
