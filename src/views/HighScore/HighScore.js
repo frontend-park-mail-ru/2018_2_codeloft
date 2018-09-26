@@ -1,18 +1,19 @@
 'use strict';
 
-import MainComponent from "../../components/MainComponent/MainComponent.js";
-import Table from "../../components/Table/Table.js"
+import BaseView from "../BaseView/BaseView.js";
+import tagParser from "../../modules/TagParser/TagParser.js";
 
-export default class HighScore extends MainComponent {
-    constructor() {
-        super('div', ['highScore-page__menu'], {});
-    }
+
+export default class HighScore extends BaseView {
 
     build() {
-        const table = new Table(['Email', 'age', 'score'],[]);
-        table.appendRow(['artur@mail.ru', '20', '200']);
-        this.append(table.render());
-
-        document.getElementById('main').appendChild(this.render());
+        this.template = `<div class="highScore-page__list">
+                         <ScoreTable>
+                         </div>`;
+        let div = document.createElement('div');
+        this.template = tagParser.toHTML(this.template);
+        div.innerHTML = this.template;
+        this.element = div.lastChild;
     }
+
 }

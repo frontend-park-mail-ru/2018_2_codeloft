@@ -105,3 +105,14 @@ login-button:active { background: white; }
     text-align: center;
     width: 30%;
 }
+
+.game-highScrore {
+    width: 300px; /* Ширина таблицы */
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+
+.game-highScoreRow {
+    padding: 3px; /* Поля вокруг содержимого таблицы */
+    border: 1px solid black;
+}
