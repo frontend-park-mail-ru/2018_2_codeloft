@@ -2,8 +2,9 @@
 
 import Main from "./views/Main/Main.js";
 import SignIn from "./views/SignIn/SignIn.js";
+import HighScore from "./views/HighScore/HighScore.js";
 
-const block = new SignIn();
+const block = new HighScore();
 
 block.build();
 
