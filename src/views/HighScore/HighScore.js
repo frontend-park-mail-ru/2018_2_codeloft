@@ -9,6 +9,7 @@ export default class HighScore extends BaseView {
     build() {
         this.template = `<div class="highScore-page__list">
                          <ScoreTable>
+                         <Button {{text=Back}} {{class=buttonGame}}>
                          </div>`;
         let div = document.createElement('div');
         this.template = tagParser.toHTML(this.template);

@@ -1,6 +1,7 @@
 import Button from "../../components/Button/Button.js"
 import Input from "../../components/Input/Input.js"
 import ScoreTable from "../../components/ScoreTable/ScoreTable.js";
+import UserInfo from "../../components/UserInfo/UserInfo.js";
 
 class TagParser {
 
@@ -12,7 +13,8 @@ class TagParser {
         this.tagMap = {
             Button: () => new Button(),
             Input: () => new Input(),
-            ScoreTable: () => new ScoreTable()
+            ScoreTable: () => new ScoreTable(),
+            UserInfo: () => new UserInfo()
         };
     }
 
