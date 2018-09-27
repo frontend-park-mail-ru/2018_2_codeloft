@@ -107,9 +107,10 @@ login-button:active { background: white; }
 }
 
 .game-highScrore {
-    width: 300px; /* Ширина таблицы */
+    width: 30%; /* Ширина таблицы */
     border-collapse: collapse;
     border: 1px solid black;
+    margin-bottom: 20px;
 }
 
 .game-highScoreRow {
