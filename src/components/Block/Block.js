@@ -3,8 +3,12 @@
 import MainComponent from '../MainComponent/MainComponent.js';
 
 export default class Block extends MainComponent {
-    constructor(tag = 'p', text = 'text', classes = [], attr = {}) {
-        super(tag, classes, attr);
-        this.innerHTML(text);
+
+    compile(data) {
+        this.template = `<${data.tag} class="{{class}}">{{text}}</${data.tag}>`;
+        this.template = Handlebars.compile(this.template);
+        this.template(data);
+        super.compile(data);
     }
+
 }

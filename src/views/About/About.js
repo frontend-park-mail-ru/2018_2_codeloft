@@ -13,13 +13,8 @@ const RULESTEXT = 'In our game you will play for a motorcyclist, \n' +
 export default class About extends BaseView {
 
     build() {
-        this.template = `<div class="about-page__logo">
-                         <p>${RULESTEXT}</p>
-                         <Button {{class=buttonGame}} {{text=Back}}>
-                         </div>`;
-        let div = document.createElement('div');
-        this.template = tagParser.toHTML(this.template);
-        div.innerHTML = this.template;
-        this.element = div.lastChild;
+        this.template = `<Block {{text=${RULESTEXT}}}>
+                         <Button {{class=buttonGame}} {{text=Back}} {{click=goMenu}}>`;
+        this.element = tagParser.toHTML(this.template, {'class': 'about-page__logo'});
     }
 }
