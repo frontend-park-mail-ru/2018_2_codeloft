@@ -11,11 +11,17 @@ export default class MainComponent {
     }
 
     show() {
+        if (!this.element) {
+            this.build();
+            document.getElementById('main').appendChild(this.render());
+        }
         this.element.style.display = 'block';
     }
 
     hide() {
-        this.element.style.display = 'none';
+        if (this.element) {
+            this.element.style.display = 'none';
+        }
     }
 
     innerHTML(html) {
