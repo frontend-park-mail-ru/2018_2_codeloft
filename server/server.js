@@ -3,31 +3,46 @@ const app = express();
 
 app.use('/', express.static('src'));
 
-const users = {
-    // 'user': {
-    //     login: 'asd',
-    //     email: 'asd@asd.com',
-    //     password: 'asdasdasd',
-    //     score: '100500'
-    // }
-};
+const users = [];
+const usersAuth = {};
+
+function userIsAuth(id) {
+    return usersAuth[id] !== undefined;
+}
+
+function userLoginAndEmailExist(login, email) {
+    return users.find(x => x.login.toUpperCase() === login.toUpperCase())
+        && users.find(x => x.email.toUpperCase() === email.toUpperCase());
+}
+
+function userLoginAndPasswordExist(login, password) {
+    return users.find(x => x.login.toUpperCase() === login.toUpperCase()
+        && x.password.toUpperCase() === password.toUpperCase());
+}
+
+function getUser(login) {
+    return (users.find(x => x.login.toUpperCase() === login.toUpperCase()));
+}
 
 app.post('/signup', (req, res) => {
     const login = req.body.login;
     const email = req.body.email;
     const password = req.body.password;
+    const id = users.length === 0 ? 0 : users.length + 1;
 
-    if (!users[login]) {
-        users[login] = {
+    if (userLoginAndEmailExist(login, email) === undefined) {
+        users.push({
+            'id': id,
             'login': login,
             'email': email,
             'password': password,
             'singleScore': 0
-        };
-        res.cookie('auth', 'id', {expires: new Date(Date.now() + 900000), httpOnly: true);
+        });
+        usersAuth[id] = {'login': login};
+        res.cookie('auth', id, {expires: new Date(Date.now() + 900000), httpOnly: true});
         return res.status(201).json(users[login]);
     } else {
-        return res.status(400).json({message: 'Логин или Email уже существует'});
+        return res.status(400).json({message: 'Login or Email already exists'});
     }
 });
 
@@ -35,33 +50,38 @@ app.post('/signin', (req, res) => {
     const login = req.body.login;
     const password = req.body.password;
 
-    if (users[login] || users[login].password === password) {
-        res.cookie('auth', 'id', {expires: new Date(Date.now() + 900000), httpOnly: true});
+    if (userLoginAndPasswordExist(login, password)) {
+        const id = getUser(login).id;
+        usersAuth[id] = {'login': login};
+        res.cookie('auth', id, {expires: new Date(Date.now() + 900000), httpOnly: true});
         return res.status(200).json(users[login]);
     } else {
-        return res.status(400).json({message: 'Не верный Логин и/или пароль'});
+        return res.status(400).json({message: 'Wrong login or password'});
     }
 });
 
 app.get('/user', (req, res) => {
     const login = req.body.login;
-    if (!users[login]) {
-        return res.status(401).end();
+    const user = getUser(login);
+    if (user !== undefined) {
+        res.json(user);
     } else {
-        res.json(users[login]);
+        return res.status(401).end();
     }
 });
 
 app.get('/users', (req, res) => {
-    const getUsers = Object.keys(users).map((login) => {
-            return {
-                'login': login,
-                'email': users[login].email,
-                'singleScore': users[login].singleScore
-            };
-        });
+    res.json(users);
+});
 
-    res.json(getUsers);
+app.post('/logout', (req, res) => {
+    const id = req.cookies.auth;
+    if (userIsAuth(id)) {
+        res.cookie('auth', '', {expires: new Date()});
+        res.json({});
+    } else {
+        return res.status(401).end();
+    }
 });
 
 app.listen(process.env.PORT || 3000);
