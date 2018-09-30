@@ -1,14 +1,14 @@
-import Button from "../../components/Button/Button.js"
-import Input from "../../components/Input/Input.js"
-import ScoreTable from "../../components/ScoreTable/ScoreTable.js";
-import UserInfo from "../../components/UserInfo/UserInfo.js";
-import Block from "../../components/Block/Block.js";
+import Button from '../../components/Button/Button.js'
+import Input from '../../components/Input/Input.js'
+import ScoreTable from '../../components/ScoreTable/ScoreTable.js'
+import UserInfo from '../../components/UserInfo/UserInfo.js'
+import Block from '../../components/Block/Block.js'
 
 /**
  * Класс, нужный для сборки документа по кастомному шаблону
  */
 class TagParser {
-
+  
     constructor() {
         /**
          * Находит тэги в шаблоне
@@ -73,8 +73,7 @@ class TagParser {
         component.compile(config);
         return component.render();
     }
-
 }
 
-const tagParser = new TagParser();
-export default tagParser;
+const tagParser = new TagParser()
+export default tagParser

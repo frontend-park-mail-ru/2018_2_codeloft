@@ -1,9 +1,9 @@
-'use strict';
+'use strict'
 
-import eventHandler from "../../modules/EventHandler/EventHandler.js";
+import eventHandler from '../../modules/EventHandler/EventHandler.js'
 
 export default class MainComponent {
-
+  
     constructor() {
         this.element = null;
         this.template = null;
@@ -45,5 +45,4 @@ export default class MainComponent {
             eventHandler.handleEvent(this.element, event, config[event]);
         })
     }
-
 }

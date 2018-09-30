@@ -1,15 +1,14 @@
-'use strict';
+'use strict'
 
 /**
  * Класс-отображение url в конкретные части HTML кода
  */
 class Router {
 
-    constructor() {
-        this.routesMap = {};
-        this.currentView = null;
-    }
-
+	constructor() {
+		this.routesMap = {}
+		this.currentView = null
+	}
     /**
      * Инициализация работы приложения
      * Метод получает начальный url и отрисовывает нужную часть сайта
@@ -20,8 +19,8 @@ class Router {
             this._onRoute(window.location.pathname);
         });
 
-        this._onRoute(window.location.pathname);
-    }
+		this._onRoute(window.location.pathname)
+	}
 
     /**
      * внутренняя реализация отрисовки и перехода по урлам
@@ -31,16 +30,16 @@ class Router {
     _onRoute(pathname) {
         const view = this.routesMap[pathname];
 
-        if (!view) {
-            return;
-        }
+		if (!view) {
+			return
+		}
 
-        if (this.currentView) {
-            this.currentView.hide();
-        }
-        this.currentView = view;
-        this.currentView.show();
-    }
+		if (this.currentView) {
+			this.currentView.hide()
+		}
+		this.currentView = view
+		this.currentView.show()
+	}
 
     /**
      * Добавление зависимости вьюшки от урла
@@ -62,8 +61,7 @@ class Router {
         history.pushState({url: path}, '', path);
         this._onRoute(path);
     }
-
 }
 
-const router = new Router();
-export default router;
+const router = new Router()
+export default router

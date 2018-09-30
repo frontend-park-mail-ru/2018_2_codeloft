@@ -1,11 +1,11 @@
-import router from "../Router/Router.js";
+import router from '../Router/Router.js'
 
 /**
  * Класс, навешивающий обработчики событий
  * на объекты различных классов
  */
 class EventHandler {
-
+  
     constructor() {
         /**
          * Мапа, отображающая имя обработчика в конкретную функцию-обработчик
@@ -34,10 +34,9 @@ class EventHandler {
         this.eventMap[funcName] = handler;
         return this;
     }
-
 }
 
-const eventHandler = new EventHandler();
+const eventHandler = new EventHandler()
 
 eventHandler
     .addHandler('goLogin', () => {
