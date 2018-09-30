@@ -1,5 +1,10 @@
 const express = require('express');
+const cookie = require('cookie-parser');
+const body = require('body-parser');
+
 const app = express();
+app.use(cookie());
+app.use(body.json());
 
 app.use('/', express.static('src'));
 
@@ -71,7 +76,11 @@ app.get('/user', (req, res) => {
 });
 
 app.get('/users', (req, res) => {
-    res.json(users);
+    if (req.cookies !== undefined) {
+        return res.json(users);
+    } else {
+        return res.status(401).end();
+    }
 });
 
 app.post('/logout', (req, res) => {
