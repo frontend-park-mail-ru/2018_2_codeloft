@@ -21,19 +21,19 @@ const eventHandler = new EventHandler();
 
 eventHandler
     .addHandler('goLogin', () => {
-        router.go('/login');
+        router.go('/login/');
     })
     .addHandler('goRegister', () => {
-        router.go('/register');
+        router.go('/register/');
     })
     .addHandler('goScore', () => {
-        router.go('/score');
+        router.go('/score/');
     })
     .addHandler('goAbout', () => {
-        router.go('/about');
+        router.go('/about/');
     })
     .addHandler('goProfile', () => {
-        router.go('/profile');
+        router.go('/profile/');
     })
     .addHandler('goMenu', () => {
         router.go('/');

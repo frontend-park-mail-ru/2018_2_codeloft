@@ -11,10 +11,10 @@ import HighScore from "./views/HighScore/HighScore.js";
 
 router
     .add('/', new Main())
-    .add('/about', new About())
-    .add('/login', new SignIn())
-    .add('/register', new SignUp())
-    .add('/profile', new Profile())
-    .add('/score', new HighScore());
+    .add('/about/', new About())
+    .add('/login/', new SignIn())
+    .add('/register/', new SignUp())
+    .add('/profile/', new Profile())
+    .add('/score/', new HighScore());
 
 router.start();
