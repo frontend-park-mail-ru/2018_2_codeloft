@@ -3,49 +3,46 @@
 import eventHandler from '../../modules/EventHandler/EventHandler.js'
 
 export default class MainComponent {
-	constructor() {
-		this.element = null
-		this.template = null
-		this.events = []
-	}
+  
+    constructor() {
+        this.element = null;
+        this.template = null;
+        this.events = [];
+    }
 
-	render() {
-		return this.element
-	}
+    /**
+     *  Возвращает непосредственно сам элемент для вставки в код страницы.
+     * @return {element} нужный при вставке элемент *
+     */
+    render() {
+        return this.element;
+    }
 
-	show() {
-		if (!this.element) {
-			this.build()
-			document.getElementById('main').appendChild(this.render())
-		}
-		this.element.style.display = 'block'
-	}
+    /** Удаляет данный элемент из HTML
+     */
+    remove() {
+        this.element.parentElement.removeChild(this.element);
+    }
 
-	hide() {
-		if (this.element) {
-			this.element.style.display = 'none'
-		}
-	}
+    /**
+     * Компилирует шаблон Handlebars
+     * @param config - нужный для копиляции объект
+     */
+    compile(config) {
+        const parent = document.createElement('div');
+        parent.innerHTML = this.template(config);
+        this.element = parent.lastChild;
+        this.addEvents(config);
+    }
 
-	innerHTML(html) {
-		this.element.innerHTML = html
-	}
-
-	remove() {
-		this.element.parentElement.removeChild(this.element)
-	}
-
-	compile(config) {
-		const parent = document.createElement('div')
-		parent.innerHTML = this.template(config)
-		this.element = parent.lastChild
-		this.addEvents(config)
-	}
-
-	addEvents(config) {
-		this.events.forEach(event => {
-			eventHandler.handleEvent(this.element, event, config[event])
-		})
-	}
-
+    /**
+     * Добавляет события на объект
+     * @param config - мапа, отображающая имя события в имя обработчика
+     * @see eventHandler навешивает событие на объект по имени обработчика
+     */
+    addEvents(config) {
+        this.events.forEach(event => {
+            eventHandler.handleEvent(this.element, event, config[event]);
+        })
+    }
 }
