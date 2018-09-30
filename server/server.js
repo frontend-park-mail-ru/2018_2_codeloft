@@ -7,6 +7,11 @@ app.use(cookie());
 app.use(body.json());
 
 app.use('/', express.static('src'));
+app.use('/about/', express.static('src'));
+app.use('/login/', express.static('src'));
+app.use('/register/', express.static('src'));
+app.use('/score/', express.static('src'));
+app.use('/profile/', express.static('src'));
 
 const users = [];
 const usersAuth = {};

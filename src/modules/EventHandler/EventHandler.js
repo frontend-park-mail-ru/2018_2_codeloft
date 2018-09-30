@@ -20,23 +20,23 @@ class EventHandler {
 const eventHandler = new EventHandler()
 
 eventHandler
-	.addHandler('goLogin', () => {
-		router.go('/login')
-	})
-	.addHandler('goRegister', () => {
-		router.go('/register')
-	})
-	.addHandler('goScore', () => {
-		router.go('/score')
-	})
-	.addHandler('goAbout', () => {
-		router.go('/about')
-	})
-	.addHandler('goProfile', () => {
-		router.go('/profile')
-	})
-	.addHandler('goMenu', () => {
-		router.go('/')
-	})
+    .addHandler('goLogin', () => {
+        router.go('/login/');
+    })
+    .addHandler('goRegister', () => {
+        router.go('/register/');
+    })
+    .addHandler('goScore', () => {
+        router.go('/score/');
+    })
+    .addHandler('goAbout', () => {
+        router.go('/about/');
+    })
+    .addHandler('goProfile', () => {
+        router.go('/profile/');
+    })
+    .addHandler('goMenu', () => {
+        router.go('/');
+    });
 
-export default eventHandler
+export default eventHandler;
