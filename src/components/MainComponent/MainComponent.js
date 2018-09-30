@@ -1,13 +1,13 @@
-'use strict'
+'use strict';
 
-import eventHandler from '../../modules/EventHandler/EventHandler.js'
+import eventHandler from '../../modules/EventHandler/EventHandler.js';
 
 export default class MainComponent {
   
 	constructor() {
-		this.element = null
-		this.template = null
-		this.events = []
+		this.element = null;
+		this.template = null;
+		this.events = [];
 	}
 
 	/**
@@ -15,13 +15,13 @@ export default class MainComponent {
      * @return {element} нужный при вставке элемент *
      */
 	render() {
-		return this.element
+		return this.element;
 	}
 
 	/** Удаляет данный элемент из HTML
      */
 	remove() {
-		this.element.parentElement.removeChild(this.element)
+		this.element.parentElement.removeChild(this.element);
 	}
 
 	/**
@@ -29,10 +29,10 @@ export default class MainComponent {
      * @param config - нужный для копиляции объект
      */
 	compile(config) {
-		const parent = document.createElement('div')
-		parent.innerHTML = this.template(config)
-		this.element = parent.lastChild
-		this.addEvents(config)
+		const parent = document.createElement('div');
+		parent.innerHTML = this.template(config);
+		this.element = parent.lastChild;
+		this.addEvents(config);
 	}
 
 	/**
@@ -42,7 +42,7 @@ export default class MainComponent {
      */
 	addEvents(config) {
 		this.events.forEach(event => {
-			eventHandler.handleEvent(this.element, event, config[event])
-		})
+			eventHandler.handleEvent(this.element, event, config[event]);
+		});
 	}
 }

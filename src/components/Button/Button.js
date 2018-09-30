@@ -1,6 +1,6 @@
 'use strict';
 
-import MainComponent from '../MainComponent/MainComponent.js'
+import MainComponent from '../MainComponent/MainComponent.js';
 
 export default class Button extends MainComponent {
 

@@ -1,7 +1,7 @@
 'use strict';
 
-import BaseView from '../BaseView/BaseView.js'
-import tagParser from '../../modules/TagParser/TagParser.js'
+import BaseView from '../BaseView/BaseView.js';
+import tagParser from '../../modules/TagParser/TagParser.js';
 
 
 export default class SignUp extends BaseView {

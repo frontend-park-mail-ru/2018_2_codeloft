@@ -1,74 +1,74 @@
-'use strict'
+'use strict';
 
-const emptyFieldError = 'Field is empty'
-const loginShortError = 'Login is too short'
-const wrongEmailError = 'Wrong email'
-const passwordShortError = 'Password is too short 8 symbol min'
-const passwordLongError = 'Password is too long 20 symbol max'
-const passwordMatchError = 'Password doesn\'t match'
+const emptyFieldError = 'Field is empty';
+const loginShortError = 'Login is too short';
+const wrongEmailError = 'Wrong email';
+const passwordShortError = 'Password is too short 8 symbol min';
+const passwordLongError = 'Password is too long 20 symbol max';
+const passwordMatchError = 'Password doesn\'t match';
 
 export default class Validation {
 	constructor(inputArray = {}) {
-		this.inputArray = inputArray
-		this.password = null
-		this.passwordConfirm = null
-		this.errors = []
+		this.inputArray = inputArray;
+		this.password = null;
+		this.passwordConfirm = null;
+		this.errors = [];
 	}
 
 	static generateError(text, errorType) {
-		const error = document.createElement('div')
-		error.class = ['login-page__error', errorType]
-		error.style.color = 'red'
-		error.innerHTML = text
+		const error = document.createElement('div');
+		error.class = ['login-page__error', errorType];
+		error.style.color = 'red';
+		error.innerHTML = text;
 
-		return error
+		return error;
 	}
 
 	static checkFieldsPresenceBool(field) {
-		return field.value
+		return field.value;
 	}
 
 	checkLoginCorrect(field) {
 		if (!Validation.checkFieldsPresenceBool(field)) {
-			this.errors.push(Validation.generateError(emptyFieldError, 'login'))
+			this.errors.push(Validation.generateError(emptyFieldError, 'login'));
 		}
 		if (field.value.length < 5) {
-			this.errors.push(Validation.generateError(loginShortError, 'login'))
+			this.errors.push(Validation.generateError(loginShortError, 'login'));
 		}
 	}
 
 	checkEmailCorrect(field) {
-		const reg = /^[-._a-z0-9]+@(?:[a-z0-9][-a-z0-9]+\.)+[a-z]{2,6}$/i
+		const reg = /^[-._a-z0-9]+@(?:[a-z0-9][-a-z0-9]+\.)+[a-z]{2,6}$/i;
 
 		if (!Validation.checkFieldsPresenceBool(field)) {
-			this.errors.push(Validation.generateError(emptyFieldError, 'email'))
+			this.errors.push(Validation.generateError(emptyFieldError, 'email'));
 		}
 		if (!reg.test(field.value)) {
-			this.errors.push(Validation.generateError(wrongEmailError, 'email'))
+			this.errors.push(Validation.generateError(wrongEmailError, 'email'));
 		}
 	}
 
 	checkPasswordCorrect(field) {
 		if (!Validation.checkFieldsPresenceBool(field)) {
-			this.errors.push(Validation.generateError(emptyFieldError, 'password'))
+			this.errors.push(Validation.generateError(emptyFieldError, 'password'));
 		}
 		if (field.value.length < 8) {
-			this.errors.push(Validation.generateError(passwordShortError, 'password'))
+			this.errors.push(Validation.generateError(passwordShortError, 'password'));
 		}
 		if (field.value.length > 20) {
-			this.errors.push(Validation.generateError(passwordLongError, 'password'))
+			this.errors.push(Validation.generateError(passwordLongError, 'password'));
 		}
 	}
 
 	checkPasswordConfirmCorrect(field) {
 		if (!Validation.checkFieldsPresenceBool(field)) {
-			this.errors.push(Validation.generateError(emptyFieldError, 'passwordConfirm'))
+			this.errors.push(Validation.generateError(emptyFieldError, 'passwordConfirm'));
 		}
 	}
 
 	checkoutPasswordMatch(password, passwordConfirm) {
 		if (password.value !== passwordConfirm.value) {
-			this.errors.push(Validation.generateError(passwordMatchError, 'passwordMatch'))
+			this.errors.push(Validation.generateError(passwordMatchError, 'passwordMatch'));
 		}
 	}
 
@@ -76,26 +76,26 @@ export default class Validation {
 		for (const property in this.inputArray) {
 			switch (this.inputArray[property].name) {
 			case 'login':
-				this.checkLoginCorrect(this.inputArray[property])
-				break
+				this.checkLoginCorrect(this.inputArray[property]);
+				break;
 			case 'email':
-				this.checkEmailCorrect(this.inputArray[property])
-				break
+				this.checkEmailCorrect(this.inputArray[property]);
+				break;
 			case 'password':
-				this.checkPasswordCorrect(this.inputArray[property])
-				this.password = this.inputArray[property]
-				break
+				this.checkPasswordCorrect(this.inputArray[property]);
+				this.password = this.inputArray[property];
+				break;
 			case 'passwordConfirm':
-				this.checkPasswordConfirmCorrect(this.inputArray[property])
-				this.passwordConfirm = this.inputArray[property]
-				break
+				this.checkPasswordConfirmCorrect(this.inputArray[property]);
+				this.passwordConfirm = this.inputArray[property];
+				break;
 			default:
-				break
+				break;
 			}
 		}
 		if (this.password && this.passwordConfirm) {
-			this.checkoutPasswordMatch(this.password, this.passwordConfirm)
+			this.checkoutPasswordMatch(this.password, this.passwordConfirm);
 		}
-		return this.errors
+		return this.errors;
 	}
 }

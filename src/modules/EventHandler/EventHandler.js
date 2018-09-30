@@ -1,4 +1,4 @@
-import router from '../Router/Router.js'
+import router from '../Router/Router.js';
 
 /**
  * Класс, навешивающий обработчики событий
@@ -10,7 +10,7 @@ class EventHandler {
 		/**
          * Мапа, отображающая имя обработчика в конкретную функцию-обработчик
          */
-		this.eventMap = {}
+		this.eventMap = {};
 	}
 
 	/**
@@ -20,7 +20,7 @@ class EventHandler {
      * @param funcName - имя обработчика
      */
 	handleEvent(object, event, funcName) {
-		object.addEventListener(event, this.eventMap[funcName])
+		object.addEventListener(event, this.eventMap[funcName]);
 	}
 
 	/**
@@ -31,8 +31,8 @@ class EventHandler {
      * класса Router для красивого многострочного добавления
      */
 	addHandler(funcName, handler) {
-		this.eventMap[funcName] = handler
-		return this
+		this.eventMap[funcName] = handler;
+		return this;
 	}
 }
 
@@ -40,22 +40,22 @@ const eventHandler = new EventHandler();
 
 eventHandler
 	.addHandler('goLogin', () => {
-		router.go('/login/')
+		router.go('/login/');
 	})
 	.addHandler('goRegister', () => {
-		router.go('/register/')
+		router.go('/register/');
 	})
 	.addHandler('goScore', () => {
-		router.go('/score/')
+		router.go('/score/');
 	})
 	.addHandler('goAbout', () => {
-		router.go('/about/')
+		router.go('/about/');
 	})
 	.addHandler('goProfile', () => {
-		router.go('/profile/')
+		router.go('/profile/');
 	})
 	.addHandler('goMenu', () => {
-		router.go('/')
-	})
+		router.go('/');
+	});
 
-export default eventHandler
+export default eventHandler;

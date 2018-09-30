@@ -1,8 +1,8 @@
-import Button from '../../components/Button/Button.js'
-import Input from '../../components/Input/Input.js'
-import ScoreTable from '../../components/ScoreTable/ScoreTable.js'
-import UserInfo from '../../components/UserInfo/UserInfo.js'
-import Block from '../../components/Block/Block.js'
+import Button from '../../components/Button/Button.js';
+import Input from '../../components/Input/Input.js';
+import ScoreTable from '../../components/ScoreTable/ScoreTable.js';
+import UserInfo from '../../components/UserInfo/UserInfo.js';
+import Block from '../../components/Block/Block.js';
 
 /**
  * Класс, нужный для сборки документа по кастомному шаблону
@@ -15,13 +15,13 @@ class TagParser {
          * @private
          * @type {RegExp}
          */
-		this.tagExpr = /<\/?([^>\s\/]+)\s*([^>]*)\/?>/g
+		this.tagExpr = /<\/?([^>\s\/]+)\s*([^>]*)\/?>/g;
 		/**
          * Парсит содержимое тэга для вставки конткста в Handlebars
          * @private
          * @type {RegExp}
          */
-		this.contextExpr = /{{([^=]*)=([^}]*)}}/g
+		this.contextExpr = /{{([^=]*)=([^}]*)}}/g;
 
 		/**
          * Мапа для отображения имени кастомного тэга в конкретную компоненту
@@ -33,7 +33,7 @@ class TagParser {
 			ScoreTable: () => new ScoreTable(),
 			UserInfo: () => new UserInfo(),
 			Block: () => new Block()
-		}
+		};
 	}
 
 	/**
@@ -44,22 +44,22 @@ class TagParser {
      * @return {HTMLDivElement}
      */
 	toHTML(template, attrs, tag) {
-		let tagResult
-		const html = document.createElement(tag || 'div')
+		let tagResult;
+		const html = document.createElement(tag || 'div');
 		while (tagResult = this.tagExpr.exec(template)) {
-			let object = {}
-			object.fullText = tagResult[0]
-			object.tag = tagResult[1]
-			let contextResult
+			let object = {};
+			object.fullText = tagResult[0];
+			object.tag = tagResult[1];
+			let contextResult;
 			while (contextResult = this.contextExpr.exec(tagResult[2])) {
-				object[contextResult[1]] = contextResult[2]
+				object[contextResult[1]] = contextResult[2];
 			}
-			html.appendChild(this._getElement(object))
+			html.appendChild(this._getElement(object));
 		}
 		for (let attr in attrs) {
-			html.setAttribute(attr, attrs[attr])
+			html.setAttribute(attr, attrs[attr]);
 		}
-		return html
+		return html;
 	}
 
 	/**
@@ -69,11 +69,11 @@ class TagParser {
      * @private
      */
 	_getElement(config) {
-		const component = this.tagMap[config.tag]()
-		component.compile(config)
-		return component.render()
+		const component = this.tagMap[config.tag]();
+		component.compile(config);
+		return component.render();
 	}
 }
 
-const tagParser = new TagParser()
-export default tagParser
+const tagParser = new TagParser();
+export default tagParser;

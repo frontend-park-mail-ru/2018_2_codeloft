@@ -1,6 +1,6 @@
-const server=''
+const server='';
 
-const urlBack = 'https://apoj.herokuapp.com'
+const urlBack = 'https://apoj.herokuapp.com';
 
 /**
  * Module with methods for HTTP-requests
@@ -13,7 +13,7 @@ export default class Transport {
      * @return {Promise}
      */
 	static Get(adr) {
-		return Transport.FSend(urlBack + adr, 'get')
+		return Transport.FSend(urlBack + adr, 'get');
 	}
 
 	/**
@@ -23,7 +23,7 @@ export default class Transport {
      * @return {Promise}
      */
 	static Post(adr, body) {
-		return Transport.FSend(urlBack + adr, 'post', body)
+		return Transport.FSend(urlBack + adr, 'post', body);
 	}
 
 	/**
@@ -34,25 +34,25 @@ export default class Transport {
      * @return {Promise}
      */
 	static FSend(adr, method, body = {}) {
-		const url = server+adr
+		const url = server+adr;
 		const fPar = {
 			method: method,
 			// mode: 'cors',
 			credentials: 'include',
-		}
+		};
 		if (method === 'post') {
-			fPar.body = JSON.stringify(body)
+			fPar.body = JSON.stringify(body);
 			fPar.headers = {
 				'Content-Type': 'application/json; charset=utf-8',
-			}
+			};
 		}
 		return fetch(url, fPar)
 			.then((response) => {
 				if (response.status >= 400) {
-					throw response
+					throw response;
 				}
 
-				return response.json()
-			})
+				return response.json();
+			});
 	}
 }

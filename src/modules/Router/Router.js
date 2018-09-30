@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 /**
  * Класс-отображение url в конкретные части HTML кода
@@ -6,8 +6,8 @@
 class Router {
 
 	constructor() {
-		this.routesMap = {}
-		this.currentView = null
+		this.routesMap = {};
+		this.currentView = null;
 	}
 	/**
      * Инициализация работы приложения
@@ -16,10 +16,10 @@ class Router {
      */
 	start() {
 		window.onpopstate = (event => {
-			this._onRoute(window.location.pathname)
-		})
+			this._onRoute(window.location.pathname);
+		});
 
-		this._onRoute(window.location.pathname)
+		this._onRoute(window.location.pathname);
 	}
 
 	/**
@@ -28,17 +28,17 @@ class Router {
      * @private
      */
 	_onRoute(pathname) {
-		const view = this.routesMap[pathname]
+		const view = this.routesMap[pathname];
 
 		if (!view) {
-			return
+			return;
 		}
 
 		if (this.currentView) {
-			this.currentView.hide()
+			this.currentView.hide();
 		}
-		this.currentView = view
-		this.currentView.show()
+		this.currentView = view;
+		this.currentView.show();
 	}
 
 	/**
@@ -49,8 +49,8 @@ class Router {
      * класса Router для красивого многострочного добавления
      */
 	add(path, view) {
-		this.routesMap[path] = view
-		return this
+		this.routesMap[path] = view;
+		return this;
 	}
 
 	/**
@@ -58,10 +58,10 @@ class Router {
      * @param path - сам урл, по которому необходим переход
      */
 	go(path) {
-		history.pushState({url: path}, '', path)
-		this._onRoute(path)
+		history.pushState({url: path}, '', path);
+		this._onRoute(path);
 	}
 }
 
-const router = new Router()
-export default router
+const router = new Router();
+export default router;

@@ -1,6 +1,6 @@
 'use strict';
 
-import MainComponent from '../MainComponent/MainComponent.js'
+import MainComponent from '../MainComponent/MainComponent.js';
 
 export default class ScoreTable extends MainComponent {
 	compile(data) {
@@ -20,9 +20,9 @@ export default class ScoreTable extends MainComponent {
                          <td>${user.name}</td>
                          <td>${user.region}</td>
                          <td>${user.score}</td>
-                       </tr>`
+                       </tr>`;
 			}
-			return new Handlebars.SafeString(str)
+			return new Handlebars.SafeString(str);
 		});
 		this.template = Handlebars.compile(`<table class="game-highScrore">
                                                {{getRows}}
