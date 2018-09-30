@@ -1,9 +1,12 @@
 'use strict';
 
+import eventHandler from "../../modules/EventHandler/EventHandler.js";
+
 export default class MainComponent {
     constructor() {
         this.element = null;
         this.template = null;
+        this.events = [];
     }
 
     render() {
@@ -32,10 +35,17 @@ export default class MainComponent {
         this.element.parentElement.removeChild(this.element);
     }
 
-    compile(data) {
+    compile(config) {
         const parent = document.createElement('div');
-        parent.innerHTML = this.template(data);
+        parent.innerHTML = this.template(config);
         this.element = parent.lastChild;
-        //this.element.appendChild(element);
+        this.addEvents(config);
     }
+
+    addEvents(config) {
+        this.events.forEach(event => {
+            eventHandler.handleEvent(this.element, event, config[event]);
+        })
+    }
+
 }
