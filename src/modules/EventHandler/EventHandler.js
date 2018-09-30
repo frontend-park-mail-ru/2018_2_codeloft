@@ -1,23 +1,23 @@
-import router from "../Router/Router.js";
+import router from '../Router/Router.js'
 
 class EventHandler {
 
-    constructor() {
-        this.eventMap = {};
-    }
+	constructor() {
+		this.eventMap = {}
+	}
 
-    handleEvent(object, event, funcName) {
-        object.addEventListener(event, this.eventMap[funcName]);
-    }
+	handleEvent(object, event, funcName) {
+		object.addEventListener(event, this.eventMap[funcName])
+	}
 
-    addHandler(funcName, handler) {
-        this.eventMap[funcName] = handler;
-        return this;
-    }
+	addHandler(funcName, handler) {
+		this.eventMap[funcName] = handler
+		return this
+	}
 
 }
 
-const eventHandler = new EventHandler();
+const eventHandler = new EventHandler()
 
 eventHandler
     .addHandler('goLogin', () => {
