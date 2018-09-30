@@ -36,7 +36,7 @@ class EventHandler {
     }
 }
 
-const eventHandler = new EventHandler()
+const eventHandler = new EventHandler();
 
 eventHandler
     .addHandler('goLogin', () => {
