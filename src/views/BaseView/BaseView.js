@@ -14,7 +14,7 @@ export default class BaseView {
 			document.getElementById('main').appendChild(this.render());
 		}
 		this.element.style.display = 'block';
-        this.addEffects();
+		this.addEffects();
 	}
 
 	hide() {

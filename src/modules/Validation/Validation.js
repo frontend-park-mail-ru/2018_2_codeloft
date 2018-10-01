@@ -31,20 +31,20 @@ export default class Validation {
 
 	checkLoginCorrect(field) {
 		if (!Validation.checkFieldsPresenceBool(field)) {
-            // console.log('login ' + 1);
+			// console.log('login ' + 1);
 			this.errors.push(Validation.generateError(emptyFieldError, 'login'));
-            // console.log(this.errors);
+			// console.log(this.errors);
 		}
 		if (field.value.length < 5) {
-            // console.log('login ' + 2);
+			// console.log('login ' + 2);
 			this.errors.push(Validation.generateError(loginShortError, 'login'));
-            // console.log(this.errors);
+			// console.log(this.errors);
 		}
 	}
 
 	checkEmailCorrect(field) {
-        // console.log('login email');
-        // const reg = /^[-._a-z0-9]+@(?:[a-z0-9][-a-z0-9]+\.)+[a-z]{2,6}$/i;
+		// console.log('login email');
+		// const reg = /^[-._a-z0-9]+@(?:[a-z0-9][-a-z0-9]+\.)+[a-z]{2,6}$/i;
 
 		if (!Validation.checkFieldsPresenceBool(field)) {
 			this.errors.push(Validation.generateError(emptyFieldError, 'email'));
@@ -56,24 +56,24 @@ export default class Validation {
 
 	checkPasswordCorrect(field) {
 		if (!Validation.checkFieldsPresenceBool(field)) {
-            // console.log('password ' + 1);
+			// console.log('password ' + 1);
 			this.errors.push(Validation.generateError(emptyFieldError, 'password'));
-            // console.log(this.errors);
+			// console.log(this.errors);
 		}
 		if (field.value.length < 8) {
-            // console.log('password ' + 2);
+			// console.log('password ' + 2);
 			this.errors.push(Validation.generateError(passwordShortError, 'password'));
 			// console.log(this.errors);
 		}
 		if (field.value.length > 20) {
-            // console.log('password ' + 3);
+			// console.log('password ' + 3);
 			this.errors.push(Validation.generateError(passwordLongError, 'password'));
-            // console.log(this.errors);
+			// console.log(this.errors);
 		}
 	}
 
 	checkPasswordConfirmCorrect(field) {
-        // console.log('login confirm');
+		// console.log('login confirm');
 		if (!Validation.checkFieldsPresenceBool(field)) {
 			this.errors.push(Validation.generateError(emptyFieldError, 'passwordConfirm'));
 		}
