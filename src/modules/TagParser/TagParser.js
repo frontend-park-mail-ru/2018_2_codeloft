@@ -69,9 +69,12 @@ class TagParser {
      * @private
      */
 	_getElement(config) {
-		const component = this.tagMap[config.tag]();
-		component.compile(config);
-		return component.render();
+        const component = this.tagMap[config.tag]();
+        if (config.tag === 'Block') {
+            config.tag = 'div';
+        }
+        component.compile(config);
+        return component.render();
 	}
 }
 
