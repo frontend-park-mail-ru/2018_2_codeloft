@@ -30,6 +30,7 @@ export default class SignIn extends BaseView {
 
                 Transport.Post(adr, request).then(() => {
                     UserService.GetData().then(() => {
+                    	console.log('done');
 						router.go('/');
                     }).catch((response) => {
                         console.log(response);
@@ -45,11 +46,11 @@ export default class SignIn extends BaseView {
 		});
 
 		this.template = `<Block {{name=login}} {{class=signInErrorField}}>
-						 <Input {{name=login}} {{class=game-input signInInput}} {{placeholder=Enter your login}}>
-						 <Block {{name=password}} {{class=signInErrorField}}>
-                         <Input {{name=password}} {{class=game-input signInInput}} {{placeholder=Enter your password}} {{type=password}}>
-                         <Button {{class=buttonGame}} {{text=Sign in}} {{click=btnSignInSubmit}}>
-                         <Button {{class=buttonGame}} {{text=Back}} {{click=goMenu}}>`;
+						<Input {{name=login}} {{class=game-input signInInput}} {{placeholder=Enter your login}}>
+						<Block {{name=password}} {{class=signInErrorField}}>
+                        <Input {{name=password}} {{class=game-input signInInput}} {{placeholder=Enter your password}} {{type=password}}>
+                        <Button {{class=buttonGame}} {{text=Sign in}} {{click=btnSignInSubmit}}>
+                        <Button {{class=buttonGame}} {{text=Back}} {{click=goMenu}}>`;
 		this.element = tagParser.toHTML(this.template, {'class': 'signIn-page__menu'}, 'form');
 	}
 
@@ -68,10 +69,11 @@ export default class SignIn extends BaseView {
 
 	showErrors(errors, errorFields, inputs) {
 		errorFields.forEach((errorField, i) => {
-			errors.forEach((err, i) => {
+			errors.forEach((err, j) => {
         		if (errorField.getAttribute('name') === err.class[1]) {
 					errorField.innerHTML = err.innerHTML;
-        			inputs[i].style.borderColor = 'red';
+					console.log(inputs[j]);
+        			// inputs[j].style.borderColor = 'red';
 				}
 			});
 		});

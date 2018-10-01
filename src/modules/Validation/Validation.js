@@ -44,7 +44,7 @@ export default class Validation {
 
 	checkEmailCorrect(field) {
 		// console.log('login email');
-		// const reg = /^[-._a-z0-9]+@(?:[a-z0-9][-a-z0-9]+\.)+[a-z]{2,6}$/i;
+		const reg = /^[-._a-z0-9]+@(?:[a-z0-9][-a-z0-9]+\.)+[a-z]{2,6}$/i;
 
 		if (!Validation.checkFieldsPresenceBool(field)) {
 			this.errors.push(Validation.generateError(emptyFieldError, 'email'));
