@@ -1,9 +1,35 @@
 'use strict';
 
 import MainComponent from '../MainComponent/MainComponent.js';
+import Transport from '../../modules/Transport/Transport.js';
 
 export default class ScoreTable extends MainComponent {
+	constructor(){
+		super();
+		this.usersFromBack = null;
+	}
 	compile(data) {
+		// this.GetUsersFromBack(3, 1);
+
+		const limit = 3;
+		const since = 1;
+
+		Transport.Get('/stop?limit=' + limit + '&since=' + since).then((response) => {
+			this.usersFromBack = response;
+		}).catch((response) => {
+			if (!response.json) {
+				console.log(response);
+				return;
+			}
+			response.json().then((json) => {
+				console.log(json);
+			});
+		});
+
+		// setTimeout(() => {
+		//     console.log(this.usersFromBack);
+		// }, 1000);
+
 		Handlebars.registerHelper('getRows', function () {
 			const user = {
 				name: 'Edward Bill',
@@ -30,4 +56,19 @@ export default class ScoreTable extends MainComponent {
 		this.template(data);
 		super.compile(data);
 	}
+
+	// GetUsersFromBack(limit, since) {
+	//     return Transport.Get('/stop?limit=' + limit + '&since=' + since).then((response) => {
+	//         this.usersFromBack = response;
+	//         console.log(this.usersFromBack);
+	//     }).catch((response) => {
+	//         if (!response.json) {
+	//             console.log(response);
+	//             return;
+	//         }
+	//         response.json().then((json) => {
+	//             console.log(json);
+	//         });
+	//     });
+	// }
 }

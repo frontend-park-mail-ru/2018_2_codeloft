@@ -1,6 +1,7 @@
 const server='';
 
 const urlBack = 'https://apoj.herokuapp.com';
+// const urlBack = 'https://codeloft-back.now.sh';
 
 /**
  * Module with methods for HTTP-requests
