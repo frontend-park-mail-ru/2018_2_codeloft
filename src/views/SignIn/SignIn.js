@@ -6,13 +6,15 @@ import Block from '../../components/Block/Block.js';
 import Validation from '../../modules/Validation/Validation.js';
 import eventHandler from '../../modules/EventHandler/EventHandler.js';
 import Transport from '../../modules/Transport/Transport.js';
+import UserService from '../../services/UserService/UserService.js';
+import router from "../../modules/Router/Router.js";
 
 
 export default class SignIn extends BaseView {
 	build() {
 		eventHandler.addHandler('btnSignInSubmit', () => {
 			if (this.isValid(this.inputs, this.errorsFields)) {
-            	let request = {};
+                let request = {};
             	this.inputs.forEach(input => {
             		if (input.name === 'login') {
 						request.login = input.value;
@@ -24,8 +26,22 @@ export default class SignIn extends BaseView {
 						request.password = input.value;
 					}
 				});
-			}
+                const adr = '/signin';
 
+                Transport.Post(adr, request).then(() => {
+                    UserService.GetData().then(() => {
+						router.go('/');
+                    }).catch((response) => {
+                        console.log(response);
+                    });
+                }).catch((response) => {
+                    if (!response.json) {
+                        console.log(response);
+                        return;
+                    }
+                    response.json().then((json) => console.log(json));
+                });
+			}
 		});
 
 		this.template = `<Block {{name=login}} {{class=signInErrorField}}>
