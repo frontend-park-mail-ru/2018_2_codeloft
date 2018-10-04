@@ -51,8 +51,11 @@ export default class SignIn extends BaseView {
                         <Input {{name=password}} {{class=game-input signInInput}} {{placeholder=Enter your password}} {{type=password}}>
                         <Button {{class=buttonGame}} {{text=Sign in}} {{click=btnSignInSubmit}}>
                         <Button {{class=buttonGame}} {{text=Back}} {{click=goMenu}}>`;
-		this.element = tagParser.toHTML(this.template, {'class': 'signIn-page__menu'}, 'form');
-	}
+        this.elementArray = tagParser.toHTML(this.template);
+        const div = document.createElement("div");
+        div.setAttribute('class', 'signIn-page_menu');
+        this.elementArray.forEach(el => div.appendChild(el));
+        this.element = div;	}
 
 	addEffects() {
 		this.inputs = [...document.getElementsByClassName('signInInput')];

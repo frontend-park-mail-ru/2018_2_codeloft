@@ -15,6 +15,10 @@ export default class About extends BaseView {
 	build() {
 		this.template = `<Block {{text=${RULESTEXT}}}>
                          <Button {{class=buttonGame}} {{text=Back}} {{click=goMenu}}>`;
-		this.element = tagParser.toHTML(this.template, {'class': 'about-page__logo'});
-	}
+		this.elementArray = tagParser.toHTML(this.template);
+        const div = document.createElement("div");
+        div.setAttribute('class', 'about-page_logo');
+        this.elementArray.forEach(el => div.appendChild(el));
+        this.element = div;
+    }
 }

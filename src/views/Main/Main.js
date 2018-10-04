@@ -12,7 +12,11 @@ export default class Main extends BaseView {
                          <Button {{class=buttonGame}} {{text=Rules}} {{click=goAbout}}>
                          <Button {{class=buttonGame}} {{text=High score}} {{click=goScore}}>
                          <Button {{class=buttonGame}} {{text=Profile}} {{click=goProfile}}>`;
-		this.element = tagParser.toHTML(this.template, {'class': 'main-page__menu'});
+		this.elementArray = tagParser.toHTML(this.template);
+        const div = document.createElement("div");
+        div.setAttribute('class', 'main-page_menu');
+        this.elementArray.forEach(el => div.appendChild(el));
+        this.element = div;
 	}
 
 }
