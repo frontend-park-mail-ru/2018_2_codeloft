@@ -45,7 +45,7 @@ class TagParser {
      */
 	toHTML(template, attrs, tag) {
 		let tagResult;
-		const html = document.createElement(tag || 'div');
+		let elements = [];
 		while (tagResult = this.tagExpr.exec(template)) {
 			let object = {};
 			object.fullText = tagResult[0];
@@ -54,12 +54,9 @@ class TagParser {
 			while (contextResult = this.contextExpr.exec(tagResult[2])) {
 				object[contextResult[1]] = contextResult[2];
 			}
-			html.appendChild(this._getElement(object));
+			elements.push(this._getElement(object));
 		}
-		for (let attr in attrs) {
-			html.setAttribute(attr, attrs[attr]);
-		}
-		return html;
+		return elements;
 	}
 
 	/**
@@ -74,7 +71,7 @@ class TagParser {
 			config.tag = 'div';
 		}
 		component.compile(config);
-		return component.render();
+		return component;
 	}
 }
 

@@ -54,7 +54,11 @@ export default class SignUp extends BaseView {
                         <Button {{class=buttonGame}} {{text=Sign up}} {{click=btnSignUpSubmit}}>
                         <Button {{class=buttonGame}} {{text=Back}} {{click=goMenu}}>`;
 
-		this.element = tagParser.toHTML(this.template, {'class': 'signUp-page__menu'}, 'form');
+        this.elementArray = tagParser.toHTML(this.template);
+        const div = document.createElement("div");
+        div.setAttribute('class', 'signUp-page_menu');
+        this.elementArray.forEach(el => div.appendChild(el.render()));
+        this.element = div;
 	}
 
 	addEffects() {

@@ -9,7 +9,11 @@ export default class Profile extends BaseView {
 	build() {
 		this.template = `<UserInfo>
                          <Button {{text=Back}} {{class=buttonGame}} {{click=goMenu}}>`;
-		this.element = tagParser.toHTML(this.template, {'class': 'profile-page__info'});
+		this.elementArray = tagParser.toHTML(this.template);
+        const div = document.createElement("div");
+        div.setAttribute('class', 'profile-page__info');
+        this.elementArray.forEach(el => div.appendChild(el.render()));
+        this.element = div;
 	}
 
 }
