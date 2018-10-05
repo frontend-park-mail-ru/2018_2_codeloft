@@ -2,6 +2,7 @@
 
 import BaseView from '../BaseView/BaseView.js';
 import tagParser from '../../modules/TagParser/TagParser.js';
+import Transport from '../../modules/Transport/Transport.js';
 
 
 export default class HighScore extends BaseView {
@@ -22,29 +23,13 @@ export default class HighScore extends BaseView {
 
     updateScore() {
 
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                const user = {
-                    name: 'Edward Bill',
-                    region: 'Thailand',
-                    score: 100500
-                };
-                let str = `<tr class="game-highScoreRow">
-							<th>Player</th>
-							<th>Region</th>
-							<th>Score</th>
-						   </tr>`;
-                for (let i = 0; i < 3; i++) {
-                    str += `<tr class="game-highScoreRow">
-                                <td>${user.name}</td>
-                                <td>${user.region}</td>
-                                <td>${user.score}</td>
-							</tr>`;
-                }
+        Transport.Get('/user')
+            .then((usersJSON) => {
+                usersJSON.text().then(text => console.log(text));
                 this.loadingLabel.style.display = 'none';
-                this.scoreTable.innerHTML = str;
-            }, 1000);
-        });
+                // usersJSON.json().then(text => console.log(text));
+            })
+            .catch(err => console.log(err));
 
     }
 

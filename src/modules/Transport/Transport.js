@@ -1,7 +1,7 @@
 const server='';
 
-const urlBack = 'https://apoj.herokuapp.com';
-// const urlBack = 'https://codeloft-back.now.sh';
+//const urlBack = 'https://apoj.herokuapp.com';
+const urlBack = 'https://codeloft-backend.now.sh';
 
 /**
  * Module with methods for HTTP-requests
@@ -38,8 +38,12 @@ export default class Transport {
 		const url = server+adr;
 		const fPar = {
 			method: method,
-			// mode: 'cors',
-			credentials: 'include',
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                Host: 'https://codeloft-backend.now.sh'
+            },
+			mode: 'no-cors',
+            credentials: 'same-origin'
 		};
 		if (method === 'post') {
 			fPar.body = JSON.stringify(body);
@@ -47,13 +51,6 @@ export default class Transport {
 				'Content-Type': 'application/json; charset=utf-8',
 			};
 		}
-		return fetch(url, fPar)
-			.then((response) => {
-				if (response.status >= 400) {
-					throw response;
-				}
-
-				return response.json();
-			});
+		return fetch(url, fPar);
 	}
 }
