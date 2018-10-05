@@ -1,7 +1,7 @@
 const server='';
 
 //const urlBack = 'https://apoj.herokuapp.com';
-const urlBack = 'https://codeloft-backend.now.sh';
+const urlBack = 'https://20182codeloft-hufsrgrrkc.now.sh/';
 
 /**
  * Module with methods for HTTP-requests
@@ -40,7 +40,7 @@ export default class Transport {
 			method: method,
             headers: {
                 'Access-Control-Allow-Origin': '*',
-                Host: 'https://codeloft-backend.now.sh'
+                Host: 'https://20182codeloft-hufsrgrrkc.now.sh/'
             },
 			mode: 'no-cors',
             credentials: 'same-origin'
