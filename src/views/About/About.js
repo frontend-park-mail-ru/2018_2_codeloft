@@ -18,7 +18,7 @@ export default class About extends BaseView {
 		this.elementArray = tagParser.toHTML(this.template);
         const div = document.createElement("div");
         div.setAttribute('class', 'about-page_logo');
-        this.elementArray.forEach(el => div.appendChild(el));
+        this.elementArray.forEach(el => div.appendChild(el.render()));
         this.element = div;
     }
 }

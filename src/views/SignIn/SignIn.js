@@ -54,7 +54,7 @@ export default class SignIn extends BaseView {
         this.elementArray = tagParser.toHTML(this.template);
         const div = document.createElement("div");
         div.setAttribute('class', 'signIn-page_menu');
-        this.elementArray.forEach(el => div.appendChild(el));
+        this.elementArray.forEach(el => div.appendChild(el.render()));
         this.element = div;	}
 
 	addEffects() {

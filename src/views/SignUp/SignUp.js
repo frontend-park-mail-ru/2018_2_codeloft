@@ -57,7 +57,7 @@ export default class SignUp extends BaseView {
         this.elementArray = tagParser.toHTML(this.template);
         const div = document.createElement("div");
         div.setAttribute('class', 'signUp-page_menu');
-        this.elementArray.forEach(el => div.appendChild(el));
+        this.elementArray.forEach(el => div.appendChild(el.render()));
         this.element = div;
 	}
 

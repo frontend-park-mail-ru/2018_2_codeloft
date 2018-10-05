@@ -71,7 +71,7 @@ class TagParser {
 			config.tag = 'div';
 		}
 		component.compile(config);
-		return component.render();
+		return component;
 	}
 }
 

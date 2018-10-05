@@ -11,11 +11,11 @@ export default class HighScore extends BaseView {
 						 <ScoreTable>
                          <Button {{text=Back}} {{class=buttonGame}} {{click=goMenu}}>`;
         this.elementArray = tagParser.toHTML(this.template);
-        this.scoreTable = this.elementArray[1];
-        this.loadingLabel = this.elementArray[0];
+        this.scoreTable = this.elementArray[1].render();
+        this.loadingLabel = this.elementArray[0].render();
         const div = document.createElement("div");
         div.setAttribute('class', 'highScore-page__list');
-        this.elementArray.forEach(el => div.appendChild(el));
+        this.elementArray.forEach(el => div.appendChild(el.render()));
         this.element = div;
         this.updateScore()
     }
