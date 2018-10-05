@@ -34,26 +34,15 @@ function getUser(login) {
     return (users.find(x => x.login.toUpperCase() === login.toUpperCase()));
 }
 
-app.post('/signup', (req, res) => {
-    const login = req.body.login;
-    const email = req.body.email;
-    const password = req.body.password;
-    const id = users.length === 0 ? 0 : users.length + 1;
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Content-Type, X-Requested-With");
+    next();
+});
 
-    if (userLoginAndEmailExist(login, email) === undefined) {
-        users.push({
-            'id': id,
-            'login': login,
-            'email': email,
-            'password': password,
-            'singleScore': 0
-        });
-        usersAuth[id] = {'login': login};
-        res.cookie('auth', id, {expires: new Date(Date.now() + 900000), httpOnly: true});
-        return res.status(201).json(users[login]);
-    } else {
-        return res.status(400).json({message: 'Login or Email already exists'});
-    }
+app.get('/test', (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+        return res.send(JSON.stringify({test: "123"}));
 });
 
 app.post('/signin', (req, res) => {

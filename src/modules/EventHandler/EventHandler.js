@@ -1,4 +1,5 @@
 import router from '../Router/Router.js';
+import URLS from '../Consts/Consts.js';
 
 /**
  * Класс, навешивающий обработчики событий
@@ -40,19 +41,19 @@ const eventHandler = new EventHandler();
 
 eventHandler
 	.addHandler('goLogin', () => {
-		router.go('/login/');
+		router.go(URLS.SIGN_IN);
 	})
 	.addHandler('goRegister', () => {
-		router.go('/register/');
+		router.go(URLS.SIGN_UP);
 	})
 	.addHandler('goScore', () => {
-		router.go('/score/');
+		router.go(URLS.HIGH_SCORE);
 	})
 	.addHandler('goAbout', () => {
-		router.go('/about/');
+		router.go(URLS.ABOUT);
 	})
 	.addHandler('goProfile', () => {
-		router.go('/profile/');
+		router.go(URLS.PROFILE);
 	})
 	.addHandler('goMenu', () => {
 		router.go('/');

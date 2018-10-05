@@ -1,7 +1,7 @@
 const server='';
 
 //const urlBack = 'https://apoj.herokuapp.com';
-const urlBack = 'https://20182codeloft-hufsrgrrkc.now.sh/';
+const urlBack = 'https://20182codeloft-iasahymkzp.now.sh';
 
 /**
  * Module with methods for HTTP-requests
@@ -37,14 +37,13 @@ export default class Transport {
 	static FSend(adr, method, body = {}) {
 		const url = server+adr;
 		const fPar = {
-			method: method,
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                Host: 'https://20182codeloft-hufsrgrrkc.now.sh/'
-            },
-			mode: 'no-cors',
-            credentials: 'same-origin'
-		};
+            method: 'GET' || method,
+                headers: {
+                    Host: 'localhost'
+                },
+                mode: 'cors',
+                credentials: 'same-origin'
+        };
 		if (method === 'post') {
 			fPar.body = JSON.stringify(body);
 			fPar.headers = {

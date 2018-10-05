@@ -1,5 +1,5 @@
 {
-  "name": "2018_2_codeloft",
+  "name": "server",
   "version": "1.0.0",
   "description": "tron",
   "main": "index.js",
@@ -8,7 +8,11 @@
     "start": "node server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "eslint": "./node_modules/.bin/eslint ./src",
-    "eslintFix": "./node_modules/.bin/eslint --fix ./src"
+    "eslintFix": "./node_modules/.bin/eslint --fix ./src",
+    "deploy": "npm run build:tmpl && now",
+    "deploy:host": "now bla",
+    "precommit": "npm run eslint",
+    "build:tmpl": "build hndl"
   },
   "repository": {
     "type": "git",
@@ -26,6 +30,9 @@
   },
   "homepage": "https://github.com/frontend-park-mail-ru/2018_2_codeloft#readme",
   "dependencies": {
+    "cookie-parser": "^1.4.3",
+    "express": "latest",
+    "body-parser": "latest"
   },
   "devDependencies": {
     "eslint": "^5.6.1",
