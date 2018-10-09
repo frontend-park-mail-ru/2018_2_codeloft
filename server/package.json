@@ -30,9 +30,10 @@
   },
   "homepage": "https://github.com/frontend-park-mail-ru/2018_2_codeloft#readme",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",
-    "express": "latest",
-    "body-parser": "latest"
+    "cors": "^2.8.4",
+    "express": "^4.16.3"
   },
   "devDependencies": {
     "eslint": "^5.6.1",

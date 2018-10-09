@@ -1,8 +1,11 @@
 const express = require('express');
 const cookie = require('cookie-parser');
 const body = require('body-parser');
+const handlebars = require('handlebars');
+const cors = require('cors');
 
 const app = express();
+app.use(cors());
 app.use(cookie());
 app.use(body.json());
 
@@ -85,6 +88,17 @@ app.post('/logout', (req, res) => {
     } else {
         return res.status(401).end();
     }
+});
+
+app.get('/template', (req, res) => {
+    const context = req.query;
+    res.set('access-control-allow-headers','Content-Type');
+    res.set('access-control-allow-origin','*');
+    //res.json(req.query);
+    const template  = handlebars.compile(context.template);
+    //template(context);
+    const result = {html: template(context)};
+    res.json(result);
 });
 
 app.listen(process.env.PORT || 3000);

@@ -10,11 +10,14 @@ export default class BaseView {
 
 	show() {
 		if (!this.element) {
-			this.build();
-			document.getElementById('main').appendChild(this.render());
+			this.build().then(() => {
+                document.getElementById('main').appendChild(this.render());
+            })
 		}
-		this.element.style.display = 'block';
-		this.addEffects();
+		else {
+		    this.element.style.display = 'block';
+        }
+		//this.addEffects();
 	}
 
 	hide() {
