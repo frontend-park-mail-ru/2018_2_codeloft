@@ -8,7 +8,8 @@ export default class Main extends BaseView {
 
     build() {
         return new Promise((resolve) => {
-            this.template = `<Button {{class=buttonGame}} {{text=Sign in}} {{click=goLogin}}>
+            this.template = `<Button {{class=buttonGame}} {{text=Single Player}} {{click=goSinglePlayer}}>
+                         <Button {{class=buttonGame}} {{text=Sign in}} {{click=goLogin}}>
                          <Button {{class=buttonGame}} {{text=Sign up}} {{click=goRegister}}>
                          <Button {{class=buttonGame}} {{text=Rules}} {{click=goAbout}}>
                          <Button {{class=buttonGame}} {{text=High score}} {{click=goScore}}>

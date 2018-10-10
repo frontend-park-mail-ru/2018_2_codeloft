@@ -1,3 +1,5 @@
+'use strict';
+
 import MainComponent from '../MainComponent/MainComponent.js';
 
 export default class Label extends MainComponent {
