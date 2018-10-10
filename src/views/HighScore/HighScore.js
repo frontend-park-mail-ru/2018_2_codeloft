@@ -12,27 +12,34 @@ export default class HighScore extends BaseView {
         eventHandler.addHandler('loadScoreRows', () => {
             this.updateScore();
         });
-        this.template = `<ScoreTable>
-						 <Block {{tagName=p}} {{class=score-loading}} {{text=loading...}}>
+        return new Promise((resolve) => {
+            this.template = `<ScoreTable>
+						 <Label {{class=score-loading}} {{text=loading...}}>
 						 <Button {{text=Load more}} {{class=buttonGame}}, {{click=loadScoreRows}}>
                          <Button {{text=Back}} {{class=buttonGame}} {{click=goMenu}}>`;
-        this.elementArray = tagParser.toHTML(this.template);
-        this.scoreTable = this.elementArray[0].render();
-        this.scoreTable.innerHTML = `<tr class="game-highScoreRow">
-							<th>Player</th>
-							<th>Email</th>
-							<th>Score</th>
-						   </tr>`;
-        this.loadingLabel = this.elementArray[1].render();
-        this.loadingLabel.style.display = 'none';
-        this.loadMore = this.elementArray[2].render();
-        this.loadMore.style.display = 'none';
-        const div = document.createElement("div");
-        div.setAttribute('class', 'highScore-page__list');
-        this.elementArray.forEach(el => div.appendChild(el.render()));
-        this.element = div;
-        this.pageNumber = 0;
-        this.updateScore()
+            tagParser.toHTML(this.template).then((elementsArray) => {
+                this.elementsArray = elementsArray;
+                this.scoreTable = this.elementsArray[0];
+                this.loadingLabel = this.elementsArray[1];
+                this.loadMore = this.elementsArray[2];
+
+                this.scoreTable.innerHTML = `<tr class="game-highScoreRow">
+                            <th>Player</th>
+                            <th>Email</th>
+                            <th>Score</th>
+                           </tr>`;
+
+                this.loadingLabel.style.display = 'none';
+                this.loadMore.style.display = 'none';
+                const div = document.createElement("div");
+                div.setAttribute('class', 'highScore-page__list');
+                this.elementsArray.forEach(el => div.appendChild(el));
+                this.element = div;
+                this.pageNumber = 0;
+                this.updateScore();
+                resolve();
+            });
+        });
     }
 
     updateScore() {
@@ -42,7 +49,6 @@ export default class HighScore extends BaseView {
         Transport.Get(`/user?page=${this.pageNumber}&page_size=5`)
             .then((usersJSON) => usersJSON.json())
             .then(users => {
-                console.log(users);
                 let str = ``;
                 for (let i = 0; i < 5; i++) {
                     str += `<tr class="game-highScoreRow">

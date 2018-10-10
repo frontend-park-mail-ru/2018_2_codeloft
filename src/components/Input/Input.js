@@ -3,9 +3,8 @@
 import MainComponent from '../MainComponent/MainComponent.js';
 
 export default class Input extends MainComponent {
-	compile(data) {
-		this.template = Handlebars.compile('<input name="{{name}}" class="{{class}}" type="{{type}}" placeholder="{{placeholder}}">');
-		this.template(data);
-		super.compile(data);
-	}
+    constructor() {
+        super();
+        this.template = '<input name="{{name}}" class="{{class}}" type="{{type}}" placeholder="{{placeholder}}">';
+    }
 }

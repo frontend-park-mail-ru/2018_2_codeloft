@@ -3,6 +3,7 @@ import Input from '../../components/Input/Input.js';
 import ScoreTable from '../../components/ScoreTable/ScoreTable.js';
 import UserInfo from '../../components/UserInfo/UserInfo.js';
 import Block from '../../components/Block/Block.js';
+import Label from '../../components/Label/Label.js';
 
 /**
  * Класс, нужный для сборки документа по кастомному шаблону
@@ -32,7 +33,8 @@ class TagParser {
             Input: () => new Input(),
             ScoreTable: () => new ScoreTable(),
             UserInfo: () => new UserInfo(),
-            Block: () => new Block()
+            Block: () => new Block(),
+            Label: () => new Label()
         };
     }
 
@@ -71,10 +73,7 @@ class TagParser {
      */
     _getElement(config) {
         const component = this.tagMap[config.tag]();
-        if (config.tag === 'Block') {
-            config.tag = 'div';
-        }
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             component.compile(config).then(component => {
                 resolve(component.render());
             });

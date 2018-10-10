@@ -7,13 +7,18 @@ import tagParser from '../../modules/TagParser/TagParser.js';
 export default class Profile extends BaseView {
 
 	build() {
-		this.template = `<UserInfo>
+	    return new Promise((resolve) => {
+            this.template = `<UserInfo>
                          <Button {{text=Back}} {{class=buttonGame}} {{click=goMenu}}>`;
-		this.elementArray = tagParser.toHTML(this.template);
-        const div = document.createElement("div");
-        div.setAttribute('class', 'profile-page__info');
-        this.elementArray.forEach(el => div.appendChild(el.render()));
-        this.element = div;
+            tagParser.toHTML(this.template).then((elementsArray) => {
+                this.elementsArray = elementsArray;
+                const div = document.createElement("div");
+                div.setAttribute('class', 'profile-page__info');
+                this.elementsArray.forEach(el => div.appendChild(el));
+                this.element = div;
+                resolve();
+            });
+        });
 	}
 
 }

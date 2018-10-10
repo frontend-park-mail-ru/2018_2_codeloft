@@ -42,23 +42,26 @@ export default class SignUp extends BaseView {
 				});
 			}
 		});
-
-		this.template = `<Block {{name=login}} {{class=signUpErrorField}}>
+		return new Promise((resolve) => {
+            this.template = `<Label {{name=login}} {{class=signUpErrorField}} {{visible=none}}>
 						<Input {{name=login}} {{class=game-input signUpInput}} {{placeholder=Enter your login}}>
-						<Block {{name=email}} {{class=signUpErrorField}}>
+						<Label {{name=email}} {{class=signUpErrorField}} {{visible=none}}>
 					    <Input {{name=email}} {{class=game-input signUpInput}} {{placeholder=Enter your email}}>
-					    <Block {{name=password}} {{class=signUpErrorField}}>
+					    <Label {{name=password}} {{class=signUpErrorField}} {{visible=none}}>
                         <Input {{name=password}} {{class=game-input signUpInput}} {{placeholder=Enter your password}} {{type=password}}>
-                        <Block {{name=passwordConfirm}} {{class=signUpErrorField}}>
+                        <Label {{name=passwordConfirm}} {{class=signUpErrorField}} {{visible=none}}>
                         <Input {{name=passwordConfirm}} {{class=game-input signUpInput}} {{placeholder=Repeat your password}} {{type=password}}>
                         <Button {{class=buttonGame}} {{text=Sign up}} {{click=btnSignUpSubmit}}>
                         <Button {{class=buttonGame}} {{text=Back}} {{click=goMenu}}>`;
-
-        this.elementArray = tagParser.toHTML(this.template);
-        const div = document.createElement("div");
-        div.setAttribute('class', 'signUp-page_menu');
-        this.elementArray.forEach(el => div.appendChild(el.render()));
-        this.element = div;
+            tagParser.toHTML(this.template).then((elementsArray) => {
+            	this.elementsArray = elementsArray;
+                const div = document.createElement("div");
+                div.setAttribute('class', 'signUp-page_menu');
+                this.elementsArray.forEach(el => div.appendChild(el));
+                this.element = div;
+                resolve();
+			});
+		});
 	}
 
 	addEffects() {

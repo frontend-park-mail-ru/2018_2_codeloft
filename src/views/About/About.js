@@ -11,14 +11,18 @@ const RULESTEXT = 'In our game you will play for a motorcyclist, \n' +
     '     various bonuses that will help you win. So do not yawn!';
 
 export default class About extends BaseView {
-
 	build() {
-		this.template = `<Block {{text=${RULESTEXT}}}>
+	    return new Promise((resolve) => {
+            this.template = `<Block {{text=${RULESTEXT}}}>
                          <Button {{class=buttonGame}} {{text=Back}} {{click=goMenu}}>`;
-		this.elementArray = tagParser.toHTML(this.template);
-        const div = document.createElement("div");
-        div.setAttribute('class', 'about-page_logo');
-        this.elementArray.forEach(el => div.appendChild(el.render()));
-        this.element = div;
+            tagParser.toHTML(this.template).then((elementsArray) => {
+                this.elementsArray = elementsArray;
+                const div = document.createElement("div");
+                div.setAttribute('class', 'about-page_logo');
+                this.elementsArray.forEach(el => div.appendChild(el));
+                this.element = div;
+                resolve();
+            });
+        })
     }
 }
