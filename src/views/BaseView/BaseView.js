@@ -1,32 +1,41 @@
 export default class BaseView {
 
-	constructor() {
-		this.element = null;
-	}
+    constructor() {
+        this.element = null;
+    }
 
-	render() {
-		return this.element;
-	}
+    build() {
 
-	show() {
-		if (!this.element) {
-			this.build().then(() => {
-                document.getElementById('main').appendChild(this.render());
-            })
-		}
-		else {
-		    this.element.style.display = 'block';
+    }
+
+    render() {
+        return this.element;
+    }
+
+    show() {
+        new Promise((resolve) => {
+            if (!this.element) {
+                this.build().then(() => {
+                    document.getElementById('main').appendChild(this.render());
+                    resolve();
+                })
+            }
+            else {
+                resolve();
+            }
+        }).then(() => {
+            this.element.style.display = 'block';
+            this.addEffects();
+        });
+    }
+
+    hide() {
+        if (this.element) {
+            this.element.style.display = 'none';
         }
-		//this.addEffects();
-	}
+    }
 
-	hide() {
-		if (this.element) {
-			this.element.style.display = 'none';
-		}
-	}
+    addEffects() {
 
-	addEffects() {
-
-	}
+    }
 }

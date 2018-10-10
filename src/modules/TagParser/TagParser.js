@@ -4,6 +4,7 @@ import ScoreTable from '../../components/ScoreTable/ScoreTable.js';
 import UserInfo from '../../components/UserInfo/UserInfo.js';
 import Block from '../../components/Block/Block.js';
 import Label from '../../components/Label/Label.js';
+import GameBlock from '../../components/GameBlock/GameBlock.js';
 
 /**
  * Класс, нужный для сборки документа по кастомному шаблону
@@ -34,7 +35,8 @@ class TagParser {
             ScoreTable: () => new ScoreTable(),
             UserInfo: () => new UserInfo(),
             Block: () => new Block(),
-            Label: () => new Label()
+            Label: () => new Label(),
+            GameBlock: () => new GameBlock(),
         };
     }
 
