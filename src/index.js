@@ -12,12 +12,12 @@ import URLS from './modules/Consts/Consts.js';
 
 
 router
-	.add('/', new Main())
-	.add(URLS.ABOUT, new About())
-	.add(URLS.SIGN_IN, new SignIn())
-	.add(URLS.SIGN_UP, new SignUp())
-	.add(URLS.PROFILE, new Profile())
-	.add(URLS.HIGH_SCORE, new HighScore())
-	.add(URLS.SINGLEPLAYER, new SinglePlayer());
+    .add('/', new Main())
+    .add(URLS.ABOUT, new About())
+    .add(URLS.SIGN_IN, new SignIn())
+    .add(URLS.SIGN_UP, new SignUp())
+    .add(URLS.PROFILE, new Profile())
+    .add(URLS.HIGH_SCORE, new HighScore())
+    .add(URLS.SINGLEPLAYER, new SinglePlayer());
 
 router.start();

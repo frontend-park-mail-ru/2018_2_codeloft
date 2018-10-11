@@ -55,7 +55,16 @@ class UserService {
             'login': login,
             'password': password
         };
-        return Transport.Post('/session', requestBody);
+        return Transport.Post('/session', requestBody)
+            .then(response => {
+                // Inspect the headers in the response
+                response.headers.forEach(console.log);
+                // OR you can do this
+                for (let entry of response.headers.entries()) {
+                    console.log(entry);
+                }
+            });
+        //.then(ans => console.log(ans.headers.get('Set-Cookie')));
     }
 
     register(login, email, password) {
@@ -65,8 +74,18 @@ class UserService {
             'password': password
         };
         Transport.Post('/user', requestBody)
-            .then(ans => ans.json())
-            .then(answer => console.log(answer));
+            .then(response => {
+                // Inspect the headers in the response
+                response.headers.forEach(console.log);
+                // OR you can do this
+                for (let entry of response.headers.entries()) {
+                    console.log(entry);
+                }
+            });// .then(ans => {
+            //     console.log(ans.headers);
+            //     return ans.json();
+            // })
+            // .then(answer => console.log(answer));
     }
 }
 
