@@ -7,48 +7,67 @@ import Transport from '../../modules/Transport/Transport.js';
  * @module UserService
  */
 class UserService {
-	/**
+    /**
      * @constructor
      */
-	constructor() {
-		this.user = null;
-	}
+    constructor() {
+        this.user = null;
+    }
 
-	/**
+    /**
      * Get data from backend
      * @return {Transport|*}
      */
-	GetData() {
-		return Transport.Get('/user').then((userData) => {
-			this.user = userData;
-		});
-	}
+    getData() {
+        return Transport.Get('/user').then((userData) => {
+            this.user = userData;
+        });
+    }
 
-	/**
+    /**
      * Get user data
      * @return {*}
      */
-	GetUser() {
-		return this.user;
-	}
+    getUser() {
+        return this.user;
+    }
 
-	/**
+    /**
      * Check, that user in system
      * @return {*}
      */
-	IsLogIn() {
-		return !!this.user;
-	}
+    isLogIn() {
+        return !!this.user;
+    }
 
-	/**
+    /**
      * Log out user
      * @return {*}
      */
-	LogOut() {
-		return Transport.Post('/logout', {}).then(() => {
-			this.user = null;
-		});
-	}
+    logOut() {
+        return Transport.Post('/logout', {}).then(() => {
+            this.user = null;
+        });
+    }
+
+    logIn(login, password) {
+        let requestBody = {
+            'login': login,
+            'password': password
+        };
+        return Transport.Post('/session', requestBody);
+    }
+
+    register(login, email, password) {
+        let requestBody = {
+            'login': login,
+            'email': email,
+            'password': password
+        };
+        Transport.Post('/user', requestBody)
+            .then(ans => ans.json())
+            .then(answer => console.log(answer));
+    }
 }
 
 const userService = new UserService();

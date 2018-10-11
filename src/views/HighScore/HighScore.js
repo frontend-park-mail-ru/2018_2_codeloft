@@ -9,9 +9,7 @@ import eventHandler from '../../modules/EventHandler/EventHandler.js';
 export default class HighScore extends BaseView {
 
     build() {
-        eventHandler.addHandler('loadScoreRows', () => {
-            this.updateScore();
-        });
+        eventHandler.addHandler('loadScoreRows', () => this.updateScore());
         return new Promise((resolve) => {
             this.template = `<ScoreTable>
 						 <Label {{class=score-loading}} {{text=loading...}}>
@@ -47,16 +45,19 @@ export default class HighScore extends BaseView {
         this.loadingLabel.style.display = 'block';
         this.pageNumber++;
         Transport.Get(`/user?page=${this.pageNumber}&page_size=5`)
-            .then((usersJSON) => usersJSON.json())
-            .then(users => {
+            .then((usersJSON) => {
+                console.log(usersJSON);
+                return usersJSON.json();
+            })
+            .then((users) => {
                 let str = ``;
-                for (let i = 0; i < 5; i++) {
+                users.forEach((user) => {
                     str += `<tr class="game-highScoreRow">
-                                <td>${users[i].login}</td>
-                                <td>${users[i].email}</td>
-                                <td>${users[i].score}</td>
+                                <td>${user.login}</td>
+                                <td>${user.email}</td>
+                                <td>${user.score}</td>
 							</tr>`;
-                }
+                });
                 this.loadingLabel.style.display = 'none';
                 this.loadMore.style.display = 'block';
                 this.scoreTable.innerHTML += str;

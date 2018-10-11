@@ -6,8 +6,8 @@ import tagParser from '../../modules/TagParser/TagParser.js';
 
 export default class Profile extends BaseView {
 
-	build() {
-	    return new Promise((resolve) => {
+    build() {
+        return new Promise((resolve) => {
             this.template = `<UserInfo>
                          <Button {{text=Back}} {{class=buttonGame}} {{click=goMenu}}>`;
             tagParser.toHTML(this.template).then((elementsArray) => {
@@ -19,6 +19,6 @@ export default class Profile extends BaseView {
                 resolve();
             });
         });
-	}
+    }
 
 }

@@ -14,7 +14,7 @@ export default class Transport {
      * @return {Promise}
      */
     static Get(adr) {
-        return Transport.FSend(urlBack + adr, 'get');
+        return Transport.FSend(urlBack + adr, 'GET');
     }
 
     /**
@@ -24,7 +24,7 @@ export default class Transport {
      * @return {Promise}
      */
     static Post(adr, body) {
-        return Transport.FSend(urlBack + adr, 'post', body);
+        return Transport.FSend(urlBack + adr, 'POST', body);
     }
 
     /**
@@ -37,19 +37,20 @@ export default class Transport {
     static FSend(adr, method, body = {}) {
         const url = server + adr;
         const fPar = {
-            method: 'GET' || method,
+            method: method,
             headers: {
                 Host: 'localhost'
             },
             mode: 'cors',
             credentials: 'same-origin'
         };
-        if (method === 'post') {
+        if (method === 'POST') {
             fPar.body = JSON.stringify(body);
             fPar.headers = {
                 'Content-Type': 'application/json; charset=utf-8',
             };
         }
+        console.log(fPar.method);
         return fetch(url, fPar);
     }
 
