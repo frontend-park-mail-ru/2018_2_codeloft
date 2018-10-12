@@ -12,6 +12,7 @@ class UserService {
      */
     constructor() {
         this.user = null;
+
     }
 
     /**
@@ -40,22 +41,27 @@ class UserService {
         return !!this.user;
     }
 
+    checkAuth() {
+        return Transport.Get('/session')
+            .then((response) => {
+                if (response.status === 200) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+    }
+
     /**
      * Log out user
      * @return {*}
      */
-    logOut() {
-        return Transport.Post('/logout', {}).then(() => {
-            this.user = null;
-        });
-    }
-
-    logIn(login, password) {
+    logOut(login, password) {
         let requestBody = {
             'login': login,
             'password': password
         };
-        return Transport.Post('/session', requestBody)
+        return Transport.Delete('/session', requestBody)
             .then(response => {
                 // Inspect the headers in the response
                 response.headers.forEach(console.log);
@@ -64,7 +70,19 @@ class UserService {
                     console.log(entry);
                 }
             });
-        //.then(ans => console.log(ans.headers.get('Set-Cookie')));
+    }
+
+    logIn(login, password) {
+        let requestBody = {
+            'login': login,
+            'password': password
+        };
+        return Transport.Post('/session', requestBody)
+            .then((response) => {
+                if (response.status === 200) {
+                    this.user = requestBody['login'];
+                }
+            });
     }
 
     register(login, email, password) {
@@ -74,18 +92,10 @@ class UserService {
             'password': password
         };
         Transport.Post('/user', requestBody)
-            .then(response => {
-                // Inspect the headers in the response
-                response.headers.forEach(console.log);
-                // OR you can do this
-                for (let entry of response.headers.entries()) {
-                    console.log(entry);
-                }
-            });// .then(ans => {
-            //     console.log(ans.headers);
-            //     return ans.json();
-            // })
-            // .then(answer => console.log(answer));
+            .then(response => response.json())
+            .then((user) => {
+                this.user = user['login'];
+            });
     }
 }
 

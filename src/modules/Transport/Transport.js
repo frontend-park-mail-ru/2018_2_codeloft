@@ -1,7 +1,7 @@
 const server = '';
 
-//const urlBack = 'https://apoj.herokuapp.com';
-const urlBack = 'https://20182codeloft-iasahymkzp.now.sh';
+const urlBack = 'https://20182codeloft-qpouodariu.now.sh';
+//const urlBack = 'https://20182codeloft-iasahymkzp.now.sh';
 
 /**
  * Module with methods for HTTP-requests
@@ -27,6 +27,9 @@ export default class Transport {
         return Transport.FSend(urlBack + adr, 'POST', body);
     }
 
+    static Delete(adr, body) {
+        return Transport.FSend(urlBack + adr, 'DELETE', body);
+    }
     /**
      * Perform requests with specified address
      * @param {string} adr - address of request
@@ -50,7 +53,6 @@ export default class Transport {
                 'Content-Type': 'application/json; charset=utf-8',
             };
         }
-        console.log(fPar.method);
         return fetch(url, fPar);
     }
 

@@ -46,7 +46,6 @@ export default class HighScore extends BaseView {
         this.pageNumber++;
         Transport.Get(`/user?page=${this.pageNumber}&page_size=5`)
             .then((usersJSON) => {
-                console.log(usersJSON);
                 return usersJSON.json();
             })
             .then((users) => {

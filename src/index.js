@@ -10,7 +10,6 @@ import HighScore from './views/HighScore/HighScore.js';
 import SinglePlayer from './views/SinglePlayer/SinglePlayer.js';
 import URLS from './modules/Consts/Consts.js';
 
-
 router
     .add('/', new Main())
     .add(URLS.ABOUT, new About())

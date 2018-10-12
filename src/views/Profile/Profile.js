@@ -2,13 +2,15 @@
 
 import BaseView from '../BaseView/BaseView.js';
 import tagParser from '../../modules/TagParser/TagParser.js';
-
+import userService from '../../services/UserService/UserService.js';
+import URLS from '../../modules/Consts/Consts.js';
+import router from '../../modules/Router/Router.js';
 
 export default class Profile extends BaseView {
 
     build() {
         return new Promise((resolve) => {
-            this.template = `<UserInfo>
+            this.template = `<UserInfo {{user = ${userService.getUser()}}>
                          <Button {{text=Back}} {{class=buttonGame}} {{click=goMenu}}>`;
             tagParser.toHTML(this.template).then((elementsArray) => {
                 this.elementsArray = elementsArray;
@@ -19,6 +21,17 @@ export default class Profile extends BaseView {
                 resolve();
             });
         });
+    }
+
+    show() {
+        userService.checkAuth()
+            .then((ok) => {
+                if (!ok) {
+                    router.go(URLS.SIGN_IN);
+                } else {
+                    super.show();
+                }
+            });
     }
 
 }
