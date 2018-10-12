@@ -1,7 +1,13 @@
+'use strict';
+
+import eventBus from '../../modules/EventBus/EventBus.js';
+
 export default class BaseView {
 
     constructor() {
         this.element = null;
+        this.elementsArray = [];
+        eventBus.on('loggedIn', this.showPrivateComponents.bind(this));
     }
 
     build() {
@@ -32,6 +38,16 @@ export default class BaseView {
     hide() {
         if (this.element) {
             this.element.style.display = 'none';
+        }
+    }
+
+    showPrivateComponents() {
+        if (this.element) {
+            this.elementsArray.forEach((element) => {
+               if (element.needAuth()) {
+                   element.show();
+               }
+            });
         }
     }
 

@@ -1,6 +1,7 @@
 'use strict';
 
 import Transport from '../../modules/Transport/Transport.js';
+import eventBus from '../../modules/EventBus/EventBus.js';
 
 /**
  * Module user data
@@ -73,6 +74,7 @@ class UserService {
     }
 
     logIn(login, password) {
+        eventBus.emit('loggedIn');
         let requestBody = {
             'login': login,
             'password': password

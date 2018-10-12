@@ -9,6 +9,7 @@ export default class MainComponent {
         this.element = null;
         this.template = null;
         this.events = [];
+        this._needAuth = false;
     }
 
     /**
@@ -27,9 +28,12 @@ export default class MainComponent {
 
     /**
      * Компилирует шаблон Handlebars
-     * @param config - нужный для копиляции объект
+     * @param context - нужный для копиляции объект
      */
     compile(context) {
+        if (context['needAuth'] === 'true') {
+            this._needAuth = true;
+        }
         return Transport.GetHTML(this.template, context)
             .then((resJSON) => resJSON.json())
             .then(compiled => {
@@ -42,6 +46,18 @@ export default class MainComponent {
             .catch(error => console.log(error));
     }
 
+    hide() {
+        if (this.element) {
+            this.element.style.display = 'none';
+        }
+    }
+
+    show() {
+        if (this.element) {
+            this.element.style.display = 'block';
+        }
+    }
+
     /**
      * Добавляет события на объект
      * @param config - мапа, отображающая имя события в имя обработчика
@@ -51,5 +67,9 @@ export default class MainComponent {
         this.events.forEach(event => {
             eventHandler.handleEvent(this.element, event, config[event]);
         });
+    }
+
+    needAuth() {
+        return this._needAuth;
     }
 }

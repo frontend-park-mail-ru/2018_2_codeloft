@@ -6,6 +6,8 @@ import Validation from '../../modules/Validation/Validation.js';
 import eventHandler from '../../modules/EventHandler/EventHandler.js';
 import UserService from '../../services/UserService/UserService.js';
 import router from '../../modules/Router/Router.js';
+import userService from '../../services/UserService/UserService.js';
+import eventBus from '../../modules/EventBus/EventBus.js';
 
 export default class SignIn extends BaseView {
     build() {
@@ -32,7 +34,12 @@ export default class SignIn extends BaseView {
                 this.elementsArray = elementsArray;
                 const div = document.createElement("div");
                 div.setAttribute('class', 'signIn-page_menu');
-                this.elementsArray.forEach(el => div.appendChild(el));
+                this.elementsArray.forEach((el) => {
+                    div.appendChild(el.render());
+                    if (el.needAuth() && !userService.isLogIn()) {
+                        el.hide();
+                    }
+                });
                 this.element = div;
                 resolve();
             });

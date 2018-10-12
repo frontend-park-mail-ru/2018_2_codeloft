@@ -4,7 +4,7 @@ import BaseView from '../BaseView/BaseView.js';
 import tagParser from '../../modules/TagParser/TagParser.js';
 import Validation from '../../modules/Validation/Validation.js';
 import eventHandler from '../../modules/EventHandler/EventHandler.js';
-import userService from "../../services/UserService/UserService.js";
+import userService from '../../services/UserService/UserService.js';
 
 
 export default class SignUp extends BaseView {
@@ -39,7 +39,12 @@ export default class SignUp extends BaseView {
                 this.elementsArray = elementsArray;
                 const div = document.createElement("div");
                 div.setAttribute('class', 'signUp-page_menu');
-                this.elementsArray.forEach(el => div.appendChild(el));
+                this.elementsArray.forEach((el) => {
+                    div.appendChild(el.render());
+                    if (el.needAuth() && !userService.isLogIn()) {
+                        el.hide();
+                    }
+                });
                 this.element = div;
                 resolve();
             });

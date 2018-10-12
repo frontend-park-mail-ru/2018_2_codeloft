@@ -9,6 +9,7 @@ import Profile from './views/Profile/Profile.js';
 import HighScore from './views/HighScore/HighScore.js';
 import SinglePlayer from './views/SinglePlayer/SinglePlayer.js';
 import URLS from './modules/Consts/Consts.js';
+import userService from './services/UserService/UserService.js';
 
 router
     .add('/', new Main())
