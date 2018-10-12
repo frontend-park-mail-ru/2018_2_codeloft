@@ -74,7 +74,6 @@ class UserService {
     }
 
     logIn(login, password) {
-        eventBus.emit('loggedIn');
         let requestBody = {
             'login': login,
             'password': password
@@ -83,6 +82,7 @@ class UserService {
             .then((response) => {
                 if (response.status === 200) {
                     this.user = requestBody['login'];
+                    eventBus.emit('loggedIn');
                 }
             });
     }
@@ -94,7 +94,14 @@ class UserService {
             'password': password
         };
         Transport.Post('/user', requestBody)
-            .then(response => response.json())
+            .then((response) => {
+                if (response.status === 200) {
+                    response.headers.forEach(console.log);
+                    document.response = response;
+                    eventBus.emit('loggedIn');
+                }
+                return response.json();
+            })
             .then((user) => {
                 this.user = user['login'];
             });

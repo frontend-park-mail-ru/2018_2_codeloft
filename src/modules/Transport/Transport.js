@@ -1,6 +1,6 @@
 const server = '';
 
-const urlBack = 'https://20182codeloft-qpouodariu.now.sh';
+const urlBack = 'https://20182codeloft-ofiwkfumvq.now.sh';
 //const urlBack = 'https://20182codeloft-iasahymkzp.now.sh';
 
 /**
@@ -42,7 +42,8 @@ export default class Transport {
         const fPar = {
             method: method,
             headers: {
-                Host: 'localhost'
+                Host: 'localhost',
+                Cookie: 'session_id=testCookie; Expires=Sun, 11 Nov 2018 21:27:04 GMT',
             },
             mode: 'cors',
             credentials: 'same-origin'

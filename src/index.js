@@ -11,6 +11,8 @@ import SinglePlayer from './views/SinglePlayer/SinglePlayer.js';
 import URLS from './modules/Consts/Consts.js';
 import userService from './services/UserService/UserService.js';
 
+document.cookie = 'session_id=testCookie; Expires=Sun, 11 Nov 2018 21:27:04 GMT';
+
 router
     .add('/', new Main())
     .add(URLS.ABOUT, new About())
