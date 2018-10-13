@@ -12,26 +12,19 @@ class UserService {
      * @constructor
      */
     constructor() {
-        this.user = null;
-
-    }
-
-    /**
-     * Get data from backend
-     * @return {Transport|*}
-     */
-    getData() {
-        return Transport.Get('/user').then((userData) => {
-            this.user = userData;
-        });
+        this.userInfo = {
+            'login' : null,
+            'email' : null,
+            'score' : null
+        };
     }
 
     /**
      * Get user data
      * @return {*}
      */
-    getUser() {
-        return this.user;
+    getUser(property) {
+        return this.userInfo[property];
     }
 
     /**
@@ -39,7 +32,7 @@ class UserService {
      * @return {*}
      */
     isLogIn() {
-        return !!this.user;
+        return !!this.userInfo['login'];
     }
 
     checkAuth() {
@@ -51,9 +44,8 @@ class UserService {
                 return 'false';
             })
             .then((userInfo) => {
-                console.log(userInfo['login']);
-               this.user = userInfo['login'];
-               return 'ok';
+                this.userInfo = userInfo;
+                return 'ok';
             });
     }
 
@@ -62,33 +54,45 @@ class UserService {
      * @return {*}
      */
     logOut(login, password) {
-        let requestBody = {
+        const requestBody = {
             'login': login,
             'password': password
         };
         return Transport.Delete('/session', requestBody)
-            .then(response => {
-                this.user = null;
+            .then(() => {
+                this.userInfo = {
+                    'login' : null,
+                    'email' : null,
+                    'score' : null
+                };
                 eventBus.emit('loggedOut');
-            })
-    }
-
-    logIn(login, password) {
-        let requestBody = {
-            'login': login,
-            'password': password
-        };
-        return Transport.Post('/session', requestBody)
-            .then((response) => {
-                if (response.status === 200) {
-                    this.user = requestBody['login'];
-                    eventBus.emit('loggedIn');
-                }
             });
     }
 
+    logIn(login, password) {
+        const requestBody = {
+            'login': login,
+            'password': password
+        };
+        Transport.Post('/session', requestBody)
+            .then((response) => {
+                if (response.status === 200) {
+                    this.userInfo['login'] = requestBody['login'];
+                    eventBus.emit('loggedIn');
+                    return '';
+                }
+                throw response.status;
+            })
+            .catch((status) => console.log(status));
+            // .then((userInfo) => {
+            //     this.userInfo = userInfo;
+            //     eventBus.emit('loggedIn');
+            //     return 'ok';
+            // });
+    }
+
     register(login, email, password) {
-        let requestBody = {
+        const requestBody = {
             'login': login,
             'email': email,
             'password': password
@@ -96,14 +100,14 @@ class UserService {
         Transport.Post('/user', requestBody)
             .then((response) => {
                 if (response.status === 200) {
-                    response.headers.forEach(console.log);
-                    document.response = response;
-                    eventBus.emit('loggedIn');
+                    return response.json();
                 }
-                return response.json();
+                throw response.status;
             })
-            .then((user) => {
-                this.user = user['login'];
+            .then((userInfo) => {
+                this.userInfo = userInfo;
+                eventBus.emit('loggedIn');
+                return 'ok';
             });
     }
 }

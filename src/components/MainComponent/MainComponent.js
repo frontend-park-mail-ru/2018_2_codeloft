@@ -10,6 +10,7 @@ export default class MainComponent {
         this.template = null;
         this.events = [];
         this._needAuth = false;
+        this._forAuth = false;
     }
 
     /**
@@ -33,6 +34,8 @@ export default class MainComponent {
     compile(context) {
         if (context['needAuth'] === 'true') {
             this._needAuth = true;
+        } else if(context['forAuth'] === 'true') {
+            this._forAuth = true;
         }
         return Transport.GetHTML(this.template, context)
             .then((resJSON) => resJSON.json())
@@ -71,5 +74,8 @@ export default class MainComponent {
 
     needAuth() {
         return this._needAuth;
+    }
+    forAuth() {
+        return this._forAuth;
     }
 }

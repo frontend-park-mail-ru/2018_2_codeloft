@@ -5,7 +5,7 @@ const URLS = {
     PROFILE: '/profile',
     ABOUT: '/about',
     HIGH_SCORE: '/score',
-    SINGLEPLAYER: '/singleplayer',
+    SINGLE_PLAYER: '/singleplayer',
 };
 
 export default URLS;

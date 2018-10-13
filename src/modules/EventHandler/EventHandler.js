@@ -60,7 +60,7 @@ eventHandler
         router.go(URLS.MENU);
     })
     .addHandler('goSinglePlayer', () => {
-        router.go(URLS.SINGLEPLAYER);
+        router.go(URLS.SINGLE_PLAYER);
     })
     .addHandler('logOut', () => {
         userService.logOut();

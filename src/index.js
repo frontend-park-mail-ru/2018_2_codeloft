@@ -20,7 +20,7 @@ userService.checkAuth()
             .add(URLS.SIGN_UP, new SignUp())
             .add(URLS.PROFILE, new Profile())
             .add(URLS.HIGH_SCORE, new HighScore())
-            .add(URLS.SINGLEPLAYER, new SinglePlayer());
+            .add(URLS.SINGLE_PLAYER, new SinglePlayer());
 
         router.start();
     });

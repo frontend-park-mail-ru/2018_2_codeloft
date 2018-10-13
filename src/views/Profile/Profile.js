@@ -7,6 +7,10 @@ import URLS from '../../modules/Consts/Consts.js';
 import router from '../../modules/Router/Router.js';
 
 export default class Profile extends BaseView {
+    constructor() {
+        super();
+        this._needAuth = true;
+    }
 
     build() {
         return new Promise((resolve) => {
