@@ -1,7 +1,7 @@
 const server = '';
 
-const urlBack = 'https://20182codeloft-ofiwkfumvq.now.sh';
-//const urlBack = 'https://20182codeloft-iasahymkzp.now.sh';
+//const urlBack = 'https://20182codeloft-uhoznwewiq.now.sh';
+const urlBack = 'https://20182codeloft-sxouxkmpmu.now.sh';
 
 /**
  * Module with methods for HTTP-requests
@@ -46,7 +46,7 @@ export default class Transport {
                 Cookie: 'session_id=testCookie; Expires=Sun, 11 Nov 2018 21:27:04 GMT',
             },
             mode: 'cors',
-            credentials: 'same-origin'
+            credentials: 'include'
         };
         if (method === 'POST') {
             fPar.body = JSON.stringify(body);

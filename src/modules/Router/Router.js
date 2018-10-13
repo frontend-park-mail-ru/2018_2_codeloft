@@ -1,5 +1,8 @@
 'use strict';
 
+import eventBus from '../../modules/EventBus/EventBus.js';
+import URLS from '../Consts/Consts.js';
+
 /**
  * Класс-отображение url в конкретные части HTML кода
  */
@@ -18,7 +21,8 @@ class Router {
 		window.onpopstate = (event => {
 			this._onRoute(window.location.pathname);
 		});
-
+		eventBus.on('loggedIn', this.goMenu.bind(this));
+		eventBus.on('loggedOut', this.goMenu.bind(this));
 		this._onRoute(window.location.pathname);
 	}
 
@@ -60,6 +64,10 @@ class Router {
 	go(path) {
 		history.pushState({url: path}, '', path);
 		this._onRoute(path);
+	}
+
+	goMenu() {
+		this.go(URLS.MENU);
 	}
 }
 

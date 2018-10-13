@@ -11,15 +11,16 @@ import SinglePlayer from './views/SinglePlayer/SinglePlayer.js';
 import URLS from './modules/Consts/Consts.js';
 import userService from './services/UserService/UserService.js';
 
-document.cookie = 'session_id=testCookie; Expires=Sun, 11 Nov 2018 21:27:04 GMT';
+userService.checkAuth()
+    .then(() => {
+        router
+            .add('/', new Main())
+            .add(URLS.ABOUT, new About())
+            .add(URLS.SIGN_IN, new SignIn())
+            .add(URLS.SIGN_UP, new SignUp())
+            .add(URLS.PROFILE, new Profile())
+            .add(URLS.HIGH_SCORE, new HighScore())
+            .add(URLS.SINGLEPLAYER, new SinglePlayer());
 
-router
-    .add('/', new Main())
-    .add(URLS.ABOUT, new About())
-    .add(URLS.SIGN_IN, new SignIn())
-    .add(URLS.SIGN_UP, new SignUp())
-    .add(URLS.PROFILE, new Profile())
-    .add(URLS.HIGH_SCORE, new HighScore())
-    .add(URLS.SINGLEPLAYER, new SinglePlayer());
-
-router.start();
+        router.start();
+    });

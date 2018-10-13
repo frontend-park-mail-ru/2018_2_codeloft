@@ -10,7 +10,7 @@ export default class Profile extends BaseView {
 
     build() {
         return new Promise((resolve) => {
-            this.template = `<UserInfo {{user = ${userService.getUser()}}>
+            this.template = `<UserInfo>
                          <Button {{text=Back}} {{class=buttonGame}} {{click=goMenu}}>
                          <Button {{text=LogOut}} {{class=buttonGame}} {{click=logOut}}>`;
             tagParser.toHTML(this.template).then((elementsArray) => {

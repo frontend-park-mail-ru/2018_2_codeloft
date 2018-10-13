@@ -1,4 +1,5 @@
 const URLS = {
+    MENU: '/',
     SIGN_IN: '/login',
     SIGN_UP: '/register',
     PROFILE: '/profile',

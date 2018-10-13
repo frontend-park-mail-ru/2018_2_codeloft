@@ -46,10 +46,14 @@ class UserService {
         return Transport.Get('/session')
             .then((response) => {
                 if (response.status === 200) {
-                    return true;
-                } else {
-                    return false;
+                    return response.json();
                 }
+                return 'false';
+            })
+            .then((userInfo) => {
+                console.log(userInfo['login']);
+               this.user = userInfo['login'];
+               return 'ok';
             });
     }
 
@@ -64,13 +68,9 @@ class UserService {
         };
         return Transport.Delete('/session', requestBody)
             .then(response => {
-                // Inspect the headers in the response
-                response.headers.forEach(console.log);
-                // OR you can do this
-                for (let entry of response.headers.entries()) {
-                    console.log(entry);
-                }
-            });
+                this.user = null;
+                eventBus.emit('loggedOut');
+            })
     }
 
     logIn(login, password) {
