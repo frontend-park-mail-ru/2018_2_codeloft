@@ -51,9 +51,7 @@ export default class HighScore extends BaseView {
         this.loadingLabel.style.display = 'block';
         this.pageNumber++;
         Transport.Get(`/user?page=${this.pageNumber}&page_size=5`)
-            .then((usersJSON) => {
-                return usersJSON.json();
-            })
+            .then((usersJSON) => usersJSON.json())
             .then((users) => {
                 let str = ``;
                 users.forEach((user) => {

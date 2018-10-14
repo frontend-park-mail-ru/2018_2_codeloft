@@ -27,7 +27,13 @@ export default class BaseView {
         new Promise((resolve) => {
             if (!this.element) {
                 this.build().then(() => {
+                    this.render().style.display = 'none';
                     document.getElementById('main').appendChild(this.render());
+                    if (userService.isLogIn()) {
+                        this.showPrivateComponents();
+                    } else {
+                        this.hidePrivateComponents();
+                    }
                     resolve();
                 });
             }
@@ -35,7 +41,7 @@ export default class BaseView {
                 resolve();
             }
         }).then(() => {
-            if(userService.isLogIn() || !this.needAuth()) {
+            if (userService.isLogIn() || !this.needAuth()) {
                 this.element.style.display = 'block';
                 this.addEffects();
             } else {
@@ -53,11 +59,11 @@ export default class BaseView {
     showPrivateComponents() {
         if (this.element) {
             this.elementsArray.forEach((element) => {
-               if (element.needAuth()) {
-                   element.show();
-               } else if(element.forAuth()) {
-                   element.hide();
-               }
+                if (element.needAuth()) {
+                    element.show();
+                } else if (element.forAuth()) {
+                    element.hide();
+                }
             });
         }
     }
@@ -67,7 +73,7 @@ export default class BaseView {
             this.elementsArray.forEach((element) => {
                 if (element.needAuth()) {
                     element.hide();
-                } else if(element.forAuth()) {
+                } else if (element.forAuth()) {
                     element.show();
                 }
             });

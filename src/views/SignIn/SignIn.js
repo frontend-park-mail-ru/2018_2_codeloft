@@ -5,9 +5,7 @@ import tagParser from '../../modules/TagParser/TagParser.js';
 import Validation from '../../modules/Validation/Validation.js';
 import eventHandler from '../../modules/EventHandler/EventHandler.js';
 import UserService from '../../services/UserService/UserService.js';
-import router from '../../modules/Router/Router.js';
 import userService from '../../services/UserService/UserService.js';
-import eventBus from '../../modules/EventBus/EventBus.js';
 
 export default class SignIn extends BaseView {
     build() {
@@ -64,8 +62,6 @@ export default class SignIn extends BaseView {
             errors.forEach((err, j) => {
                 if (errorField.getAttribute('name') === err.class[1]) {
                     errorField.innerHTML = err.innerHTML;
-                    console.log(inputs[j]);
-                    // inputs[j].style.borderColor = 'red';
                 }
             });
         });

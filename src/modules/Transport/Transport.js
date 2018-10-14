@@ -1,7 +1,6 @@
 const server = '';
 
-//const urlBack = 'https://20182codeloft-uhoznwewiq.now.sh';
-const urlBack = 'https://20182codeloft-sxouxkmpmu.now.sh';
+const urlBack = 'https://codeloft.herokuapp.com';
 
 /**
  * Module with methods for HTTP-requests
@@ -43,7 +42,6 @@ export default class Transport {
             method: method,
             headers: {
                 Host: 'localhost',
-                Cookie: 'session_id=testCookie; Expires=Sun, 11 Nov 2018 21:27:04 GMT',
             },
             mode: 'cors',
             credentials: 'include'
@@ -65,7 +63,6 @@ export default class Transport {
                 Host: 'localhost'
             },
             mode: 'cors',
-            credentials: 'same-origin'
         };
         let params = `?template=${template}`;
         for (const field in context) {

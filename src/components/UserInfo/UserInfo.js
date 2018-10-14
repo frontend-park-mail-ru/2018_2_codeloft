@@ -7,9 +7,9 @@ export default class UserInfo extends MainComponent {
     constructor() {
         super();
         this.template = `<div>
-        <p>User: ${userService.getUser('login')}</p>
-        <p>Email: ${userService.getUser('email')}</p>
-        <p>Score: ${userService.getUser('score')}</p>
+        <p>User: ${userService.getUserInfo('login')}</p>
+        <p>Email: ${userService.getUserInfo('email')}</p>
+        <p>Score: ${userService.getUserInfo('score')}</p>
         </div>`;
     }
 }

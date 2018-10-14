@@ -2,9 +2,6 @@
 
 import BaseView from '../BaseView/BaseView.js';
 import tagParser from '../../modules/TagParser/TagParser.js';
-import userService from '../../services/UserService/UserService.js';
-import eventBus from '../../modules/EventBus/EventBus.js';
-
 
 export default class Main extends BaseView {
 
@@ -22,9 +19,6 @@ export default class Main extends BaseView {
                 div.setAttribute('class', 'main-page_menu');
                 this.elementsArray.forEach((el) => {
                     div.appendChild(el.render());
-                    if (el.needAuth() && !userService.isLogIn()) {
-                        el.hide();
-                    }
                 });
                 this.element = div;
                 resolve();
