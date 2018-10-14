@@ -2,7 +2,6 @@
 
 import BaseView from '../BaseView/BaseView.js';
 import tagParser from '../../modules/TagParser/TagParser.js';
-import userService from '../../services/UserService/UserService.js';
 
 const RULESTEXT = 'In our game you will play for a motorcyclist, \n' +
     '    which leaves a bright trace. Other players or bots will also\n' +
@@ -22,9 +21,6 @@ export default class About extends BaseView {
                 div.setAttribute('class', 'about-page_logo');
                 this.elementsArray.forEach((el) => {
                     div.appendChild(el.render());
-                    if (el.needAuth() && !userService.isLogIn()) {
-                        el.hide();
-                    }
                 });
                 this.element = div;
                 resolve();

@@ -22,9 +22,9 @@ export default class SignIn extends BaseView {
             UserService.logIn(login, password);
         });
         return new Promise((resolve) => {
-            this.template = `<Block {{name=login}} {{class=signInErrorField}}>
+            this.template = `<Label {{name=login}} {{class=signInErrorField}}>
 						<Input {{name=login}} {{class=game-input signInInput}} {{placeholder=Enter your login}}>
-						<Block {{name=password}} {{class=signInErrorField}}>
+						<Label {{name=password}} {{class=signInErrorField}}>
                         <Input {{name=password}} {{class=game-input signInInput}} {{placeholder=Enter your password}} {{type=password}}>
                         <Button {{class=buttonGame}} {{text=Sign in}} {{click=btnSignInSubmit}}>
                         <Button {{class=buttonGame}} {{text=Back}} {{click=goMenu}}>`;
@@ -34,13 +34,19 @@ export default class SignIn extends BaseView {
                 div.setAttribute('class', 'signIn-page_menu');
                 this.elementsArray.forEach((el) => {
                     div.appendChild(el.render());
-                    if (el.needAuth() && !userService.isLogIn()) {
-                        el.hide();
-                    }
                 });
                 this.element = div;
                 resolve();
             });
+        });
+    }
+
+    afterRender() {
+        return new Promise((resolve) => {
+            this.inputs = [this.elementsArray[1], this.elementsArray[3]];
+            this.errorsFields = [this.elementsArray[0], this.elementsArray[2]];
+            this.errorsFields.forEach((label) => label.hide());
+            resolve();
         });
     }
 

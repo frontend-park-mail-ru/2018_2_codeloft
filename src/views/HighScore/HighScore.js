@@ -18,29 +18,17 @@ export default class HighScore extends BaseView {
                          <Button {{text=Back}} {{class=buttonGame}} {{click=goMenu}}>`;
             tagParser.toHTML(this.template).then((elementsArray) => {
                 this.elementsArray = elementsArray;
-                this.scoreTable = this.elementsArray[0].render();
+                this.scoreTable = this.elementsArray[0];
                 this.loadingLabel = this.elementsArray[1].render();
                 this.loadMore = this.elementsArray[2].render();
-
-                this.scoreTable.innerHTML = `<tr class="game-highScoreRow">
-                            <th>Player</th>
-                            <th>Email</th>
-                            <th>Score</th>
-                           </tr>`;
-
                 this.loadingLabel.style.display = 'none';
-                this.loadMore.style.display = 'none';
                 const div = document.createElement("div");
                 div.setAttribute('class', 'highScore-page__list');
                 this.elementsArray.forEach((el) => {
                     div.appendChild(el.render());
-                    if (el.needAuth() && !userService.isLogIn()) {
-                        el.hide();
-                    }
                 });
                 this.element = div;
                 this.pageNumber = 0;
-                this.updateScore();
                 resolve();
             });
         });
@@ -50,23 +38,10 @@ export default class HighScore extends BaseView {
 
         this.loadingLabel.style.display = 'block';
         this.pageNumber++;
-        Transport.Get(`/user?page=${this.pageNumber}&page_size=5`)
-            .then((usersJSON) => usersJSON.json())
-            .then((users) => {
-                let str = ``;
-                users.forEach((user) => {
-                    str += `<tr class="game-highScoreRow">
-                                <td>${user.login}</td>
-                                <td>${user.email}</td>
-                                <td>${user.score}</td>
-							</tr>`;
-                });
-                this.loadingLabel.style.display = 'none';
-                this.loadMore.style.display = 'block';
-                this.scoreTable.innerHTML += str;
-            })
-            .catch(err => console.log(err));
-
+        this.scoreTable.loadScore().then(() => {
+            this.loadingLabel.style.display = 'none';
+            this.loadMore.style.display = 'block';
+        });
     }
 
 }

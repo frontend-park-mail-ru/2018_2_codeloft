@@ -25,13 +25,13 @@ export default class SignUp extends BaseView {
             userService.register(login, email, password);
         });
         return new Promise((resolve) => {
-            this.template = `<Label {{name=login}} {{class=signUpErrorField}} {{visible=none}}>
+            this.template = `<Label {{name=login}} {{class=signUpErrorField}}>
 						<Input {{name=login}} {{class=game-input signUpInput}} {{placeholder=Enter your login}}>
-						<Label {{name=email}} {{class=signUpErrorField}} {{visible=none}}>
+						<Label {{name=email}} {{class=signUpErrorField}}>
 					    <Input {{name=email}} {{class=game-input signUpInput}} {{placeholder=Enter your email}}>
-					    <Label {{name=password}} {{class=signUpErrorField}} {{visible=none}}>
+					    <Label {{name=password}} {{class=signUpErrorField}}>
                         <Input {{name=password}} {{class=game-input signUpInput}} {{placeholder=Enter your password}} {{type=password}}>
-                        <Label {{name=passwordConfirm}} {{class=signUpErrorField}} {{visible=none}}>
+                        <Label {{name=passwordConfirm}} {{class=signUpErrorField}}>
                         <Input {{name=passwordConfirm}} {{class=game-input signUpInput}} {{placeholder=Repeat your password}} {{type=password}}>
                         <Button {{class=buttonGame}} {{text=Sign up}} {{click=btnSignUpSubmit}}>
                         <Button {{class=buttonGame}} {{text=Back}} {{click=goMenu}}>`;
@@ -48,6 +48,17 @@ export default class SignUp extends BaseView {
                 this.element = div;
                 resolve();
             });
+        });
+    }
+
+    afterRender() {
+        return new Promise((resolve) => {
+            this.inputs = [this.elementsArray[1], this.elementsArray[3],
+                this.elementsArray[5], this.elementsArray[7]];
+            this.errorsFields = [this.elementsArray[0], this.elementsArray[2],
+                this.elementsArray[4], this.elementsArray[6]];
+            this.errorsFields.forEach((label) => label.hide());
+            resolve();
         });
     }
 

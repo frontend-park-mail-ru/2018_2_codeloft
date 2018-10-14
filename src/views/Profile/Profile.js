@@ -2,14 +2,11 @@
 
 import BaseView from '../BaseView/BaseView.js';
 import tagParser from '../../modules/TagParser/TagParser.js';
-import userService from '../../services/UserService/UserService.js';
-import URLS from '../../modules/Consts/Consts.js';
-import router from '../../modules/Router/Router.js';
 
 export default class Profile extends BaseView {
     constructor() {
         super();
-        this._needAuth = true;
+        //this._needAuth = true;
     }
 
     build() {
@@ -23,25 +20,20 @@ export default class Profile extends BaseView {
                 div.setAttribute('class', 'profile-page__info');
                 this.elementsArray.forEach((el) => {
                     div.appendChild(el.render());
-                    if (el.needAuth() && !userService.isLogIn()) {
-                        el.hide();
-                    }
                 });
                 this.element = div;
+                this.userBlock = this.elementsArray[0];
                 resolve();
             });
         });
     }
 
+    afterRender() {
+        return new Promise((resolve) => resolve(this.userBlock.afterRender()));
+    }
+
     show() {
-        userService.checkAuth()
-            .then((ok) => {
-                if (!ok) {
-                    router.go(URLS.SIGN_IN);
-                } else {
-                    super.show();
-                }
-            });
+        return super.show();
     }
 
 }

@@ -2,6 +2,7 @@
 
 import eventHandler from '../../modules/EventHandler/EventHandler.js';
 import Transport from "../../modules/Transport/Transport.js";
+import userService from '../../services/UserService/UserService.js';
 
 export default class MainComponent {
 
@@ -47,6 +48,37 @@ export default class MainComponent {
                 return this;
             })
             .catch(error => console.log(error));
+    }
+
+    preRender() {
+        return new Promise((resolve) => resolve());
+    }
+
+    afterRender(promise = new Promise((resolve) => resolve())) {
+        return promise.then(() => {
+            this.handleVisibility();
+            return this;
+        });
+    }
+
+    build(context) {
+        return this.preRender()
+            .then(() => {
+                if (!this.element) {
+                    return this.compile(context);
+                }
+            })
+            .then(() => this.afterRender());
+    }
+
+    handleVisibility() {
+        if (this.needAuth() && !userService.isLogIn()) {
+            this.hide();
+        } else if (this.forAuth() && userService.isLogIn()) {
+            this.hide();
+        } else {
+            this.show();
+        }
     }
 
     hide() {

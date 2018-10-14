@@ -28,7 +28,6 @@ class UserService {
      * @return {*}
      */
     isLogIn() {
-        console.log(!!this.userInfo['login']);
         return !!this.userInfo['login'];
     }
 
