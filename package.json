@@ -25,10 +25,10 @@
     "url": "https://github.com/frontend-park-mail-ru/2018_2_codeloft/issues"
   },
   "homepage": "https://github.com/frontend-park-mail-ru/2018_2_codeloft#readme",
-  "dependencies": {},
+  "dependencies": {
+  },
   "devDependencies": {
     "eslint": "^5.6.1",
-    "fs": "0.0.1-security",
     "handlebars": "^4.0.12"
   }
 }

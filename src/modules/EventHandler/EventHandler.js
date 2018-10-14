@@ -1,5 +1,6 @@
 import router from '../Router/Router.js';
 import URLS from '../Consts/Consts.js';
+import userService from '../../services/UserService/UserService.js';
 
 /**
  * Класс, навешивающий обработчики событий
@@ -56,10 +57,13 @@ eventHandler
         router.go(URLS.PROFILE);
     })
     .addHandler('goMenu', () => {
-        router.go('/');
+        router.go(URLS.MENU);
     })
     .addHandler('goSinglePlayer', () => {
-        router.go(URLS.SINGLEPLAYER);
+        router.go(URLS.SINGLE_PLAYER);
+    })
+    .addHandler('logOut', () => {
+        userService.logOut();
     });
 
 export default eventHandler;

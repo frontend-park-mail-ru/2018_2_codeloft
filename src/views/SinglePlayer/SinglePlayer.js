@@ -3,6 +3,7 @@
 import BaseView from '../BaseView/BaseView.js';
 import tagParser from '../../modules/TagParser/TagParser.js';
 import router from "../../modules/Router/Router.js";
+import userService from '../../services/UserService/UserService.js';
 
 export default class SinglePlayer extends BaseView {
     constructor() {
@@ -39,7 +40,12 @@ export default class SinglePlayer extends BaseView {
                 this.elementsArray = elementsArray;
                 const div = document.createElement("div");
                 div.setAttribute('class', 'block-game_simple');
-                this.elementsArray.forEach(el => div.appendChild(el));
+                this.elementsArray.forEach((el) => {
+                    div.appendChild(el.render());
+                    if (el.needAuth() && !userService.isLogIn()) {
+                        el.hide();
+                    }
+                });
                 this.element = div;
                 resolve();
             });

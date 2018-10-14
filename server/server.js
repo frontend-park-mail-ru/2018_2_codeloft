@@ -2,14 +2,12 @@ const express = require('express');
 const cookie = require('cookie-parser');
 const body = require('body-parser');
 const handlebars = require('handlebars');
-const cors = require('cors');
 
 const app = express();
-app.use(cors());
 app.use(cookie());
 app.use(body.json());
 
-app.use('/', express.static('src'));
+app.use('/', express.static('../src'));
 app.use('/about/', express.static('src'));
 app.use('/login/', express.static('src'));
 app.use('/register/', express.static('src'));
@@ -45,7 +43,7 @@ app.use((req, res, next) => {
 
 app.get('/test', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
-        return res.send(JSON.stringify({test: "123"}));
+    return res.send(JSON.stringify({test: "123"}));
 });
 
 app.post('/signin', (req, res) => {
@@ -92,13 +90,13 @@ app.post('/logout', (req, res) => {
 
 app.get('/template', (req, res) => {
     const context = req.query;
-    res.set('access-control-allow-headers','Content-Type');
-    res.set('access-control-allow-origin','*');
-    //res.json(req.query);
-    const template  = handlebars.compile(context.template);
-    //template(context);
+    res.set('access-control-allow-headers', 'Content-Type');
+    //res.set('access-control-allow-origin','*');
+    const template = handlebars.compile(context.template);
     const result = {html: template(context)};
     res.json(result);
 });
 
-app.listen(process.env.PORT || 3000);
+app.listen(process.env.PORT || 3000, () => {
+    console.log(`started on port ${process.env.PORT || 3000}`);
+});

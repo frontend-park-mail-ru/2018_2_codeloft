@@ -3,44 +3,26 @@
 import BaseView from '../BaseView/BaseView.js';
 import tagParser from '../../modules/TagParser/TagParser.js';
 import Validation from '../../modules/Validation/Validation.js';
-import UserService from '../../services/UserService/UserService.js';
-import router from '../../modules/Router/Router.js';
-import Transport from '../../modules/Transport/Transport.js';
 import eventHandler from '../../modules/EventHandler/EventHandler.js';
+import userService from '../../services/UserService/UserService.js';
 
 
 export default class SignUp extends BaseView {
     build() {
         eventHandler.addHandler('btnSignUpSubmit', () => {
-            if (this.isValid(this.inputs, this.errorsFields)) {
-                let request = {};
-                this.inputs.forEach(input => {
-                    if (input.name === 'login') {
-                        request.login = input.value;
-                    }
-                    if (input.name === 'email') {
-                        request.email = input.value;
-                    }
-                    if (input.name === 'password') {
-                        request.password = input.value;
-                    }
-                });
-                const adr = '/signup';
-
-                Transport.Post(adr, request).then(() => {
-                    UserService.GetData().then(() => {
-                        router.go('/');
-                    }).catch((response) => {
-                        console.log(response);
-                    });
-                }).catch((response) => {
-                    if (!response.json) {
-                        console.log(response);
-                        return;
-                    }
-                    response.json().then((json) => console.log(json));
-                });
-            }
+            let login = '';
+            let email = '';
+            let password = '';
+            this.inputs.forEach((input) => {
+                if (input.name === 'login') {
+                    login = input.value;
+                } else if (input.name === 'email') {
+                    email = input.value;
+                } else if (input.name === 'password') {
+                    password = input.value;
+                }
+            });
+            userService.register(login, email, password);
         });
         return new Promise((resolve) => {
             this.template = `<Label {{name=login}} {{class=signUpErrorField}} {{visible=none}}>
@@ -57,7 +39,12 @@ export default class SignUp extends BaseView {
                 this.elementsArray = elementsArray;
                 const div = document.createElement("div");
                 div.setAttribute('class', 'signUp-page_menu');
-                this.elementsArray.forEach(el => div.appendChild(el));
+                this.elementsArray.forEach((el) => {
+                    div.appendChild(el.render());
+                    if (el.needAuth() && !userService.isLogIn()) {
+                        el.hide();
+                    }
+                });
                 this.element = div;
                 resolve();
             });

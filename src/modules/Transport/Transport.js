@@ -1,7 +1,6 @@
 const server = '';
 
-//const urlBack = 'https://apoj.herokuapp.com';
-const urlBack = 'https://20182codeloft-iasahymkzp.now.sh';
+const urlBack = 'https://codeloft.herokuapp.com';
 
 /**
  * Module with methods for HTTP-requests
@@ -14,7 +13,7 @@ export default class Transport {
      * @return {Promise}
      */
     static Get(adr) {
-        return Transport.FSend(urlBack + adr, 'get');
+        return Transport.FSend(urlBack + adr, 'GET');
     }
 
     /**
@@ -24,9 +23,12 @@ export default class Transport {
      * @return {Promise}
      */
     static Post(adr, body) {
-        return Transport.FSend(urlBack + adr, 'post', body);
+        return Transport.FSend(urlBack + adr, 'POST', body);
     }
 
+    static Delete(adr, body) {
+        return Transport.FSend(urlBack + adr, 'DELETE', body);
+    }
     /**
      * Perform requests with specified address
      * @param {string} adr - address of request
@@ -37,14 +39,14 @@ export default class Transport {
     static FSend(adr, method, body = {}) {
         const url = server + adr;
         const fPar = {
-            method: 'GET' || method,
+            method: method,
             headers: {
-                Host: 'localhost'
+                Host: 'localhost',
             },
             mode: 'cors',
-            credentials: 'same-origin'
+            credentials: 'include'
         };
-        if (method === 'post') {
+        if (method === 'POST') {
             fPar.body = JSON.stringify(body);
             fPar.headers = {
                 'Content-Type': 'application/json; charset=utf-8',
@@ -61,7 +63,6 @@ export default class Transport {
                 Host: 'localhost'
             },
             mode: 'cors',
-            credentials: 'same-origin'
         };
         let params = `?template=${template}`;
         for (const field in context) {
