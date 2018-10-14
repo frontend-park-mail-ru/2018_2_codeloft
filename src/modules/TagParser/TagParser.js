@@ -76,9 +76,7 @@ class TagParser {
     _getElement(config) {
         const component = this.tagMap[config.tag]();
         return new Promise((resolve) => {
-            component.compile(config).then(component => {
-                resolve(component);
-            });
+            component.build(config).then(component => resolve(component));
         })
     }
 }

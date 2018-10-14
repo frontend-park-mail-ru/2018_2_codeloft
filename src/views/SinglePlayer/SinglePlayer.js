@@ -8,6 +8,7 @@ import userService from '../../services/UserService/UserService.js';
 export default class SinglePlayer extends BaseView {
     constructor() {
         super();
+        this._needAuth = true;
         this.x = 0;
         this.y = 0;
         this.gameMode = false;
@@ -42,9 +43,6 @@ export default class SinglePlayer extends BaseView {
                 div.setAttribute('class', 'block-game_simple');
                 this.elementsArray.forEach((el) => {
                     div.appendChild(el.render());
-                    if (el.needAuth() && !userService.isLogIn()) {
-                        el.hide();
-                    }
                 });
                 this.element = div;
                 resolve();

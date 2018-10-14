@@ -114,6 +114,7 @@ login-button:active { background: white; }
 }
 
 .game-highScoreRow {
+    text-align: center;
     padding: 3px; /* Поля вокруг содержимого таблицы */
     border: 1px solid black;
 }

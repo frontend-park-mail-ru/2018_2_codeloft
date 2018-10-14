@@ -11,8 +11,18 @@ export default class BaseView {
         this.element = null;
         this.elementsArray = [];
         this._needAuth = false;
-        eventBus.on('loggedIn', this.showPrivateComponents.bind(this));
-        eventBus.on('loggedOut', this.hidePrivateComponents.bind(this));
+        eventBus.on('loggedIn', this.afterRender.bind(this));
+        eventBus.on('loggedOut', this.afterRender.bind(this));
+    }
+
+    init() {
+        return new Promise((resolve) => {
+            this.build().then(() => {
+                this.hide();
+                document.getElementById('main').appendChild(this.render());
+                resolve();
+            });
+        });
     }
 
     build() {
@@ -23,31 +33,30 @@ export default class BaseView {
         return this.element;
     }
 
-    show() {
-        new Promise((resolve) => {
-            if (!this.element) {
-                this.build().then(() => {
-                    this.render().style.display = 'none';
-                    document.getElementById('main').appendChild(this.render());
-                    if (userService.isLogIn()) {
-                        this.showPrivateComponents();
-                    } else {
-                        this.hidePrivateComponents();
-                    }
-                    resolve();
-                });
-            }
-            else {
-                resolve();
-            }
-        }).then(() => {
-            if (userService.isLogIn() || !this.needAuth()) {
-                this.element.style.display = 'block';
-                this.addEffects();
-            } else {
-                router.go(URLS.SIGN_IN);
-            }
+    preRender() {
+        return new Promise((resolve) => resolve());
+    }
+
+    afterRender() {
+        return new Promise((resolve) => {
+            resolve();
         });
+    }
+
+    show() {
+        this.preRender()
+            .then(() => {
+                if (!this.element) {
+                    return this.init();
+                }
+            })
+            .then(() => {
+                if (userService.isLogIn() || !this.needAuth()) {
+                    this.afterRender().then(() => this.element.style.display = 'block')
+                } else {
+                    router.go(URLS.SIGN_IN);
+                }
+            });
     }
 
     hide() {
@@ -82,9 +91,5 @@ export default class BaseView {
 
     needAuth() {
         return this._needAuth;
-    }
-
-    addEffects() {
-
     }
 }
