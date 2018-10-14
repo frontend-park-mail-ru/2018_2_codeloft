@@ -2,24 +2,18 @@
 
 import BaseView from '../BaseView/BaseView.js';
 import tagParser from '../../modules/TagParser/TagParser.js';
-import Validation from '../../modules/Validation/Validation.js';
+import Validator from '../../modules/Validator/Validator.js';
 import eventHandler from '../../modules/EventHandler/EventHandler.js';
-import UserService from '../../services/UserService/UserService.js';
 import userService from '../../services/UserService/UserService.js';
 
 export default class SignIn extends BaseView {
     build() {
         eventHandler.addHandler('btnSignInSubmit', () => {
-            let login = '';
-            let password = '';
-            this.inputs.forEach((input) => {
-                if (input.name === 'login') {
-                    login = input.value;
-                } else if (input.name === 'password') {
-                    password = input.value;
-                }
-            });
-            UserService.logIn(login, password);
+            const requestBody = {};
+            for (const field in this.inputs) {
+                requestBody[field] = this.inputs[field].render().value;
+            }
+            userService.logIn(requestBody);
         });
         return new Promise((resolve) => {
             this.template = `<Label {{name=login}} {{class=signInErrorField}}>
@@ -43,9 +37,17 @@ export default class SignIn extends BaseView {
 
     afterRender() {
         return new Promise((resolve) => {
-            this.inputs = [this.elementsArray[1], this.elementsArray[3]];
-            this.errorsFields = [this.elementsArray[0], this.elementsArray[2]];
-            this.errorsFields.forEach((label) => label.hide());
+            this.inputs = {
+                'login': this.elementsArray[1],
+                'password': this.elementsArray[3]
+            };
+            this.errorsFields = {
+              'login': this.elementsArray[0],
+              'password': this.elementsArray[2]
+            };
+            for (const field in this.errorsFields) {
+                this.errorsFields[field].hide();
+            }
             resolve();
         });
     }
@@ -74,7 +76,7 @@ export default class SignIn extends BaseView {
     }
 
     isValid(inputs = [], errorFields = []) {
-        const errors = new Validation(this.inputs).checkAllFields();
+        const errors = new Validator(this.inputs).checkAllFields();
 
         if (errors.length === 0) {
             return true;

@@ -11,8 +11,8 @@ export default class BaseView {
         this.element = null;
         this.elementsArray = [];
         this._needAuth = false;
-        eventBus.on('loggedIn', this.afterRender.bind(this));
-        eventBus.on('loggedOut', this.afterRender.bind(this));
+        eventBus.on('loggedIn', this.handlePrivateComponents.bind(this));
+        eventBus.on('loggedOut', this.handlePrivateComponents.bind(this));
     }
 
     init() {
@@ -38,9 +38,7 @@ export default class BaseView {
     }
 
     afterRender() {
-        return new Promise((resolve) => {
-            resolve();
-        });
+        return new Promise((resolve) => resolve());
     }
 
     show() {
@@ -65,27 +63,9 @@ export default class BaseView {
         }
     }
 
-    showPrivateComponents() {
+    handlePrivateComponents() {
         if (this.element) {
-            this.elementsArray.forEach((element) => {
-                if (element.needAuth()) {
-                    element.show();
-                } else if (element.forAuth()) {
-                    element.hide();
-                }
-            });
-        }
-    }
-
-    hidePrivateComponents() {
-        if (this.element) {
-            this.elementsArray.forEach((element) => {
-                if (element.needAuth()) {
-                    element.hide();
-                } else if (element.forAuth()) {
-                    element.show();
-                }
-            });
+            this.elementsArray.forEach((element) => element.handleVisibility());
         }
     }
 

@@ -62,20 +62,11 @@ class UserService {
             });
     }
 
-    logIn(login, password) {
-        const requestBody = {
-            'login': login,
-            'password': password
-        };
+    logIn(requestBody) {
         this._handleAuthResponse(Transport.Post('/session', requestBody));
     }
 
-    register(login, email, password) {
-        const requestBody = {
-            'login': login,
-            'email': email,
-            'password': password
-        };
+    register(requestBody) {
         this._handleAuthResponse(Transport.Post('/user', requestBody));
     }
 

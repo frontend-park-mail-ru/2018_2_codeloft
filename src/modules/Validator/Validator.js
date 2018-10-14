@@ -7,7 +7,7 @@ const passwordShortError = 'Password is too short 8 symbol min';
 const passwordLongError = 'Password is too long 20 symbol max';
 const passwordMatchError = 'Password doesn\'t match';
 
-export default class Validation {
+export default class Validator {
 	constructor(inputArray = {}) {
 		this.inputArray = inputArray;
 		this.password = null;
@@ -30,14 +30,14 @@ export default class Validation {
 	}
 
 	checkLoginCorrect(field) {
-		if (!Validation.checkFieldsPresenceBool(field)) {
+		if (!Validator.checkFieldsPresenceBool(field)) {
 			// console.log('login ' + 1);
-			this.errors.push(Validation.generateError(emptyFieldError, 'login'));
+			this.errors.push(Validator.generateError(emptyFieldError, 'login'));
 			// console.log(this.errors);
 		}
 		if (field.value.length < 5) {
 			// console.log('login ' + 2);
-			this.errors.push(Validation.generateError(loginShortError, 'login'));
+			this.errors.push(Validator.generateError(loginShortError, 'login'));
 			// console.log(this.errors);
 		}
 	}
@@ -46,42 +46,42 @@ export default class Validation {
 		// console.log('login email');
 		const reg = /^[-._a-z0-9]+@(?:[a-z0-9][-a-z0-9]+\.)+[a-z]{2,6}$/i;
 
-		if (!Validation.checkFieldsPresenceBool(field)) {
-			this.errors.push(Validation.generateError(emptyFieldError, 'email'));
+		if (!Validator.checkFieldsPresenceBool(field)) {
+			this.errors.push(Validator.generateError(emptyFieldError, 'email'));
 		}
 		if (!reg.test(field.value)) {
-			this.errors.push(Validation.generateError(wrongEmailError, 'email'));
+			this.errors.push(Validator.generateError(wrongEmailError, 'email'));
 		}
 	}
 
 	checkPasswordCorrect(field) {
-		if (!Validation.checkFieldsPresenceBool(field)) {
+		if (!Validator.checkFieldsPresenceBool(field)) {
 			// console.log('password ' + 1);
-			this.errors.push(Validation.generateError(emptyFieldError, 'password'));
+			this.errors.push(Validator.generateError(emptyFieldError, 'password'));
 			// console.log(this.errors);
 		}
 		if (field.value.length < 8) {
 			// console.log('password ' + 2);
-			this.errors.push(Validation.generateError(passwordShortError, 'password'));
+			this.errors.push(Validator.generateError(passwordShortError, 'password'));
 			// console.log(this.errors);
 		}
 		if (field.value.length > 20) {
 			// console.log('password ' + 3);
-			this.errors.push(Validation.generateError(passwordLongError, 'password'));
+			this.errors.push(Validator.generateError(passwordLongError, 'password'));
 			// console.log(this.errors);
 		}
 	}
 
 	checkPasswordConfirmCorrect(field) {
 		// console.log('login confirm');
-		if (!Validation.checkFieldsPresenceBool(field)) {
-			this.errors.push(Validation.generateError(emptyFieldError, 'passwordConfirm'));
+		if (!Validator.checkFieldsPresenceBool(field)) {
+			this.errors.push(Validator.generateError(emptyFieldError, 'passwordConfirm'));
 		}
 	}
 
 	checkoutPasswordMatch(password, passwordConfirm) {
 		if (password.value !== passwordConfirm.value) {
-			this.errors.push(Validation.generateError(passwordMatchError, 'passwordMatch'));
+			this.errors.push(Validator.generateError(passwordMatchError, 'passwordMatch'));
 		}
 	}
 

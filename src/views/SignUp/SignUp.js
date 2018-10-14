@@ -2,7 +2,7 @@
 
 import BaseView from '../BaseView/BaseView.js';
 import tagParser from '../../modules/TagParser/TagParser.js';
-import Validation from '../../modules/Validation/Validation.js';
+import Validator from '../../modules/Validator/Validator.js';
 import eventHandler from '../../modules/EventHandler/EventHandler.js';
 import userService from '../../services/UserService/UserService.js';
 
@@ -10,19 +10,11 @@ import userService from '../../services/UserService/UserService.js';
 export default class SignUp extends BaseView {
     build() {
         eventHandler.addHandler('btnSignUpSubmit', () => {
-            let login = '';
-            let email = '';
-            let password = '';
-            this.inputs.forEach((input) => {
-                if (input.name === 'login') {
-                    login = input.value;
-                } else if (input.name === 'email') {
-                    email = input.value;
-                } else if (input.name === 'password') {
-                    password = input.value;
-                }
-            });
-            userService.register(login, email, password);
+            const requestBody = {};
+            for (const field in this.inputs) {
+                requestBody[field] = this.inputs[field].render().value;
+            }
+            userService.register(requestBody);
         });
         return new Promise((resolve) => {
             this.template = `<Label {{name=login}} {{class=signUpErrorField}}>
@@ -31,7 +23,6 @@ export default class SignUp extends BaseView {
 					    <Input {{name=email}} {{class=game-input signUpInput}} {{placeholder=Enter your email}}>
 					    <Label {{name=password}} {{class=signUpErrorField}}>
                         <Input {{name=password}} {{class=game-input signUpInput}} {{placeholder=Enter your password}} {{type=password}}>
-                        <Label {{name=passwordConfirm}} {{class=signUpErrorField}}>
                         <Input {{name=passwordConfirm}} {{class=game-input signUpInput}} {{placeholder=Repeat your password}} {{type=password}}>
                         <Button {{class=buttonGame}} {{text=Sign up}} {{click=btnSignUpSubmit}}>
                         <Button {{class=buttonGame}} {{text=Back}} {{click=goMenu}}>`;
@@ -41,9 +32,6 @@ export default class SignUp extends BaseView {
                 div.setAttribute('class', 'signUp-page_menu');
                 this.elementsArray.forEach((el) => {
                     div.appendChild(el.render());
-                    if (el.needAuth() && !userService.isLogIn()) {
-                        el.hide();
-                    }
                 });
                 this.element = div;
                 resolve();
@@ -53,11 +41,19 @@ export default class SignUp extends BaseView {
 
     afterRender() {
         return new Promise((resolve) => {
-            this.inputs = [this.elementsArray[1], this.elementsArray[3],
-                this.elementsArray[5], this.elementsArray[7]];
-            this.errorsFields = [this.elementsArray[0], this.elementsArray[2],
-                this.elementsArray[4], this.elementsArray[6]];
-            this.errorsFields.forEach((label) => label.hide());
+            this.inputs = {
+                'login': this.elementsArray[1],
+                'email': this.elementsArray[3],
+                'password': this.elementsArray[5]
+            };
+            this.errorsFields = {
+                'login': this.elementsArray[0],
+                'email': this.elementsArray[2],
+                'password': this.elementsArray[4]
+            };
+            for (const field in this.errorsFields) {
+                this.errorsFields[field].hide();
+            }
             resolve();
         });
     }
@@ -87,7 +83,7 @@ export default class SignUp extends BaseView {
     }
 
     isValid(inputs = [], errorFields = []) {
-        const errors = new Validation(this.inputs).checkAllFields();
+        const errors = new Validator(this.inputs).checkAllFields();
 
         if (errors.length === 0) {
             return true;
