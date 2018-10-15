@@ -5,6 +5,8 @@ import userService from '../../services/UserService/UserService.js';
 import router from '../../modules/Router/Router.js';
 import URLS from '../../modules/Consts/Consts.js';
 
+const MAIN_ELEMENT = 'main';
+
 export default class BaseView {
 
     constructor() {
@@ -19,7 +21,7 @@ export default class BaseView {
         return new Promise((resolve) => {
             this.build().then(() => {
                 this.hide();
-                document.getElementById('main').appendChild(this.render());
+                document.getElementById(MAIN_ELEMENT).appendChild(this.render());
                 resolve();
             });
         });
@@ -43,11 +45,7 @@ export default class BaseView {
 
     show() {
         this.preRender()
-            .then(() => {
-                if (!this.element) {
-                    return this.init();
-                }
-            })
+            .then(() => { if (!this.element) return this.init() })
             .then(() => {
                 if (userService.isLogIn() || !this.needAuth()) {
                     this.afterRender().then(() => this.element.style.display = 'block')

@@ -9,14 +9,13 @@ export default class ScoreTable extends MainComponent {
         return Transport.Get(`/user?page=${this.pageNumber}&page_size=5`)
             .then((usersJSON) => usersJSON.json())
             .then((users) => {
-                let rows = ``;
-                users.forEach((user) => {
-                    rows += `<tr class="game-highScoreRow">
+                const rows = users.reduce((str, user) => {
+                    return str + `<tr class="game-highScoreRow">
                                 <td>${user.login}</td>
                                 <td>${user.email}</td>
                                 <td>${user.score}</td>
-							</tr>`;
-                });
+                         </tr>`;
+                }, '');
                 if (this.element) {
                     this.element.innerHTML += rows;
                 }

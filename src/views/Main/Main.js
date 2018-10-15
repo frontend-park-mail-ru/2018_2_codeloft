@@ -12,7 +12,7 @@ export default class Main extends BaseView {
                          <Button {{class=buttonGame}} {{text=Sign up}} {{click=goRegister}} {{forAuth=true}}>
                          <Button {{class=buttonGame}} {{text=Rules}} {{click=goAbout}}>
                          <Button {{class=buttonGame}} {{text=High score}} {{click=goScore}}>
-                         <Button {{class=buttonGame}} {{text=Profile}} {{click=goProfile}} {{needAuth=true}}>`;
+                         <Button {{class=buttonGame bbb aaa}} {{text=Profile}} {{click=goProfile}} {{needAuth=true}}>`;
             tagParser.toHTML(this.template).then((elementsArray) => {
                 this.elementsArray = elementsArray;
                 const div = document.createElement("div");
