@@ -8,20 +8,7 @@ import userService from '../../services/UserService/UserService.js';
 
 export default class SignIn extends BaseView {
     build() {
-        eventHandler.addHandler('btnSignInSubmit', () => {
-            if (this.validator.isValid()) {
-                const requestBody = {};
-                for (const field in this.inputs) {
-                    requestBody[field] = this.inputs[field].render().value;
-                }
-                userService.logIn(requestBody)
-                    .then((ans) => {
-                        this.errorLabels['login'].render().innerText = this.errorMessages[ans];
-                        this.errorLabels['login'].show();
-                        setTimeout(() => this.errorLabels['login'].hide(), 3000);
-                    });
-            }
-        });
+        eventHandler.addHandler('btnSignInSubmit', () => this.submit());
         return new Promise((resolve) => {
             this.template = `<Label {{name=login}} {{class=signInErrorField}}>
 						<Input {{name=login}} {{class=game-input signInInput}} {{placeholder=Enter your login}} {{check=loginMin loginMax}}>
@@ -42,8 +29,24 @@ export default class SignIn extends BaseView {
         });
     }
 
+    submit() {
+        if (this.validator.isValid()) {
+            const requestBody = {};
+            for (const field in this.inputs) {
+                requestBody[field] = this.inputs[field].render().value;
+            }
+            userService.logIn(requestBody)
+                .then((ans) => {
+                    this.errorLabels['login'].render().innerText = this.errorMessages[ans];
+                    this.errorLabels['login'].show();
+                    setTimeout(() => this.errorLabels['login'].hide(), 3000);
+                });
+        }
+    }
+
     afterRender() {
         return new Promise((resolve) => {
+            this.mainEvent = this.submit;
             this.inputs = {
                 'login': this.elementsArray[1],
                 'password': this.elementsArray[3]

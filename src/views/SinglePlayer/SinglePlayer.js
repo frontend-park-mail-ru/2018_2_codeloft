@@ -3,7 +3,7 @@
 import BaseView from '../BaseView/BaseView.js';
 import tagParser from '../../modules/TagParser/TagParser.js';
 import router from "../../modules/Router/Router.js";
-import userService from '../../services/UserService/UserService.js';
+import URLS from '../../modules/Consts/Consts.js';
 
 export default class SinglePlayer extends BaseView {
     constructor() {
@@ -12,7 +12,7 @@ export default class SinglePlayer extends BaseView {
         this.x = 0;
         this.y = 0;
         this.gameMode = false;
-        document.onkeydown = (key) => {
+        document.addEventListener('keydown', (key) => {
             if (this.gameMode) {
                 let button = String.fromCharCode(key.keyCode || key.charCode);
                 this.ctx.fillStyle = ('rgb(255, 255, 255');
@@ -26,12 +26,10 @@ export default class SinglePlayer extends BaseView {
                     this.x += 10;
                 } else if (button === 'A') {
                     this.x -= 10;
-                } else if (key.key === 'Escape') {
-                    router.go('/');
                 }
                 this.ctx.fillRect(this.x, this.y, 30, 30);
             }
-        }
+        });
     }
 
     build() {
@@ -50,9 +48,12 @@ export default class SinglePlayer extends BaseView {
         });
     }
 
-    addEffects() {
-        this.gameMode = true;
-        this.handleGameProcess();
+    afterRender() {
+        return new Promise((resolve) => {
+            this.gameMode = true;
+            this.handleGameProcess();
+            resolve();
+        });
     }
 
     hide() {

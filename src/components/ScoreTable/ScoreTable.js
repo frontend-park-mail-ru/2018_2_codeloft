@@ -9,6 +9,7 @@ export default class ScoreTable extends MainComponent {
         return Transport.Get(`/user?page=${this.pageNumber}&page_size=5`)
             .then((usersJSON) => usersJSON.json())
             .then((users) => {
+                this.pageNumber++;
                 const rows = users.reduce((str, user) => {
                     return str + `<tr class="game-highScoreRow">
                                 <td>${user.login}</td>
@@ -31,6 +32,7 @@ export default class ScoreTable extends MainComponent {
     }
 
     preRender() {
+        this.pageNumber = 1;
         return this.loadScore()
             .then((rows) => {
                 this.template = `<table class="game-highScore">

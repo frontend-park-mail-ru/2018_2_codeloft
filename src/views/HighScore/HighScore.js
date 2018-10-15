@@ -28,7 +28,6 @@ export default class HighScore extends BaseView {
                     div.appendChild(el.render());
                 });
                 this.element = div;
-                this.pageNumber = 0;
                 resolve();
             });
         });
@@ -37,7 +36,6 @@ export default class HighScore extends BaseView {
     updateScore() {
 
         this.loadingLabel.style.display = 'block';
-        this.pageNumber++;
         this.scoreTable.loadScore().then(() => {
             this.loadingLabel.style.display = 'none';
             this.loadMore.style.display = 'block';

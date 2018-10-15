@@ -13,6 +13,7 @@ export default class BaseView {
         this.element = null;
         this.elementsArray = [];
         this._needAuth = false;
+        eventBus.on('enterPressed', this.mainEvent.bind(this));
         eventBus.on('loggedIn', this.handlePrivateComponents.bind(this));
         eventBus.on('loggedOut', this.handlePrivateComponents.bind(this));
     }
@@ -25,6 +26,10 @@ export default class BaseView {
                 resolve();
             });
         });
+    }
+
+    mainEvent() {
+
     }
 
     build() {
