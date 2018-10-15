@@ -45,7 +45,7 @@ class UserService {
             .then((userInfo) => {
                 this.userInfo = userInfo;
                 return 'ok';
-            }).catch(() => {});
+            }).catch(() => this._clearUserData());
     }
 
     /**
