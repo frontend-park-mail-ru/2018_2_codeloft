@@ -1,7 +1,7 @@
 'use strict';
 
 import eventHandler from '../../modules/EventHandler/EventHandler.js';
-import Transport from "../../modules/Transport/Transport.js";
+import Transport from '../../modules/Transport/Transport.js';
 import userService from '../../services/UserService/UserService.js';
 
 export default class MainComponent {

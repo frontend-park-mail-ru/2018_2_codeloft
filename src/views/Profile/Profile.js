@@ -6,7 +6,7 @@ import tagParser from '../../modules/TagParser/TagParser.js';
 export default class Profile extends BaseView {
     constructor() {
         super();
-        //this._needAuth = true;
+        this._needAuth = true;
     }
 
     build() {

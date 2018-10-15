@@ -13,6 +13,9 @@ class UserService {
      */
     constructor() {
         this._clearUserData();
+        this.errorMessages = {
+            400: 'Incorrect login or password',
+        }
     }
 
     /**
@@ -28,7 +31,7 @@ class UserService {
      * @return {*}
      */
     isLogIn() {
-        return !!this.userInfo['login'];
+        return !!this.userInfo.login;
     }
 
     checkAuth() {
@@ -42,7 +45,7 @@ class UserService {
             .then((userInfo) => {
                 this.userInfo = userInfo;
                 return 'ok';
-            }).catch((status) => console.log(status));
+            }).catch(() => this._clearUserData());
     }
 
     /**
@@ -62,25 +65,16 @@ class UserService {
             });
     }
 
-    logIn(login, password) {
-        const requestBody = {
-            'login': login,
-            'password': password
-        };
-        this._handleAuthResponse(Transport.Post('/session', requestBody));
+    logIn(requestBody) {
+        return this._handleAuthResponse(Transport.Post('/session', requestBody));
     }
 
-    register(login, email, password) {
-        const requestBody = {
-            'login': login,
-            'email': email,
-            'password': password
-        };
-        this._handleAuthResponse(Transport.Post('/user', requestBody));
+    register(requestBody) {
+        return this._handleAuthResponse(Transport.Post('/user', requestBody));
     }
 
     _handleAuthResponse(_fetch) {
-        _fetch
+        return _fetch
             .then((response) => {
                 if (response.status === 200) {
                     return response.json();
@@ -92,7 +86,7 @@ class UserService {
                 eventBus.emit('loggedIn');
                 return 'ok';
             })
-            .catch((status) => console.log(status));
+            .catch((status) => status);
     }
 
     _clearUserData() {

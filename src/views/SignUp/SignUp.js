@@ -2,7 +2,7 @@
 
 import BaseView from '../BaseView/BaseView.js';
 import tagParser from '../../modules/TagParser/TagParser.js';
-import Validation from '../../modules/Validation/Validation.js';
+import Validator from '../../modules/Validator/Validator.js';
 import eventHandler from '../../modules/EventHandler/EventHandler.js';
 import userService from '../../services/UserService/UserService.js';
 
@@ -10,29 +10,28 @@ import userService from '../../services/UserService/UserService.js';
 export default class SignUp extends BaseView {
     build() {
         eventHandler.addHandler('btnSignUpSubmit', () => {
-            let login = '';
-            let email = '';
-            let password = '';
-            this.inputs.forEach((input) => {
-                if (input.name === 'login') {
-                    login = input.value;
-                } else if (input.name === 'email') {
-                    email = input.value;
-                } else if (input.name === 'password') {
-                    password = input.value;
+            if (this.validator.isValid()) {
+                const requestBody = {};
+                for (const field in this.inputs) {
+                    requestBody[field] = this.inputs[field].render().value;
                 }
-            });
-            userService.register(login, email, password);
+                userService.register(requestBody)
+                    .then((ans) => {
+                        this.errorLabels['login'].render().innerText = this.errorMessages[ans];
+                        this.errorLabels['login'].show();
+                        setTimeout(() => this.errorLabels['login'].hide(), 3000);
+                    });
+            }
         });
         return new Promise((resolve) => {
             this.template = `<Label {{name=login}} {{class=signUpErrorField}}>
-						<Input {{name=login}} {{class=game-input signUpInput}} {{placeholder=Enter your login}}>
+						<Input {{name=login}} {{class=game-input signUpInput}} {{placeholder=Enter your login}} {{check=loginMin loginMax}}>
 						<Label {{name=email}} {{class=signUpErrorField}}>
-					    <Input {{name=email}} {{class=game-input signUpInput}} {{placeholder=Enter your email}}>
+					    <Input {{name=email}} {{class=game-input signUpInput}} {{placeholder=Enter your email}} {{check=email}}>
 					    <Label {{name=password}} {{class=signUpErrorField}}>
-                        <Input {{name=password}} {{class=game-input signUpInput}} {{placeholder=Enter your password}} {{type=password}}>
+                        <Input {{name=password}} {{class=game-input signUpInput}} {{placeholder=Enter your password}} {{type=password}} {{check=passwordMin passwordMax}}>
                         <Label {{name=passwordConfirm}} {{class=signUpErrorField}}>
-                        <Input {{name=passwordConfirm}} {{class=game-input signUpInput}} {{placeholder=Repeat your password}} {{type=password}}>
+                        <Input {{name=passwordConfirm}} {{class=game-input signUpInput}} {{placeholder=Repeat your password}} {{type=password}} {{check=passwordsEquality}}>
                         <Button {{class=buttonGame}} {{text=Sign up}} {{click=btnSignUpSubmit}}>
                         <Button {{class=buttonGame}} {{text=Back}} {{click=goMenu}}>`;
             tagParser.toHTML(this.template).then((elementsArray) => {
@@ -41,9 +40,6 @@ export default class SignUp extends BaseView {
                 div.setAttribute('class', 'signUp-page_menu');
                 this.elementsArray.forEach((el) => {
                     div.appendChild(el.render());
-                    if (el.needAuth() && !userService.isLogIn()) {
-                        el.hide();
-                    }
                 });
                 this.element = div;
                 resolve();
@@ -53,46 +49,31 @@ export default class SignUp extends BaseView {
 
     afterRender() {
         return new Promise((resolve) => {
-            this.inputs = [this.elementsArray[1], this.elementsArray[3],
-                this.elementsArray[5], this.elementsArray[7]];
-            this.errorsFields = [this.elementsArray[0], this.elementsArray[2],
-                this.elementsArray[4], this.elementsArray[6]];
-            this.errorsFields.forEach((label) => label.hide());
+            this.inputs = {
+                'login': this.elementsArray[1],
+                'email': this.elementsArray[3],
+                'password': this.elementsArray[5],
+                'passwordConfirm': this.elementsArray[7]
+            };
+            this.errorLabels = {
+                'login': this.elementsArray[0],
+                'email': this.elementsArray[2],
+                'password': this.elementsArray[4],
+                'passwordConfirm': this.elementsArray[6]
+            };
+            for (const field in this.errorLabels) {
+                this.errorLabels[field].hide();
+            }
+            this.validator = new Validator(this.inputs, this.errorLabels);
+            for (const input in this.inputs) {
+                this.inputs[input].render().addEventListener('blur', () => {
+                    this.validator.checkInput(input);
+                });
+            }
+            this.errorMessages = {
+                400: 'User with a such login already exists',
+            };
             resolve();
         });
-    }
-
-    addEffects() {
-        this.inputs = [...document.getElementsByClassName('signUpInput')];
-        this.errorsFields = [...document.getElementsByClassName('signUpErrorField')];
-
-        this.inputs.forEach((input, i) => {
-            input.addEventListener('blur', () => {
-                this.errorsFields[i].innerHTML = '';
-                this.inputs[i].style.borderColor = 'black';
-                this.isValid([input], [this.errorsFields[i]]);
-            });
-        });
-    }
-
-    showErrors(errors, errorFields, inputs) {
-        errorFields.forEach((errorField, i) => {
-            errors.forEach((err, i) => {
-                if (errorField.getAttribute('name') === err.class[1]) {
-                    errorField.innerHTML = err.innerHTML;
-                    // inputs[i].style.borderColor = 'red';
-                }
-            });
-        });
-    }
-
-    isValid(inputs = [], errorFields = []) {
-        const errors = new Validation(this.inputs).checkAllFields();
-
-        if (errors.length === 0) {
-            return true;
-        }
-        this.showErrors(errors, errorFields, inputs);
-        return false;
     }
 }
