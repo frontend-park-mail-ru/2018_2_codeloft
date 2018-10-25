@@ -1,0 +1,28 @@
+.main-page__menu__logo {
+    margin-top: 7vh;
+    margin-bottom: 3vh;
+    text-align: center;
+    color: #505050;
+    font-size: 10vh;
+    cursor: default;
+    /*animation: neon-text 13s steps(1, start) infinite reverse;*/
+}
+
+.about-page__rules {
+    margin-top: 7vh;
+    margin-bottom: 3vh;
+    text-align: center;
+    color: #505050;
+    font-size: 5vh;
+    cursor: default;
+}
+
+.main-page__menu__button {
+    cursor: pointer;
+    border: 0;
+    font-size: 6vh;
+    color: #505050;
+    background-color: rgba(0, 0, 0, 0);
+    text-align: center;
+    /*text-shadow: 0 0 500px #E8175D,0 0 500px #E8175D,0 0 6px #fff,0 0 10px #fff,0 0 50px #79a7fc;*/
+}

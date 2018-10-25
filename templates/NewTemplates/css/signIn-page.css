@@ -1,0 +1,40 @@
+.login-page_error {
+    font-size: 3vh;
+    color: #E8175D;
+    margin: auto;
+    text-align: center;
+}
+
+.main-page__menu__logo {
+    margin-top: 7vh;
+    margin-bottom: 3vh;
+    text-align: center;
+    color: #505050;
+    font-size: 10vh;
+    cursor: default;
+    /*animation: neon-text 13s steps(1, start) infinite reverse;*/
+}
+
+.login-page__signInInput {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2%;
+    min-height: 4vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 25px;
+    padding-left: 20px;
+    font-size: 2vh;
+    outline:none;
+}
+
+.main-page__menu__button {
+    cursor: pointer;
+    border: 0;
+    font-size: 6vh;
+    color: #505050;
+    background-color: rgba(0, 0, 0, 0);
+    text-align: center;
+    /*text-shadow: 0 0 500px #E8175D,0 0 500px #E8175D,0 0 6px #fff,0 0 10px #fff,0 0 50px #79a7fc;*/
+}
