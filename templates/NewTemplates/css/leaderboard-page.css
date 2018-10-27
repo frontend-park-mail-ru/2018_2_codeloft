@@ -8,6 +8,16 @@
     /*animation: neon-text 13s steps(1, start) infinite reverse;*/
 }
 
+.main-page__menu__button {
+    cursor: pointer;
+    border: 0;
+    font-size: 6vh;
+    color: #505050;
+    background-color: rgba(0, 0, 0, 0);
+    text-align: center;
+    /*text-shadow: 0 0 500px #E8175D,0 0 500px #E8175D,0 0 6px #fff,0 0 10px #fff,0 0 50px #79a7fc;*/
+}
+
 .leaderboard-page__users {
     margin-top: 7vh;
     margin-bottom: 3vh;
@@ -17,14 +27,20 @@
     cursor: default;
 }
 
+.leaderboard-page__users p {
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+}
+
 .leaderboard-page__pagination {
     text-align: center;
     font-size: 5vh;
     color: #505050;
+    margin-bottom: 3vh;
 }
 
 .leaderboard-page__pagination a {
-    cursor: default;
+    cursor: pointer;
     user-select: none;
     color: #505050;
     padding: 8px 16px;
@@ -38,4 +54,5 @@
     border: 2px solid #E84A5F;
     color: #E84A5F;
     border-radius: 10px;
+    cursor: default;
 }
