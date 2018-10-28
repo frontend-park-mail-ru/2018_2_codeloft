@@ -4,25 +4,22 @@ import MainComponent from '../MainComponent/MainComponent.js';
 import Transport from '../../modules/Transport/Transport.js';
 
 export default class ScoreTable extends MainComponent {
-
     loadScore() {
         return Transport.Get(`/user?page=${this.pageNumber}&page_size=5`)
             .then((usersJSON) => usersJSON.json())
             .then((users) => {
                 this.pageNumber++;
-                const rows = users.reduce((str, user) => {
-                    return str + `<tr class="game-highScoreRow">
+                const rows = users.reduce((str, user) => `${str}<tr class="game-highScoreRow">
                                 <td>${user.login}</td>
                                 <td>${user.email}</td>
                                 <td>${user.score}</td>
-                         </tr>`;
-                }, '');
+                         </tr>`, '');
                 if (this.element) {
                     this.element.innerHTML += rows;
                 }
                 return rows;
             })
-            .catch(err => console.log(err));
+            .catch((err) => err);
     }
 
     show() {

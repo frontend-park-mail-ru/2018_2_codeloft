@@ -18,7 +18,7 @@ export default class SignIn extends BaseView {
                         <Button {{class=buttonGame}} {{text=Back}} {{click=goMenu}}>`;
             tagParser.toHTML(this.template).then((elementsArray) => {
                 this.elementsArray = elementsArray;
-                const div = document.createElement("div");
+                const div = document.createElement('div');
                 div.setAttribute('class', 'signIn-page_menu');
                 this.elementsArray.forEach((el) => {
                     div.appendChild(el.render());
@@ -32,14 +32,14 @@ export default class SignIn extends BaseView {
     submit() {
         if (this.validator.isValid()) {
             const requestBody = {};
-            for (const field in this.inputs) {
-                requestBody[field] = this.inputs[field].render().value;
-            }
+            this.inputs.forEach((input) => {
+                requestBody[input] = this.inputs[input].render().value;
+            });
             userService.logIn(requestBody)
                 .then((ans) => {
-                    this.errorLabels['login'].render().innerText = this.errorMessages[ans] || `Internal error`;
-                    this.errorLabels['login'].show();
-                    setTimeout(() => this.errorLabels['login'].hide(), 3000);
+                    this.errorLabels.login.render().innerText = this.errorMessages[ans] || 'Internal error';
+                    this.errorLabels.login.show();
+                    setTimeout(() => this.errorLabels.login.hide(), 3000);
                 });
         }
     }
@@ -48,22 +48,22 @@ export default class SignIn extends BaseView {
         return new Promise((resolve) => {
             this.mainEvent = this.submit;
             this.inputs = {
-                'login': this.elementsArray[1],
-                'password': this.elementsArray[3]
+                login: this.elementsArray[1],
+                password: this.elementsArray[3],
             };
             this.errorLabels = {
-                'login': this.elementsArray[0],
-                'password': this.elementsArray[2]
+                login: this.elementsArray[0],
+                password: this.elementsArray[2],
             };
-            for (const field in this.errorLabels) {
+            this.errorLabels.forAuth((field) => {
                 this.errorLabels[field].hide();
-            }
+            });
             this.validator = new Validator(this.inputs, this.errorLabels);
-            for (const input in this.inputs) {
+            this.inputs.forEach((input) => {
                 this.inputs[input].render().addEventListener('blur', () => {
                     this.validator.checkInput(input);
                 });
-            }
+            });
             this.errorMessages = {
                 400: 'Incorrect login or password',
             };

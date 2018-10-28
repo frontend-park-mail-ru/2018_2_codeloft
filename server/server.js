@@ -91,7 +91,6 @@ app.post('/logout', (req, res) => {
 app.get('/template', (req, res) => {
     const context = req.query;
     res.set('access-control-allow-headers', 'Content-Type');
-    //res.set('access-control-allow-origin','*');
     const template = handlebars.compile(context.template);
     const result = {html: template(context)};
     res.json(result);

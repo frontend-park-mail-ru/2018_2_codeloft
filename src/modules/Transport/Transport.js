@@ -44,7 +44,7 @@ export default class Transport {
                 Host: 'localhost',
             },
             mode: 'cors',
-            credentials: 'include'
+            credentials: 'include',
         };
         if (method === 'POST') {
             fPar.body = JSON.stringify(body);
@@ -60,14 +60,14 @@ export default class Transport {
         const fPar = {
             method: 'GET',
             headers: {
-                Host: 'localhost'
+                Host: 'localhost',
             },
             mode: 'cors',
         };
         let params = `?template=${template}`;
-        for (const field in context) {
+        context.forEach((field) => {
             params += `&${field}=${context[field]}`;
-        }
+        });
         return fetch(url + params, fPar);
     }
 }

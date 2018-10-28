@@ -5,7 +5,6 @@ import Transport from '../../modules/Transport/Transport.js';
 import userService from '../../services/UserService/UserService.js';
 
 export default class MainComponent {
-
     constructor() {
         this.element = null;
         this.template = null;
@@ -33,9 +32,9 @@ export default class MainComponent {
      * @param context - нужный для копиляции объект
      */
     compile(context) {
-        if (context['needAuth'] === 'true') {
+        if (context.needAuth === 'true') {
             this._needAuth = true;
-        } else if (context['forAuth'] === 'true') {
+        } else if (context.forAuth === 'true') {
             this._forAuth = true;
         }
         return Transport.GetHTML(this.template, context)
@@ -67,6 +66,7 @@ export default class MainComponent {
                 if (!this.element) {
                     return this.compile(context);
                 }
+                return Promise.resolve();
             })
             .then(() => this.afterRender());
     }

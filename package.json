@@ -26,6 +26,10 @@
   },
   "homepage": "https://github.com/frontend-park-mail-ru/2018_2_codeloft#readme",
   "dependencies": {
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-react": "^7.11.1"
   },
   "devDependencies": {
     "eslint": "^5.6.1",

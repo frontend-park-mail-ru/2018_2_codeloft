@@ -8,7 +8,6 @@ import URLS from '../../modules/Consts/Consts.js';
 const MAIN_ELEMENT = 'main';
 
 export default class BaseView {
-
     constructor() {
         this.element = null;
         this.elementsArray = [];
@@ -50,10 +49,15 @@ export default class BaseView {
 
     show() {
         this.preRender()
-            .then(() => { if (!this.element) return this.init() })
+            .then(() => {
+                if (!this.element) {
+                    return this.init();
+                }
+                return Promise.resolve();
+            })
             .then(() => {
                 if (!this.needAuth() || userService.isLogIn()) {
-                    this.afterRender().then(() => this.element.style.display = 'block')
+                    this.afterRender().then(() => this.element.style.display = 'block');
                 } else {
                     router.go(URLS.SIGN_IN);
                 }

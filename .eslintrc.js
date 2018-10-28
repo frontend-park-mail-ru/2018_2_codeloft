@@ -6,6 +6,11 @@ module.exports = {
         "ecmaVersion": 2018,
         "sourceType": "module"
     },
+    "globals": {
+        "fetch": false,
+        "document": false
+    },
+    "extends": "airbnb",
     "rules": {
         "object-shorthand": 0,
         "max-len": 0,
@@ -23,8 +28,11 @@ module.exports = {
             }
         }],
         "indent": [
-            "error",
-            "tab"
+            "warn",
+            4
+        ],
+        "no-undef": [
+            "warn",
         ],
         "linebreak-style": [
             "error",
@@ -36,6 +44,36 @@ module.exports = {
         ],
         "semi": [
             "error",
-        ]
+        ],
+        "strict": [
+            "off"
+        ],
+        "import/extensions": [
+            "off"
+        ],
+        "arrow-parens": [
+            "off"
+        ],
+        "no-plusplus": [
+            "off"
+        ],
+        "prefer-destructuring": [
+            "off"
+        ],
+        "no-underscore-dangle": [
+            "off"
+        ],
+        "no-tabs": [
+            "off"
+        ],
+        "class-methods-use-this": [
+            "off"
+        ],
+        "no-return-assign": [
+            "off"
+        ],
+        "lines-between-class-members": [
+            "off"
+        ],
     }
 };
