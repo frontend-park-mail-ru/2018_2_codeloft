@@ -7,38 +7,31 @@ body {
 
 .main-page__menu__logo {
     margin-top: 7vh;
-    margin-bottom: 3vh;
+    margin-bottom: 6vh;
     text-align: center;
-    /*color: #505050;*/
     font-size: 10vh;
     cursor: default;
-    /*animation: neon-text 13s steps(1, start) infinite reverse;*/
-
     color: #FFE64D;
     animation: neon-text-dark 13s steps(1, start) infinite reverse;
 }
 
 .about-page__rules {
     margin-top: 7vh;
-    margin-bottom: 3vh;
+    margin-bottom: 6vh;
     text-align: center;
-    /*color: #505050;*/
-    font-size: 5vh;
+    font-size: 4vh;
     cursor: default;
-
     color: #E6FFFF;
     animation: neon-text-light 13s steps(1, start) infinite reverse;
 }
 
 .main-page__menu__button {
+    margin-bottom: 3vh;
     cursor: pointer;
     border: 0;
     font-size: 6vh;
-    /*color: #505050;*/
     background-color: rgba(0, 0, 0, 0);
     text-align: center;
-    /*text-shadow: 0 0 500px #E8175D,0 0 500px #E8175D,0 0 6px #fff,0 0 10px #fff,0 0 50px #79a7fc;*/
-
     color: #E6FFFF;
     animation: neon-text-light 13s steps(1, start) infinite reverse;
 }
@@ -92,17 +85,5 @@ body {
 
     100% {
         text-shadow: 0 0 100px #DF740C;
-    }
-}
-
-@keyframes neon-light {
-    0% {
-        box-shadow: 0 0 10px 2px #6FC3DF;
-    }
-    50% {
-        box-shadow: 0 0 15px 4px #6FC3DF;
-    }
-    100% {
-        box-shadow: 0 0 20px 6px #6FC3DF;
     }
 }
