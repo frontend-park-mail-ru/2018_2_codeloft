@@ -1,3 +1,7 @@
+body {
+    background-color: #0C141F;
+}
+
 .main-page__menu {
 }
 
@@ -5,16 +9,16 @@
     margin-top: 7vh;
     margin-bottom: 3vh;
     text-align: center;
-    color: #505050;
+    /*color: #505050;*/
     font-size: 10vh;
-    /*animation: neon-text 13s steps(1, start) infinite reverse;*/
+    color: #FFE64D;
+    animation: neon-text-dark 13s steps(1, start) infinite reverse;
  }
 
 .main-page__menu__buttons {
     cursor: pointer;
     border: 0;
     font-size: 6vh;
-    color: #505050;
     background-color: rgba(0, 0, 0, 0);
     /*text-shadow: 0 0 500px #E8175D,0 0 500px #E8175D,0 0 6px #fff,0 0 10px #fff,0 0 50px #79a7fc;*/
 }
@@ -24,4 +28,58 @@
     /*border-radius: 100px;*/
     margin-top: 1vh;
     text-align: center;
+    color: #E6FFFF;
+    animation: neon-text-light 13s steps(1, start) infinite reverse;
+}
+
+@keyframes neon-text-light {
+    0% {
+        text-shadow: 0 0 10px #6FC3DF;
+    }
+
+    20% {
+        text-shadow: 0 0 20px #6FC3DF;
+    }
+
+    40% {
+        text-shadow: 0 0 40px #6FC3DF;
+    }
+
+    60% {
+        text-shadow: 0 0 60px #6FC3DF;
+    }
+
+    80% {
+        text-shadow: 0 0 80px #6FC3DF;
+    }
+
+    100% {
+        text-shadow: 0 0 100px #6FC3DF;
+    }
+}
+
+@keyframes neon-text-dark {
+    0% {
+        text-shadow: 0 0 10px #DF740C;
+    }
+
+    20% {
+        text-shadow: 0 0 20px #DF740C;
+    }
+
+    40% {
+        text-shadow: 0 0 40px #DF740C;
+    }
+
+    60% {
+        text-shadow: 0 0 60px #DF740C;
+    }
+
+    80% {
+        text-shadow: 0 0 80px #DF740C;
+    }
+
+    100% {
+        text-shadow: 0 0 100px #DF740C;
+    }
 }

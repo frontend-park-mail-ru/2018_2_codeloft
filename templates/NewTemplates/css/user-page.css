@@ -1,16 +1,23 @@
+body {
+    background-color: #0C141F;
+}
+
 .main-page__menu__logo {
     margin-top: 7vh;
     margin-bottom: 3vh;
     text-align: center;
-    color: #505050;
+    /*color: #505050;*/
     font-size: 10vh;
     cursor: default;
     /*animation: neon-text 13s steps(1, start) infinite reverse;*/
+
+    color: #FFE64D;
+    animation: neon-text-dark 13s steps(1, start) infinite reverse;
 }
 
 .user-page__img {
     /*text-align: center;*/
-    color: #505050;
+    /*color: #505050;*/
     font-size: 5vh;
     cursor: default;
     border-radius: 100vh;
@@ -18,16 +25,22 @@
     width: auto;
     display: block;
     margin: 7vh auto 3vh;
+
+    border-color: #FFE64D;
+    animation: neon-dark 13s steps(1, start) infinite reverse;
 }
 
 .main-page__menu__button {
     cursor: pointer;
     border: 0;
     font-size: 6vh;
-    color: #505050;
+    /*color: #505050;*/
     background-color: rgba(0, 0, 0, 0);
     text-align: center;
     /*text-shadow: 0 0 500px #E8175D,0 0 500px #E8175D,0 0 6px #fff,0 0 10px #fff,0 0 50px #79a7fc;*/
+
+    color: #E6FFFF;
+    animation: neon-text-light 13s steps(1, start) infinite reverse;
 }
 
 .user-page__input {
@@ -42,4 +55,83 @@
     padding-left: 20px;
     font-size: 2vh;
     outline:none;
+
+    border-color: #E6FFFF;
+    animation: neon-light 13s steps(1, start) infinite reverse;
+}
+
+@keyframes neon-text-light {
+    0% {
+        text-shadow: 0 0 10px #6FC3DF;
+    }
+
+    20% {
+        text-shadow: 0 0 20px #6FC3DF;
+    }
+
+    40% {
+        text-shadow: 0 0 40px #6FC3DF;
+    }
+
+    60% {
+        text-shadow: 0 0 60px #6FC3DF;
+    }
+
+    80% {
+        text-shadow: 0 0 80px #6FC3DF;
+    }
+
+    100% {
+        text-shadow: 0 0 100px #6FC3DF;
+    }
+}
+
+@keyframes neon-text-dark {
+    0% {
+        text-shadow: 0 0 10px #DF740C;
+    }
+
+    20% {
+        text-shadow: 0 0 20px #DF740C;
+    }
+
+    40% {
+        text-shadow: 0 0 40px #DF740C;
+    }
+
+    60% {
+        text-shadow: 0 0 60px #DF740C;
+    }
+
+    80% {
+        text-shadow: 0 0 80px #DF740C;
+    }
+
+    100% {
+        text-shadow: 0 0 100px #DF740C;
+    }
+}
+
+@keyframes neon-light {
+    0% {
+        box-shadow: 0 0 10px 2px #6FC3DF;
+    }
+    50% {
+        box-shadow: 0 0 15px 4px #6FC3DF;
+    }
+    100% {
+        box-shadow: 0 0 20px 6px #6FC3DF;
+    }
+}
+
+@keyframes neon-dark {
+    0% {
+        box-shadow: 0 0 10px 2px #DF740C;
+    }
+    50% {
+        box-shadow: 0 0 15px 4px #DF740C;
+    }
+    100% {
+        box-shadow: 0 0 20px 6px #DF740C;
+    }
 }
