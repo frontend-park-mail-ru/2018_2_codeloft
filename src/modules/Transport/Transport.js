@@ -1,6 +1,6 @@
 const server = '';
 
-const urlBack = 'https://codeloft.herokuapp.com';
+const urlBack = 'https://backend.codeloft.ru';
 
 /**
  * Module with methods for HTTP-requests

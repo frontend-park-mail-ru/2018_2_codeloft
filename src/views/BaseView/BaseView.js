@@ -52,7 +52,7 @@ export default class BaseView {
         this.preRender()
             .then(() => { if (!this.element) return this.init() })
             .then(() => {
-                if (userService.isLogIn() || !this.needAuth()) {
+                if (!this.needAuth() || userService.isLogIn()) {
                     this.afterRender().then(() => this.element.style.display = 'block')
                 } else {
                     router.go(URLS.SIGN_IN);

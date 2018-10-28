@@ -33,16 +33,13 @@ export default class ScoreTable extends MainComponent {
 
     preRender() {
         this.pageNumber = 1;
-        return this.loadScore()
-            .then((rows) => {
-                this.template = `<table class="game-highScore">
+        this.template = `<table class="game-highScore">
                                      <tr class="game-highScoreRow">
                                         <th>Player</th>
                                         <th>Email</th>
                                         <th>Score</th>
                                     </tr>
-                                    ${rows}
                                 </table>`;
-            })
+        return super.preRender();
     }
 }

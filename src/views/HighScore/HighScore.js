@@ -19,9 +19,9 @@ export default class HighScore extends BaseView {
             tagParser.toHTML(this.template).then((elementsArray) => {
                 this.elementsArray = elementsArray;
                 this.scoreTable = this.elementsArray[0];
-                this.loadingLabel = this.elementsArray[1].render();
-                this.loadMore = this.elementsArray[2].render();
-                this.loadingLabel.style.display = 'none';
+                this.loadingLabel = this.elementsArray[1];
+                this.loadMore = this.elementsArray[2];
+                this.loadingLabel.hide();
                 const div = document.createElement("div");
                 div.setAttribute('class', 'highScore-page__list');
                 this.elementsArray.forEach((el) => {
@@ -33,12 +33,16 @@ export default class HighScore extends BaseView {
         });
     }
 
-    updateScore() {
+    afterRender() {
+        this.updateScore();
+        return super.afterRender();
+    }
 
-        this.loadingLabel.style.display = 'block';
+    updateScore() {
+        this.loadingLabel.show();
         this.scoreTable.loadScore().then(() => {
-            this.loadingLabel.style.display = 'none';
-            this.loadMore.style.display = 'block';
+            this.loadingLabel.hide();
+            this.loadMore.show();
         });
     }
 
