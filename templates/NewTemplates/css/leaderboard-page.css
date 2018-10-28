@@ -11,6 +11,7 @@ body {
     text-align: center;
     font-size: 10vh;
     cursor: default;
+    user-select: none;
     color: #FFE64D;
     animation: neon-text-dark 13s steps(1, start) infinite reverse;
 }
@@ -22,6 +23,7 @@ body {
     font-size: 6vh;
     background-color: rgba(0, 0, 0, 0);
     text-align: center;
+    user-select: none;
     color: #E6FFFF;
     animation: neon-text-light 13s steps(1, start) infinite reverse;
 }
@@ -43,6 +45,7 @@ body {
 
 .leaderboard-page__pagination {
     text-align: center;
+    user-select: none;
     font-size: 5vh;
     margin-bottom: 6vh;
 }

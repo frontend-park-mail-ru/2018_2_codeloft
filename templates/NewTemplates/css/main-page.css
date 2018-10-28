@@ -5,14 +5,12 @@ body {
     font-family: 'Press Start 2P', cursive;
 }
 
-.main-page__menu {
-}
-
 .main-page__menu__logo {
     margin-top: 7vh;
     margin-bottom: 6vh;
     text-align: center;
     font-size: 10vh;
+    user-select: none;
     color: #FFE64D;
     animation: neon-text-dark 13s steps(1, start) infinite reverse;
  }
@@ -27,6 +25,7 @@ body {
 .main-page__button {
     margin-top: 3vh;
     text-align: center;
+    user-select: none;
     color: #E6FFFF;
     animation: neon-text-light 13s steps(1, start) infinite reverse;
 }
