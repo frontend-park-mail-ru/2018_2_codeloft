@@ -1,5 +1,8 @@
+@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
+
 body {
     background-color: #0C141F;
+    font-family: 'Press Start 2P', cursive;
 }
 
 .login-page_error {
@@ -25,13 +28,15 @@ body {
     margin-right: auto;
     margin-bottom: 2%;
     min-height: 4vh;
+    min-width: 45vh;
     display: flex;
     justify-content: center;
     flex-direction: column;
-    border-radius: 25px;
+    /*border-radius: 25px;*/
     padding-left: 20px;
     font-size: 2vh;
     outline:none;
+    background-color: #E6FFFF;
 
     border-color: #E6FFFF;
     animation: neon-light 13s steps(1, start) infinite reverse;

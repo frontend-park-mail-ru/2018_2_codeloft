@@ -1,5 +1,8 @@
+@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
+
 body {
     background-color: #0C141F;
+    font-family: 'Press Start 2P', cursive;
 }
 
 .main-page__menu {
