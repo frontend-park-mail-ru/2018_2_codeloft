@@ -43,6 +43,9 @@ body {
     outline:none;
     background-color: #E6FFFF;
     font-family: 'Press Start 2P', cursive;
+}
+
+.user-page__input:focus {
     border-color: #E6FFFF;
     animation: neon-light 13s steps(1, start) infinite reverse;
 }

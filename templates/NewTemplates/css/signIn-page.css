@@ -36,8 +36,11 @@ body {
     font-size: 2vmin;
     outline:none;
     background-color: #E6FFFF;
-    border-color: #E6FFFF;
     font-family: 'Press Start 2P', cursive;
+}
+
+.login-page__signInInput:focus {
+    border-color: #E6FFFF;
     animation: neon-light 13s steps(1, start) infinite reverse;
 }
 
