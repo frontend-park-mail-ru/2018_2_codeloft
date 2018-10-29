@@ -17,13 +17,12 @@ body {
 }
 
 .user-page__img {
-    font-size: 5vmin;
     cursor: default;
-    border-radius: 100vmin;
-    height: 25vmin;
+    /*border-radius: 10vmin;*/
+    height: 15vmin;
     width: auto;
     display: block;
-    margin: 7vmin auto 3vmin;
+    margin: 6vmin auto 3vmin;
     user-select: none;
     border-color: #FFE64D;
     animation: neon-dark 13s steps(1, start) infinite reverse;
@@ -59,6 +58,17 @@ body {
     user-select: none;
     color: #E6FFFF;
     animation: neon-text-light 13s steps(1, start) infinite reverse;
+}
+
+.main-page__menu__button__do {
+    margin-bottom: 3vmin;
+    border: 0;
+    font-size: 6vmin;
+    background-color: rgba(0, 0, 0, 0);
+    text-align: center;
+    user-select: none;
+    color: #FFE64D;
+    animation: neon-text-dark 13s steps(1, start) infinite reverse;
 }
 
 .main-page__menu__button span {

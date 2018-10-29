@@ -23,7 +23,6 @@ body {
     font-size: 4vmin;
     cursor: default;
     color: #E6FFFF;
-    animation: neon-text-light 13s steps(1, start) infinite reverse;
 }
 
 .main-page__menu__button {

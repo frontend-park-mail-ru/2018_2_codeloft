@@ -55,6 +55,17 @@ body {
     animation: neon-text-light 13s steps(1, start) infinite reverse;
 }
 
+.main-page__menu__button__do {
+    margin-bottom: 3vmin;
+    border: 0;
+    font-size: 6vmin;
+    background-color: rgba(0, 0, 0, 0);
+    text-align: center;
+    user-select: none;
+    color: #FFE64D;
+    animation: neon-text-dark 13s steps(1, start) infinite reverse;
+}
+
 .main-page__menu__button span {
     cursor: pointer;
 }
