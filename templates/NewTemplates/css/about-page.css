@@ -28,7 +28,6 @@ body {
 
 .main-page__menu__button {
     margin-bottom: 3vmin;
-    cursor: pointer;
     border: 0;
     font-size: 6vmin;
     background-color: rgba(0, 0, 0, 0);
@@ -36,6 +35,10 @@ body {
     user-select: none;
     color: #E6FFFF;
     animation: neon-text-light 13s steps(1, start) infinite reverse;
+}
+
+.main-page__menu__button span {
+    cursor: pointer;
 }
 
 @keyframes neon-text-light {

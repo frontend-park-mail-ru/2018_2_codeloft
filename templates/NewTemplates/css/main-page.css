@@ -16,18 +16,21 @@ body {
  }
 
 .main-page__menu__buttons {
-    cursor: pointer;
     border: 0;
-    font-size: 6vmin;
     background-color: rgba(0, 0, 0, 0);
 }
 
 .main-page__button {
     margin-top: 3vmin;
     text-align: center;
+    font-size: 6vmin;
     user-select: none;
     color: #E6FFFF;
     animation: neon-text-light 13s steps(1, start) infinite reverse;
+}
+
+.main-page__button span {
+    cursor: pointer;
 }
 
 @keyframes neon-text-light {
