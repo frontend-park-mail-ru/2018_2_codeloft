@@ -6,10 +6,10 @@ body {
 }
 
 .main-page__menu__logo {
-    margin-top: 7vh;
-    margin-bottom: 6vh;
+    margin-top: 7vmin;
+    margin-bottom: 6vmin;
     text-align: center;
-    font-size: 10vh;
+    font-size: 10vmin;
     cursor: default;
     user-select: none;
     color: #FFE64D;
@@ -17,20 +17,20 @@ body {
 }
 
 .about-page__rules {
-    margin-top: 7vh;
-    margin-bottom: 6vh;
+    margin-top: 7vmin;
+    margin-bottom: 6vmin;
     text-align: center;
-    font-size: 4vh;
+    font-size: 4vmin;
     cursor: default;
     color: #E6FFFF;
     animation: neon-text-light 13s steps(1, start) infinite reverse;
 }
 
 .main-page__menu__button {
-    margin-bottom: 3vh;
+    margin-bottom: 3vmin;
     cursor: pointer;
     border: 0;
-    font-size: 6vh;
+    font-size: 6vmin;
     background-color: rgba(0, 0, 0, 0);
     text-align: center;
     user-select: none;

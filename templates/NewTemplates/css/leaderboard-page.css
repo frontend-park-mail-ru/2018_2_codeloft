@@ -6,10 +6,10 @@ body {
 }
 
 .main-page__menu__logo {
-    margin-top: 7vh;
-    margin-bottom: 6vh;
+    margin-top: 7vmin;
+    margin-bottom: 6vmin;
     text-align: center;
-    font-size: 10vh;
+    font-size: 10vmin;
     cursor: default;
     user-select: none;
     color: #FFE64D;
@@ -17,10 +17,10 @@ body {
 }
 
 .main-page__menu__button {
-    margin-bottom: 3vh;
+    margin-bottom: 3vmin;
     cursor: pointer;
     border: 0;
-    font-size: 6vh;
+    font-size: 6vmin;
     background-color: rgba(0, 0, 0, 0);
     text-align: center;
     user-select: none;
@@ -29,25 +29,25 @@ body {
 }
 
 .leaderboard-page__users {
-    margin-top: 7vh;
-    margin-bottom: 6vh;
+    margin-top: 7vmin;
+    margin-bottom: 6vmin;
     text-align: center;
-    font-size: 5vh;
+    font-size: 5vmin;
     cursor: default;
     color: #E6FFFF;
     animation: neon-text-light 13s steps(1, start) infinite reverse;
 }
 
 .leaderboard-page__users p {
-    margin-top: 2vh;
-    margin-bottom: 2vh;
+    margin-top: 2vmin;
+    margin-bottom: 2vmin;
 }
 
 .leaderboard-page__pagination {
     text-align: center;
     user-select: none;
-    font-size: 5vh;
-    margin-bottom: 6vh;
+    font-size: 5vmin;
+    margin-bottom: 6vmin;
 }
 
 .leaderboard-page__pagination a {

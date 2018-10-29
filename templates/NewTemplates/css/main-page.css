@@ -6,10 +6,10 @@ body {
 }
 
 .main-page__menu__logo {
-    margin-top: 7vh;
-    margin-bottom: 6vh;
+    margin-top: 7vmin;
+    margin-bottom: 6vmin;
+    font-size: 10vmin;
     text-align: center;
-    font-size: 10vh;
     user-select: none;
     color: #FFE64D;
     animation: neon-text-dark 13s steps(1, start) infinite reverse;
@@ -18,12 +18,12 @@ body {
 .main-page__menu__buttons {
     cursor: pointer;
     border: 0;
-    font-size: 6vh;
+    font-size: 6vmin;
     background-color: rgba(0, 0, 0, 0);
 }
 
 .main-page__button {
-    margin-top: 3vh;
+    margin-top: 3vmin;
     text-align: center;
     user-select: none;
     color: #E6FFFF;

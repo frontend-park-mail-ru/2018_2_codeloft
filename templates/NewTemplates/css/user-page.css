@@ -6,10 +6,10 @@ body {
 }
 
 .main-page__menu__logo {
-    margin-top: 7vh;
-    margin-bottom: 6vh;
+    margin-top: 7vmin;
+    margin-bottom: 6vmin;
     text-align: center;
-    font-size: 10vh;
+    font-size: 10vmin;
     cursor: default;
     user-select: none;
     color: #FFE64D;
@@ -17,13 +17,13 @@ body {
 }
 
 .user-page__img {
-    font-size: 5vh;
+    font-size: 5vmin;
     cursor: default;
-    border-radius: 100vh;
-    height: 25vh;
+    border-radius: 100vmin;
+    height: 25vmin;
     width: auto;
     display: block;
-    margin: 7vh auto 3vh;
+    margin: 7vmin auto 3vmin;
     user-select: none;
     border-color: #FFE64D;
     animation: neon-dark 13s steps(1, start) infinite reverse;
@@ -32,14 +32,14 @@ body {
 .user-page__input {
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 4vh;
-    min-height: 4vh;
-    min-width: 45vh;
+    margin-bottom: 4vmin;
+    min-height: 4vmin;
+    min-width: 45vmin;
     display: flex;
     justify-content: center;
     flex-direction: column;
     padding-left: 20px;
-    font-size: 2vh;
+    font-size: 2vmin;
     outline:none;
     background-color: #E6FFFF;
     font-family: 'Press Start 2P', cursive;
@@ -48,10 +48,10 @@ body {
 }
 
 .main-page__menu__button {
-    margin-bottom: 3vh;
+    margin-bottom: 3vmin;
     cursor: pointer;
     border: 0;
-    font-size: 6vh;
+    font-size: 6vmin;
     background-color: rgba(0, 0, 0, 0);
     text-align: center;
     user-select: none;
