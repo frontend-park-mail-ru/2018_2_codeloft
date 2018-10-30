@@ -11,8 +11,9 @@ export default class HighScore extends BaseView {
 		return new Promise((resolve) => {
 			this.template = `<ScoreTable>
                          <Label {{class=score-loading}} {{text=loading...}}>
-                         <Button {{text=Load more}} {{class=buttonGame}}, {{click=loadScoreRows}}>
-                         <Button {{text=Back}} {{class=buttonGame}} {{click=goMenu}}>`;
+                         <Block {{class=leaderboard-page__pagination}}>
+                         <Button {{text=Load more}} {{class=main-page__button}}, {{click=loadScoreRows}}>
+                         <Button {{text=Back}} {{class=main-page__button}} {{click=goMenu}}>`;
 			tagParser.toHTML(this.template).then((elementsArray) => {
 				this.elementsArray = elementsArray;
 				this.scoreTable = this.elementsArray[0];
@@ -25,6 +26,7 @@ export default class HighScore extends BaseView {
 					div.appendChild(el.render());
 				});
 				this.element = div;
+				this.logoText = 'Leaders';
 				resolve();
 			});
 		});

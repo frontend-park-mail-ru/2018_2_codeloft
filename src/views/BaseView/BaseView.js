@@ -5,13 +5,16 @@ import userService from '../../services/UserService/UserService.js';
 import router from '../../modules/Router/Router.js';
 import URLS from '../../modules/Consts/Consts.js';
 
-const MAIN_ELEMENT = 'main';
+const MAIN_ELEMENT = 'main-page__menu';
+const MAIN_LABEL = 'main-page__menu__logo';
 
 export default class BaseView {
 	constructor() {
 		this.element = null;
 		this.elementsArray = [];
 		this._needAuth = false;
+		this.logoText = 'Tron:remastered';
+		this.mainLogo = document.getElementsByClassName(MAIN_LABEL)[0];
 		eventBus.on('enterPressed', this.mainEvent.bind(this));
 		eventBus.on('loggedIn', this.handlePrivateComponents.bind(this));
 		eventBus.on('loggedOut', this.handlePrivateComponents.bind(this));
@@ -21,7 +24,7 @@ export default class BaseView {
 		return new Promise((resolve) => {
 			this.build().then(() => {
 				this.hide();
-				document.getElementById(MAIN_ELEMENT).appendChild(this.render());
+				document.getElementsByClassName(MAIN_ELEMENT)[0].appendChild(this.render());
 				resolve();
 			});
 		});
@@ -57,7 +60,10 @@ export default class BaseView {
 			})
 			.then(() => {
 				if (!this.needAuth() || userService.isLogIn()) {
-					this.afterRender().then(() => this.element.style.display = 'block');
+					this.afterRender().then(() => {
+						this.mainLogo.innerHTML = this.logoText;
+						this.element.style.display = 'block';
+					});
 				} else {
 					router.go(URLS.SIGN_IN);
 				}

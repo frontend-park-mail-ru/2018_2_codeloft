@@ -5,6 +5,8 @@ import UserInfo from '../../components/UserInfo/UserInfo.js';
 import Block from '../../components/Block/Block.js';
 import Label from '../../components/Label/Label.js';
 import GameBlock from '../../components/GameBlock/GameBlock.js';
+import Form from '../../components/Form/Form.js';
+import Img from '../../components/Img/Img.js';
 
 /**
  * Класс, нужный для сборки документа по кастомному шаблону
@@ -36,6 +38,8 @@ class TagParser {
 			Block: () => new Block(),
 			Label: () => new Label(),
 			GameBlock: () => new GameBlock(),
+			Form: () => new Form(),
+			Img: () => new Img(),
 		};
 	}
 

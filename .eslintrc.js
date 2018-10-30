@@ -85,5 +85,8 @@ module.exports = {
 		"no-cond-assign": [
 			"off"
 		],
+		"spaced-comment": [
+			"warn"
+		],
 	}
 };

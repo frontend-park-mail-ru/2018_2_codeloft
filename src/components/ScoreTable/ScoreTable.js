@@ -9,34 +9,32 @@ export default class ScoreTable extends MainComponent {
 			.then((usersJSON) => usersJSON.json())
 			.then((users) => {
 				this.pageNumber++;
-				const rows = users.reduce((str, user) => `${str}<tr class="game-highScoreRow">
-                                <td>${user.login}</td>
-                                <td>${user.email}</td>
-                                <td>${user.score}</td>
-                         </tr>`, '');
-				if (this.element) {
-					this.element.innerHTML += rows;
-				}
+				// const rows = users.reduce((str, user) => `${str}<tr class="game-highScoreRow">
+                 //                <td>${user.login}</td>
+                 //                <td>${user.email}</td>
+                 //                <td>${user.score}</td>
+                 //         </tr>`, '');
+				// if (this.element) {
+				// 	this.element.innerHTML += rows;
+				// }
+				users.forEach((user) => {
+					this.element.innerHTML += `<p>${user.login} ${user.score}</p>`;
+				});
 				return rows;
 			})
 			.catch((err) => err);
 	}
 
-	show() {
-		if (this.element) {
-			this.element.style.display = 'table';
-		}
-	}
-
 	preRender() {
 		this.pageNumber = 1;
-		this.template = `<table class="game-highScore">
-                                     <tr class="game-highScoreRow">
-                                        <th>Player</th>
-                                        <th>Email</th>
-                                        <th>Score</th>
-                                    </tr>
-                                </table>`;
+		this.template = '<div class="leaderboard-page__users"></div>';
+		// this.template = `<table class="game-highScore">
+         //                             <tr class="game-highScoreRow">
+         //                                <th>Player</th>
+         //                                <th>Email</th>
+         //                                <th>Score</th>
+         //                            </tr>
+         //                        </table>`;
 		return super.preRender();
 	}
 }

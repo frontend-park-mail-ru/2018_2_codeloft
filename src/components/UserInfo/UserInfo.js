@@ -18,9 +18,11 @@ export default class UserInfo extends MainComponent {
 		this.emailLabel = this.element.getElementsByClassName('profile-email')[0];
 		this.scoreLabel = this.element.getElementsByClassName('profile-score')[0];
 
-		this.loginLabel.innerText = 'User: ' + userService.getUserInfo('login');
-		this.emailLabel.innerText = 'Email: ' + userService.getUserInfo('email');
-		this.scoreLabel.innerText = 'Score: ' + userService.getUserInfo('score');
+		this.loginLabel.innerText = `User: ${userService.getUserInfo('login')}`;
+		this.emailLabel.innerText = `Email: ${userService.getUserInfo('email')}`;
+		// this.loginLabel.innerText = `Score: ${userService.getUserInfo('score')}`;
+		// this.emailLabel.innerText = 'Email: ' + userService.getUserInfo('email');
+		// this.scoreLabel.innerText = 'Score: ' + userService.getUserInfo('score');
 		return super.afterRender();
 	}
 }
