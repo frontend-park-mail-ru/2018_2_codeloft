@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+    <link rel="stylesheet" href="css/user-page.css">
+</head>
+<body>
+    <div class="user-page">
+        <img class="user-page__img" src="../../src/static/img/user-default.jpg">
+        <p class="main-page__menu__logo">Username</p>
+        <input class="user-page__input loginToChange" type="text" placeholder="New login">
+        <input class="user-page__input ifLoginChanged" style="display: none" type="text" placeholder="Password">
+        <!--<input class="user-page__input passwordToChange" style="display: none" type="text" placeholder="Confirm password">-->
+        <div class="main-page__menu__button ifLoginChanged" style="display: none" id="changeLoginBtn">Change login</div>
+        <div class="main-page__menu__button" id="logOutBackBtn">Log out</div>
+        <div class="main-page__menu__button" id="userBackBtn">Back</div>
+    </div>
+    <script>
+        const passwordToChange = [...document.getElementsByClassName('ifLoginChanged')];
+
+        const loginInput = [...document.getElementsByClassName('loginToChange')];
+        loginInput[0].addEventListener('change', () => {
+            if (loginInput[0].value.length !== 0) {
+                passwordToChange.forEach(item => {
+                    item.style.display = 'block';
+                });
+            } else {
+                passwordToChange.forEach(item => {
+                    item.style.display = 'none';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

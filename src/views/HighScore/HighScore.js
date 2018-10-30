@@ -59,6 +59,9 @@ export default class HighScore extends BaseView {
 			'+1': this.currentPage + 1,
 		};
 		const tempPage = this.pageMap[action] || action;
+		if (tempPage > 5 || tempPage < 1) {
+			return;
+		}
 		Transport.Get(`/user?page=${tempPage}&page_size=5`)
 			.then((usersJSON) => usersJSON.json())
 			.then((users) => {
