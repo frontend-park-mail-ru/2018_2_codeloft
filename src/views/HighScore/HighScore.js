@@ -4,6 +4,8 @@ import BaseView from '../BaseView/BaseView.js';
 import tagParser from '../../modules/TagParser/TagParser.js';
 import eventHandler from '../../modules/EventHandler/EventHandler.js';
 import PagePointer from '../../components/PagePointer/PagePointer.js';
+import eventBus from '../../modules/EventBus/EventBus.js';
+import Transport from '../../modules/Transport/Transport.js';
 
 
 export default class HighScore extends BaseView {
@@ -13,7 +15,6 @@ export default class HighScore extends BaseView {
 			this.template = `<ScoreTable>
                          <Label {{class=score-loading}} {{text=loading...}}>
                          <Block {{class=leaderboard-page__pagination}}>
-                         <Button {{text=Load more}} {{class=main-page__button}}, {{click=loadScoreRows}}>
                          <Button {{text=Back}} {{class=main-page__button}} {{click=goMenu}}>`;
 			tagParser.toHTML(this.template).then((elementsArray) => {
 				this.elementsArray = elementsArray;
@@ -28,28 +29,54 @@ export default class HighScore extends BaseView {
 				});
 				this.element = div;
 				this.logoText = 'Leaders';
-				this.paginate();
+				this.currentPage = 1;
+				this.paginate(this.currentPage);
+				eventBus.on('getPage', this.paginate.bind(this));
 				resolve();
 			});
 		});
 	}
 
-	paginate() {
-		const back = new PagePointer('<<');
-		const forward = new PagePointer('>>');
-		this.paginator.render().appendChild(back.render());
-		this.paginator.render().appendChild(forward.render());
+	initPaginator() {
+		this.pagesArray = [];
+		this.pagesArray.push(new PagePointer('<<'));
+		for (let i = 0; i < 5; i++) {
+			this.pagesArray.push(new PagePointer(i + 1));
+		}
+		this.pagesArray.push(new PagePointer('>>'));
+		this.pagesArray[1].render().setAttribute('class', 'active');
+		this.pagesArray.forEach((pagePointer) => {
+			this.paginator.render().appendChild(pagePointer.render());
+		});
+	}
+
+	paginate(action) {
+		if (!this.pagesArray) {
+			this.initPaginator();
+		}
+		this.pageMap = {
+			'-1': this.currentPage - 1,
+			'+1': this.currentPage + 1,
+		};
+		const tempPage = this.pageMap[action] || action;
+		Transport.Get(`/user?page=${tempPage}&page_size=5`)
+			.then((usersJSON) => usersJSON.json())
+			.then((users) => {
+				this.scoreTable.render().innerHTML = '';
+				users.forEach((user) => {
+					this.scoreTable.render().innerHTML += `<p>${user.login} ${user.score}</p>`;
+				});
+				this.pagesArray[this.currentPage].setUsual();
+				this.pagesArray[tempPage].setActive();
+				this.currentPage = tempPage;
+			});
 	}
 
 	afterRender() {
-		this.updateScore();
 		return super.afterRender();
 	}
 
 	updateScore() {
 		this.loadingLabel.show();
-		this.scoreTable.loadScore().then(() => {
-			this.loadingLabel.hide();
-		});
 	}
 }

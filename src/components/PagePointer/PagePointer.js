@@ -7,14 +7,10 @@ export default class PagePointer {
 		this.element = document.createElement('a');
 		this.element.innerHTML = text;
 		this.eventMap = {
-			'<<': () => {
-				eventBus.emit('pageBack');
-			},
-			'>>': () => {
-				eventBus.emit('pageForward');
-			},
+			'<<': () => eventBus.emit('getPage', '-1'),
+			'>>': () => eventBus.emit('getPage', '+1'),
 		};
-		this.element.addEventListener('click', this.eventMap[text] || (() => eventBus.emit('getPageByNumber', text)));
+		this.element.addEventListener('click', this.eventMap[text] || (() => eventBus.emit('getPage', text)));
 	}
 
 	render() {
@@ -27,5 +23,13 @@ export default class PagePointer {
 
 	show() {
 		this.reference.style.display = 'block';
+	}
+
+	setActive() {
+		this.element.setAttribute('class', 'active');
+	}
+
+	setUsual() {
+		this.element.setAttribute('class', '');
 	}
 }
