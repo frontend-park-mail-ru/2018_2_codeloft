@@ -46,7 +46,7 @@ export default class MainComponent {
 				this.addEvents(context);
 				return this;
 			})
-			.catch(error => console.log(error));
+			.catch(error => error);
 	}
 
 	preRender() {
