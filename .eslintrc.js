@@ -88,5 +88,8 @@ module.exports = {
 		"spaced-comment": [
 			"warn"
 		],
+		"no-trailing-spaces": [
+			"off"
+		]
 	}
 };
