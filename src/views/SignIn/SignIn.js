@@ -11,9 +11,9 @@ export default class SignIn extends BaseView {
 		eventHandler.addHandler('btnSignInSubmit', () => this.submit());
 		return new Promise((resolve) => {
 			this.template = `<Label {{name=login}} {{class=login-page_error}}>
-						<Input {{name=login}} {{class=login-page__signInInput}} {{placeholder=Enter your login}} {{check=loginMin loginMax}}>
+						<Input {{name=login}} {{class=login-page__signInInput}} {{placeholder=Enter your login}} {{check=loginMin loginMax russian}}>
 						<Label {{name=password}} {{class=login-page_error}}>
-                        <Input {{name=password}} {{class=login-page__signInInput}} {{placeholder=Enter your password}} {{type=password}} {{check=passwordMin passwordMax}}>
+                        <Input {{name=password}} {{class=login-page__signInInput}} {{placeholder=Enter your password}} {{type=password}} {{check=passwordMin passwordMax russian}}>
                         <Button {{class=main-page__menu__button__do}} {{text=Sign in}} {{click=btnSignInSubmit}}>
                         <Button {{class=main-page__button}} {{text=Back}} {{click=goMenu}}>`;
 			tagParser.toHTML(this.template).then((elementsArray) => {

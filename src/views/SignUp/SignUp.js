@@ -12,13 +12,13 @@ export default class SignUp extends BaseView {
 		eventHandler.addHandler('btnSignUpSubmit', () => this.submit());
 		return new Promise((resolve) => {
 			this.template = `<Label {{name=login}} {{class=login-page_error}}>
-						<Input {{name=login}} {{class=login-page__signUpInput}} {{placeholder=Enter your login}} {{check=loginMin loginMax}}>
+						<Input {{name=login}} {{class=login-page__signUpInput}} {{placeholder=Enter your login}} {{check=loginMin loginMax russian}}>
 						<Label {{name=email}} {{class=login-page_error}}>
-					    <Input {{name=email}} {{class=login-page__signUpInput}} {{placeholder=Enter your email}} {{check=email}}>
+					    <Input {{name=email}} {{class=login-page__signUpInput}} {{placeholder=Enter your email}} {{check=email russian}}>
 					    <Label {{name=password}} {{class=login-page_error}}>
-                        <Input {{name=password}} {{class=login-page__signUpInput}} {{placeholder=Enter your password}} {{type=password}} {{check=passwordMin passwordMax}}>
+                        <Input {{name=password}} {{class=login-page__signUpInput}} {{placeholder=Enter your password}} {{type=password}} {{check=passwordMin passwordMax russian}}>
                         <Label {{name=passwordConfirm}} {{class=login-page_error}}>
-                        <Input {{name=passwordConfirm}} {{class=login-page__signUpInput}} {{placeholder=Repeat your password}} {{type=password}} {{check=passwordsEquality}}>
+                        <Input {{name=passwordConfirm}} {{class=login-page__signUpInput}} {{placeholder=Repeat your password}} {{type=password}} {{check=passwordsEquality russian}}>
                         <Button {{class=main-page__menu__button__do}} {{text=Sign up}} {{click=btnSignUpSubmit}}>
                         <Button {{class=main-page__menu__button}} {{text=Back}} {{click=goMenu}}>`;
 			tagParser.toHTML(this.template).then((elementsArray) => {
