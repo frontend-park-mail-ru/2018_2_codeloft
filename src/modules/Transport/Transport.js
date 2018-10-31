@@ -57,7 +57,7 @@ export default class Transport {
 	}
 
 	static GetHTML(template, context) {
-		const url = 'http://localhost:3000/template';
+		const url = 'https://codeloft.ru/template';
 		const fPar = {
 			method: 'GET',
 			headers: {

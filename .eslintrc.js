@@ -85,5 +85,11 @@ module.exports = {
 		"no-cond-assign": [
 			"off"
 		],
+		"spaced-comment": [
+			"warn"
+		],
+		"no-trailing-spaces": [
+			"off"
+		]
 	}
 };

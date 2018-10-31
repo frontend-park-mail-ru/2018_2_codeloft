@@ -10,19 +10,22 @@ export default class SignIn extends BaseView {
 	build() {
 		eventHandler.addHandler('btnSignInSubmit', () => this.submit());
 		return new Promise((resolve) => {
-			this.template = `<Label {{name=login}} {{class=signInErrorField}}>
-						<Input {{name=login}} {{class=game-input signInInput}} {{placeholder=Enter your login}} {{check=loginMin loginMax}}>
-						<Label {{name=password}} {{class=signInErrorField}}>
-                        <Input {{name=password}} {{class=game-input signInInput}} {{placeholder=Enter your password}} {{type=password}} {{check=passwordMin passwordMax}}>
-                        <Button {{class=buttonGame}} {{text=Sign in}} {{click=btnSignInSubmit}}>
-                        <Button {{class=buttonGame}} {{text=Back}} {{click=goMenu}}>`;
+			this.template = `<Label {{name=login}} {{class=login-page_error}}>
+						<Input {{name=login}} {{class=login-page__signInInput}} {{placeholder=Enter your login}} {{check=loginMin loginMax}}>
+						<Label {{name=password}} {{class=login-page_error}}>
+                        <Input {{name=password}} {{class=login-page__signInInput}} {{placeholder=Enter your password}} {{type=password}} {{check=passwordMin passwordMax}}>
+                        <Button {{class=main-page__menu__button__do}} {{text=Sign in}} {{click=btnSignInSubmit}}>
+                        <Button {{class=main-page__button}} {{text=Back}} {{click=goMenu}}>`;
 			tagParser.toHTML(this.template).then((elementsArray) => {
-				this.elementsArray = elementsArray;
-				const div = document.createElement('div');
-				div.setAttribute('class', 'signIn-page_menu');
+				this.elementsArray = elementsArray.slice(0, 5);
+				const form = document.createElement('form');
 				this.elementsArray.forEach((el) => {
-					div.appendChild(el.render());
+					form.appendChild(el.render());
 				});
+				const div = document.createElement('div');
+				div.appendChild(form);
+				div.appendChild(elementsArray[5].render());
+				div.setAttribute('class', 'signIn-page_menu');
 				this.element = div;
 				resolve();
 			});

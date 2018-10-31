@@ -9,7 +9,7 @@ export default class Input extends MainComponent {
 	}
 
 	compile(context) {
-		this.check = context['check'];
+		this.check = context.check;
 		return super.compile(context);
 	}
 }

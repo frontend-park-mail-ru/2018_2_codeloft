@@ -2,6 +2,7 @@
 
 import BaseView from '../BaseView/BaseView.js';
 import tagParser from '../../modules/TagParser/TagParser.js';
+import userService from '../../services/UserService/UserService.js';
 
 export default class Profile extends BaseView {
 	constructor() {
@@ -10,10 +11,11 @@ export default class Profile extends BaseView {
 	}
 
 	build() {
+		this.template = `<Img {{src=./static/img/user-default.jpg}} {{class=user-page__img}}>
+                         <UserInfo>
+                         <Button {{text=Back}} {{class=main-page__menu__button}} {{click=goMenu}}>
+                         <Button {{text=LogOut}} {{class=main-page__menu__button}} {{click=logOut}}>`;
 		return new Promise((resolve) => {
-			this.template = `<UserInfo>
-                         <Button {{text=Back}} {{class=buttonGame}} {{click=goMenu}}>
-                         <Button {{text=LogOut}} {{class=buttonGame}} {{click=logOut}}>`;
 			tagParser.toHTML(this.template).then((elementsArray) => {
 				this.elementsArray = elementsArray;
 				const div = document.createElement('div');
@@ -22,7 +24,8 @@ export default class Profile extends BaseView {
 					div.appendChild(el.render());
 				});
 				this.element = div;
-				this.userBlock = this.elementsArray[0];
+				this.userBlock = this.elementsArray[1];
+				this.logoText = 'Your profile';
 				resolve();
 			});
 		});

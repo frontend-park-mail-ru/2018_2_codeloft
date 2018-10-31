@@ -11,23 +11,25 @@ export default class SignUp extends BaseView {
 	build() {
 		eventHandler.addHandler('btnSignUpSubmit', () => this.submit());
 		return new Promise((resolve) => {
-			this.template = `<Label {{name=login}} {{class=signUpErrorField}}>
-						<Input {{name=login}} {{class=game-input signUpInput}} {{placeholder=Enter your login}} {{check=loginMin loginMax}}>
-						<Label {{name=email}} {{class=signUpErrorField}}>
-					    <Input {{name=email}} {{class=game-input signUpInput}} {{placeholder=Enter your email}} {{check=email}}>
-					    <Label {{name=password}} {{class=signUpErrorField}}>
-                        <Input {{name=password}} {{class=game-input signUpInput}} {{placeholder=Enter your password}} {{type=password}} {{check=passwordMin passwordMax}}>
-                        <Label {{name=passwordConfirm}} {{class=signUpErrorField}}>
-                        <Input {{name=passwordConfirm}} {{class=game-input signUpInput}} {{placeholder=Repeat your password}} {{type=password}} {{check=passwordsEquality}}>
-                        <Button {{class=buttonGame}} {{text=Sign up}} {{click=btnSignUpSubmit}}>
-                        <Button {{class=buttonGame}} {{text=Back}} {{click=goMenu}}>`;
+			this.template = `<Label {{name=login}} {{class=login-page_error}}>
+						<Input {{name=login}} {{class=login-page__signUpInput}} {{placeholder=Enter your login}} {{check=loginMin loginMax}}>
+						<Label {{name=email}} {{class=login-page_error}}>
+					    <Input {{name=email}} {{class=login-page__signUpInput}} {{placeholder=Enter your email}} {{check=email}}>
+					    <Label {{name=password}} {{class=login-page_error}}>
+                        <Input {{name=password}} {{class=login-page__signUpInput}} {{placeholder=Enter your password}} {{type=password}} {{check=passwordMin passwordMax}}>
+                        <Label {{name=passwordConfirm}} {{class=login-page_error}}>
+                        <Input {{name=passwordConfirm}} {{class=login-page__signUpInput}} {{placeholder=Repeat your password}} {{type=password}} {{check=passwordsEquality}}>
+                        <Button {{class=main-page__menu__button__do}} {{text=Sign up}} {{click=btnSignUpSubmit}}>
+                        <Button {{class=main-page__menu__button}} {{text=Back}} {{click=goMenu}}>`;
 			tagParser.toHTML(this.template).then((elementsArray) => {
-				this.elementsArray = elementsArray;
-				const div = document.createElement('div');
-				div.setAttribute('class', 'signUp-page_menu');
+				this.elementsArray = elementsArray.slice(0, 9);
+				const form = document.createElement('form');
 				this.elementsArray.forEach((el) => {
-					div.appendChild(el.render());
+					form.appendChild(el.render());
 				});
+				const div = document.createElement('div');
+				div.appendChild(form);
+				div.appendChild(elementsArray[9].render());
 				this.element = div;
 				resolve();
 			});
