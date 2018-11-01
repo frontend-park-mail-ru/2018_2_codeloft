@@ -1,6 +1,6 @@
 'use strict';
 
-export default class Validator {
+class Validator {
 	constructor(inputs = {}, labels = {}) {
 		this.inputs = inputs;
 		this.labels = labels;
@@ -10,6 +10,7 @@ export default class Validator {
 			passwordMin: (value) => /.{8}/.test(value),
 			passwordMax: (value) => !/.{21}/.test(value),
 			email: (value) => /^[-._a-z0-9]+@(?:[a-z0-9][-a-z0-9]+\.)+[a-z]{2,6}$/i.test(value),
+			russian: (value) => !/[а-яё]/i.test(value),
 			passwordsEquality: (value) => value === this.inputs.password.render().value,
 		};
 		this.messages = {
@@ -18,6 +19,7 @@ export default class Validator {
 			passwordMin: 'Password must be at least 8 symbols long',
 			passwordMax: 'Password must be at most 20 symbols long',
 			email: 'Wrong email format',
+			russian: 'Please use only latin characters',
 			passwordsEquality: 'Password doesn\'t match',
 		};
 	}
@@ -44,4 +46,10 @@ export default class Validator {
 		});
 		return formIsValid;
 	}
+
+	test(value, check) {
+		return this.checkConfig[check](value);
+	}
 }
+
+module.exports.Validator = Validator;
