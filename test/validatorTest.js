@@ -44,5 +44,5 @@ describe('Testing the validator module', () => {
 	});
 	it('Only latin characters - TRUE', () => {
 		assert.equal(Validator.test('simple Latin', 'russian'), true);
-	});
+	}); 
 });
