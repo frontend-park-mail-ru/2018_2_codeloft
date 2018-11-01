@@ -16,9 +16,6 @@ module.exports = {
 		main: './index.js',
 	},
 	output: {
-		// path: outPath,
-		// publicPath: '/home/igor/Projects',
-		// filename: 'bundle.js',
 		path: Path.resolve(__dirname, 'dist'),
 		filename: 'bundle.js',
 	},
@@ -29,6 +26,11 @@ module.exports = {
 	},
 	module: {
 		rules: [
+			{
+				test: /\.hbs/,
+				loader: 'handlebars-loader',
+				exclude: /(node_modules|bower_components)/
+			},
 			{
 				test: /\.scss$/,
 				loaders: [

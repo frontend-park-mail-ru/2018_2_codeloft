@@ -37,16 +37,24 @@ export default class MainComponent {
 		} else if (context.forAuth === 'true') {
 			this._forAuth = true;
 		}
-		return Transport.GetHTML(this.template, context)
-			.then((resJSON) => resJSON.json())
-			.then(compiled => {
-				const parent = document.createElement('div');
-				parent.innerHTML = compiled.html;
-				this.element = parent.lastChild;
-				this.addEvents(context);
-				return this;
-			})
-			.catch(error => error);
+		return new Promise((resolve) => {
+			const compiled = this.template(context);
+			const parent = document.createElement('div');
+			parent.innerHTML = compiled;
+			this.element = parent.lastChild;
+			this.addEvents(context);
+			resolve(this);
+		});
+		// return Transport.GetHTML(this.template, context)
+		// 	.then((resJSON) => resJSON.json())
+		// 	.then(compiled => {
+		// 		const parent = document.createElement('div');
+		// 		parent.innerHTML = compiled.html;
+		// 		this.element = parent.lastChild;
+		// 		this.addEvents(context);
+		// 		return this;
+		// 	})
+		// 	.catch(error => error);
 	}
 
 	preRender() {
