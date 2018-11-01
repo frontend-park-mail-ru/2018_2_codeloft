@@ -1,6 +1,6 @@
 'use strict';
 
-export default class Validator {
+class Validator {
 	constructor(inputs = {}, labels = {}) {
 		this.inputs = inputs;
 		this.labels = labels;
@@ -46,4 +46,10 @@ export default class Validator {
 		});
 		return formIsValid;
 	}
+
+	test(value, check) {
+		return this.checkConfig[check](value);
+	}
 }
+
+module.exports.Validator = Validator;
