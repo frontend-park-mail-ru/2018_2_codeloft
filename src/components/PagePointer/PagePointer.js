@@ -3,7 +3,7 @@
 import eventBus from '../../modules/EventBus/EventBus.js';
 
 export default class PagePointer {
-	constructor(text, action) {
+	constructor(text) {
 		this.element = document.createElement('a');
 		this.element.innerHTML = text;
 		this.eventMap = {
@@ -18,11 +18,11 @@ export default class PagePointer {
 	}
 
 	hide() {
-		this.reference.style.display = 'none';
+		this.element.style.display = 'none';
 	}
 
 	show() {
-		this.reference.style.display = 'block';
+		this.element.style.display = 'block';
 	}
 
 	setActive() {

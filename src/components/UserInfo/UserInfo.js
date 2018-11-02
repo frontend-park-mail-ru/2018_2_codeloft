@@ -2,15 +2,12 @@
 
 import MainComponent from '../MainComponent/MainComponent.js';
 import userService from '../../services/UserService/UserService.js';
+import template from './UserInfo.hbs';
 
 export default class UserInfo extends MainComponent {
 	constructor() {
 		super();
-		this.template = `<div>
-        <p class="profile-login"></p>
-        <p class="profile-email"></p>
-        <p class="profile-score"></p>
-        </div>`;
+		this.template = template;
 	}
 
 	afterRender() {
@@ -20,9 +17,6 @@ export default class UserInfo extends MainComponent {
 
 		this.loginLabel.innerText = `User: ${userService.getUserInfo('login')}`;
 		this.emailLabel.innerText = `Email: ${userService.getUserInfo('email')}`;
-		// this.loginLabel.innerText = `Score: ${userService.getUserInfo('score')}`;
-		// this.emailLabel.innerText = 'Email: ' + userService.getUserInfo('email');
-		// this.scoreLabel.innerText = 'Score: ' + userService.getUserInfo('score');
 		return super.afterRender();
 	}
 }

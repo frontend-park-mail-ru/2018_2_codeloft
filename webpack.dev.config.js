@@ -2,9 +2,11 @@ const Merge = require('webpack-merge');
 const Path = require('path');
 
 const common = require('./webpack.common.config.js');
+var OpenBrowserPlugin = require('open-browser-webpack-plugin');
 const sourcePath = Path.join(__dirname, 'src');
 
 module.exports = Merge(common, {
+	mode: 'development',
 	watch: true,
 	devtool: 'source-map',
 	module: {
@@ -25,21 +27,23 @@ module.exports = Merge(common, {
 		hot: true,
 		historyApiFallback: true,
 		progress: true,
-		port: 3000,
-		//open: process.env.WEBPACK_SERVER_BROWSER || 'Firefox',
+		port: 1000,
 		stats: {
 			warnings: false,
 		},
-		proxy: [
-			{
-				context: ['/api/**'],
-				target: 'https://backend.codeloft.ru',
-				pathRewrite: {'^/api': '/'},
-				secure: false,
-				onProxyReq: (proxyReq, req, res) => {
-					proxyReq.setHeader('Host', 'backend.codeloft.ru');
-				},
-			},
-		],
+		// proxy: [
+		// 	{
+		// 		context: ['/api/**'],
+		// 		target: 'https://backend.codeloft.ru',
+		// 		pathRewrite: {'^/api': '/'},
+		// 		secure: false,
+		// 		onProxyReq: (proxyReq, req, res) => {
+		// 			proxyReq.setHeader('Host', 'backend.codeloft.ru');
+		// 		},
+		// 	},
+		// ],
 	},
+	plugins: [
+		new OpenBrowserPlugin({ url: 'http://localhost:1000' }),
+	],
 });

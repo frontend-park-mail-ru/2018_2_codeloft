@@ -2,11 +2,12 @@
 
 import MainComponent from '../MainComponent/MainComponent.js';
 import eventHandler from '../../modules/EventHandler/EventHandler.js';
+import template from './Button.hbs';
 
 export default class Button extends MainComponent {
 	constructor() {
 		super();
-		this.template = '<div class = "{{class}}"><span>{{text}}</span></div>';
+		this.template = template;
 		this.events = ['click'];
 	}
 	addEvents(config) {
