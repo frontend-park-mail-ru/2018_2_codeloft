@@ -41,6 +41,20 @@ module.exports = {
 	module: {
 		rules: [
 			{
+				test: /\.js$/,
+				loader: 'babel-loader',
+				exclude: /(node_modules|bower_components)/,
+				options: {
+					presets: ['@babel/preset-env'],
+				},
+				// use: {
+				//
+				// 	// options: {
+				// 	// 	presets: ['env'],
+				// 	// },
+				// },
+			},
+			{
 				test: /\.hbs/,
 				loader: 'handlebars-loader',
 				exclude: /(node_modules|bower_components)/,
