@@ -47,12 +47,6 @@ module.exports = {
 				options: {
 					presets: ['@babel/preset-env'],
 				},
-				// use: {
-				//
-				// 	// options: {
-				// 	// 	presets: ['env'],
-				// 	// },
-				// },
 			},
 			{
 				test: /\.hbs/,
