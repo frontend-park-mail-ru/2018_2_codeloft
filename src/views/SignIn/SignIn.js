@@ -13,22 +13,23 @@ export default class SignIn extends BaseView {
 	build() {
 		eventHandler.addHandler('btnSignInSubmit', () => this.submit());
 		return new Promise((resolve) => {
-			this.template = `<Label {{name=login}} {{class=login-page_error-label error-label}}>
-						<Input {{name=login}} {{class=login-page__login-input input}} {{placeholder=Enter your login}} {{check=loginMin loginMax russian}}>
-						<Label {{name=password}} {{class=login-page_error-label error-label}}>
-                        <Input {{name=password}} {{class=login-page__password-input input}} {{placeholder=Enter your password}} {{type=password}} {{check=passwordMin passwordMax russian}}>
-                        <Button {{class=login-page__main-button main-button}} {{text=Sign in}} {{click=btnSignInSubmit}}>
-                        <Button {{class=login-page__menu-button button}} {{text=Back}} {{click=goMenu}}>`;
+			this.template = `<Label {{name=login}} {{class=error-label}}>
+						<Input {{name=login}} {{class=input}} {{placeholder=Enter your login}} {{check=loginMin loginMax russian}}>
+						<Label {{name=password}} {{class=error-label}}>
+                        <Input {{name=password}} {{class=input}} {{placeholder=Enter your password}} {{type=password}} {{check=passwordMin passwordMax russian}}>
+                        <Button {{class=main-button form__submit-button}} {{text=Sign in}} {{click=btnSignInSubmit}}>
+                        <Button {{class=button}} {{text=Back}} {{click=goMenu}}>`;
 			tagParser.toHTML(this.template).then((elementsArray) => {
 				this.elementsArray = elementsArray.slice(0, 5);
 				const form = document.createElement('form');
+				form.setAttribute('class', 'sinIn-block__form');
 				this.elementsArray.forEach((el) => {
 					form.appendChild(el.render());
 				});
 				const div = document.createElement('div');
 				div.appendChild(form);
 				div.appendChild(elementsArray[5].render());
-				div.setAttribute('class', 'signIn-page_menu');
+				div.setAttribute('class', 'main-content__signIn-block');
 				this.element = div;
 				resolve();
 			});

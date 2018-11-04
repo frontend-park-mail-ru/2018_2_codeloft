@@ -5,8 +5,8 @@ import userService from '../../services/UserService/UserService.js';
 import router from '../../modules/Router/Router.js';
 import URLS from '../../modules/Consts/Consts.js';
 
-const MAIN_ELEMENT = 'main-page';
-const MAIN_LABEL = 'main-page__menu__logo';
+const MAIN_ELEMENT = 'main-content';
+const MAIN_LABEL = 'main-content__logo';
 
 export default class BaseView {
 	constructor() {

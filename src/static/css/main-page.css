@@ -5,34 +5,6 @@ body {
     font-family: 'Press Start 2P', cursive;
 }
 
-.main-page__menu__logo {
-    margin-top: 7vmin;
-    margin-bottom: 6vmin;
-    font-size: 10vmin;
-    text-align: center;
-    user-select: none;
-    color: #FFE64D;
-    animation: neon-text-dark 13s steps(1, start) infinite reverse;
- }
-
-.main-page__menu__buttons {
-    border: 0;
-    background-color: rgba(0, 0, 0, 0);
-}
-
-/*.main-page__button {*/
-    /*margin-top: 3vmin;*/
-    /*text-align: center;*/
-    /*font-size: 6vmin;*/
-    /*user-select: none;*/
-    /*color: #E6FFFF;*/
-    /*animation: neon-text-light 13s steps(1, start) infinite reverse;*/
-/*}*/
-
-/*.main-page__button span {*/
-    /*cursor: pointer;*/
-/*}*/
-
 @keyframes neon-text-light {
     0% {
         text-shadow: 0 0 10px #6FC3DF;
