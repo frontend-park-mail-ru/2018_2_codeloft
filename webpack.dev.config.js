@@ -32,17 +32,17 @@ module.exports = Merge(common, {
 		stats: {
 			warnings: false,
 		},
-		// proxy: [
-		// 	{
-		// 		context: ['/**'],
-		// 		target: 'https://backend.codeloft.ru',
-		// 		pathRewrite: { '^/': '/' },
-		// 		secure: false,
-		// 		onProxyReq: (proxyReq, req, res) => {
-		// 			proxyReq.setHeader('Host', 'codeloft.ru');
-		// 		},
-		// 	},
-		// ],
+		proxy: [
+			{
+				context: ['api/**'],
+				target: 'https://backend.codeloft.ru',
+				pathRewrite: { '^/api/': '/' },
+				secure: false,
+				onProxyReq: (proxyReq, req, res) => {
+					proxyReq.setHeader('Host', 'codeloft.ru');
+				},
+			},
+		],
 	},
 	plugins: [
 		new OpenBrowserPlugin({ url: 'http://localhost:1000' }),

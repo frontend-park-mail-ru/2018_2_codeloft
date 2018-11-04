@@ -66,11 +66,11 @@ class UserService {
 	}
 
 	logIn(requestBody) {
-		return this._handleAuthResponse(Transport.Post('/session', requestBody));
+		return this._handleAuthResponse(Transport.Post('/api/session', requestBody));
 	}
 
 	register(requestBody) {
-		return this._handleAuthResponse(Transport.Post('/user', requestBody));
+		return this._handleAuthResponse(Transport.Post('/api/user', requestBody));
 	}
 
 	_handleAuthResponse(_fetch) {
