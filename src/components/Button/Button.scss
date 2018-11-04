@@ -1,0 +1,29 @@
+@import "../../static/css/main-page";
+
+%base-button {
+  margin-top: 3vmin;
+  text-align: center;
+  font-size: 6vmin;
+  user-select: none;
+  animation: neon-text-light 13s steps(1, start) infinite reverse;
+}
+
+.button {
+  @extend %base-button;
+  color: $default-label-color;
+}
+
+.button span {
+  cursor: pointer;
+}
+
+.main-button {
+  @extend %base-button;
+  color: $main-button-color;
+  border: 0;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.main-button span {
+  cursor: pointer;
+}

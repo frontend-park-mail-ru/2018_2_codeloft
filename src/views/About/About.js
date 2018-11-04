@@ -14,7 +14,7 @@ export default class About extends BaseView {
 	build() {
 		return new Promise((resolve) => {
 			this.template = `<Label {{class=about-page__rules}} {{text=${RULESTEXT}}}>
-                         <Button {{class=main-page__menu__button}} {{text=Back}} {{click=goMenu}}>`;
+                         <Button {{class=main-page__menu-button button}} {{text=Back}} {{click=goMenu}}>`;
 			tagParser.toHTML(this.template).then((elementsArray) => {
 				this.elementsArray = elementsArray;
 				const div = document.createElement('div');

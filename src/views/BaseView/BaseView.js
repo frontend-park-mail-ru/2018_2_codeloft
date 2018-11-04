@@ -5,7 +5,7 @@ import userService from '../../services/UserService/UserService.js';
 import router from '../../modules/Router/Router.js';
 import URLS from '../../modules/Consts/Consts.js';
 
-const MAIN_ELEMENT = 'main-page__menu';
+const MAIN_ELEMENT = 'main-page';
 const MAIN_LABEL = 'main-page__menu__logo';
 
 export default class BaseView {
@@ -13,7 +13,7 @@ export default class BaseView {
 		this.element = null;
 		this.elementsArray = [];
 		this._needAuth = false;
-		this.logoText = 'Tron:remastered';
+		this.logoText = 'Tron 2D';
 		this.mainLogo = document.getElementsByClassName(MAIN_LABEL)[0];
 		eventBus.on('enterPressed', this.mainEvent.bind(this));
 		eventBus.on('loggedIn', this.handlePrivateComponents.bind(this));

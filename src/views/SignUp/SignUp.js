@@ -2,7 +2,6 @@
 
 import BaseView from '../BaseView/BaseView.js';
 import tagParser from '../../modules/TagParser/TagParser.js';
-//import Validator from '../../modules/Validator/Validator.js';
 import eventHandler from '../../modules/EventHandler/EventHandler.js';
 import userService from '../../services/UserService/UserService.js';
 
@@ -22,8 +21,8 @@ export default class SignUp extends BaseView {
                         <Input {{name=password}} {{class=login-page__signUpInput}} {{placeholder=Enter your password}} {{type=password}} {{check=passwordMin passwordMax russian}}>
                         <Label {{name=passwordConfirm}} {{class=login-page_error}}>
                         <Input {{name=passwordConfirm}} {{class=login-page__signUpInput}} {{placeholder=Repeat your password}} {{type=password}} {{check=passwordsEquality russian}}>
-                        <Button {{class=main-page__menu__button__do}} {{text=Sign up}} {{click=btnSignUpSubmit}}>
-                        <Button {{class=main-page__menu__button}} {{text=Back}} {{click=goMenu}}>`;
+                        <Button {{class=main-page__main-button main-button}} {{text=Sign up}} {{click=btnSignUpSubmit}}>
+                        <Button {{class=main-page__menu-button button}} {{text=Back}} {{click=goMenu}}>`;
 			tagParser.toHTML(this.template).then((elementsArray) => {
 				this.elementsArray = elementsArray.slice(0, 9);
 				const form = document.createElement('form');

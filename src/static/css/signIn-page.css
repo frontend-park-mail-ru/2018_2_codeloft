@@ -44,36 +44,6 @@ body {
     animation: neon-light 13s steps(1, start) infinite reverse;
 }
 
-.main-page__menu__button {
-    margin-bottom: 3vmin;
-    border: 0;
-    font-size: 6vmin;
-    background-color: rgba(0, 0, 0, 0);
-    text-align: center;
-    user-select: none;
-    color: #E6FFFF;
-    animation: neon-text-light 13s steps(1, start) infinite reverse;
-}
-
-.main-page__menu__button__do {
-    margin-bottom: 3vmin;
-    border: 0;
-    font-size: 6vmin;
-    background-color: rgba(0, 0, 0, 0);
-    text-align: center;
-    user-select: none;
-    color: #FFE64D;
-    animation: neon-text-dark 13s steps(1, start) infinite reverse;
-}
-
-.main-page__menu__button span {
-    cursor: pointer;
-}
-
-.main-page__menu__button__do span {
-    cursor: pointer;
-}
-
 @keyframes neon-text-light {
     0% {
         text-shadow: 0 0 10px #6FC3DF;

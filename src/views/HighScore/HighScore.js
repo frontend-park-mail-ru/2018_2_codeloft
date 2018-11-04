@@ -15,7 +15,7 @@ export default class HighScore extends BaseView {
 			this.template = `<ScoreTable>
                          <Label {{class=score-loading}} {{text=loading...}}>
                          <Block {{class=leaderboard-page__pagination}}>
-                         <Button {{text=Back}} {{class=main-page__button}} {{click=goMenu}}>`;
+                         <Button {{text=Back}} {{class=main-page__menu-button}} {{click=goMenu}}>`;
 			tagParser.toHTML(this.template).then((elementsArray) => {
 				this.elementsArray = elementsArray;
 				this.scoreTable = this.elementsArray[0];
