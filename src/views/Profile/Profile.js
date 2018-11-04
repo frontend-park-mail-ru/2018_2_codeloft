@@ -11,15 +11,15 @@ export default class Profile extends BaseView {
 	}
 
 	build() {
-		this.template = `<Img {{src=./static/img/user-default.jpg}} {{class=user-page__img}}>
+		this.template = `<Img {{src=./static/img/user-default.jpg}} {{class=profile-block__avatar}}>
                          <UserInfo>
-                         <Button {{text=Back}} {{class=main-page__menu__button}} {{click=goMenu}}>
-                         <Button {{text=LogOut}} {{class=main-page__menu__button}} {{click=logOut}}>`;
+                         <Button {{text=Back}} {{class=button}} {{click=goMenu}}>
+                         <Button {{text=LogOut}} {{class=button}} {{click=logOut}}>`;
 		return new Promise((resolve) => {
 			tagParser.toHTML(this.template).then((elementsArray) => {
 				this.elementsArray = elementsArray;
 				const div = document.createElement('div');
-				div.setAttribute('class', 'profile-page__info');
+				div.setAttribute('class', 'main-content__profile-block');
 				this.elementsArray.forEach((el) => {
 					div.appendChild(el.render());
 				});

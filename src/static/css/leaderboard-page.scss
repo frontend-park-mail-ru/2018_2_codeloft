@@ -1,0 +1,40 @@
+.leaderboard-page__users {
+    margin-top: 7vmin;
+    margin-bottom: 6vmin;
+    text-align: center;
+    font-size: 5vmin;
+    cursor: default;
+    color: #E6FFFF;
+    animation: neon-text-light 13s steps(1, start) infinite reverse;
+}
+
+.leaderboard-page__users p {
+    margin-top: 2vmin;
+    margin-bottom: 2vmin;
+}
+
+.leaders-page__pagination-block {
+    text-align: center;
+    user-select: none;
+    font-size: 5vmin;
+    margin-bottom: 6vmin;
+}
+
+.leaders-page__pagination-block a {
+    cursor: pointer;
+    user-select: none;
+    padding: 8px 16px;
+    margin-left: 1px;
+    margin-right: 1px;
+    text-decoration: none;
+    color: #E6FFFF;
+    animation: neon-text-light 13s steps(1, start) infinite reverse;
+}
+
+.leaders-page__pagination-block a.active {
+    border: 2px solid #FFE64D;
+    color: #FFE64D;
+    border-radius: 10px;
+    cursor: default;
+    animation: neon-text-dark 13s steps(1, start) infinite reverse;
+}

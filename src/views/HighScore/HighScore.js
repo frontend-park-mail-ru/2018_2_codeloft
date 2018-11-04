@@ -2,7 +2,6 @@
 
 import BaseView from '../BaseView/BaseView.js';
 import tagParser from '../../modules/TagParser/TagParser.js';
-import eventHandler from '../../modules/EventHandler/EventHandler.js';
 import PagePointer from '../../components/PagePointer/PagePointer.js';
 import eventBus from '../../modules/EventBus/EventBus.js';
 import Transport from '../../modules/Transport/Transport.js';
@@ -10,20 +9,16 @@ import Transport from '../../modules/Transport/Transport.js';
 
 export default class HighScore extends BaseView {
 	build() {
-		eventHandler.addHandler('loadScoreRows', () => this.updateScore());
 		return new Promise((resolve) => {
 			this.template = `<ScoreTable>
-                         <Label {{class=score-loading}} {{text=loading...}}>
-                         <Block {{class=leaderboard-page__pagination}}>
-                         <Button {{text=Back}} {{class=main-page__menu-button}} {{click=goMenu}}>`;
+                         <Block {{class=leaders-page__pagination-block}}>
+                         <Button {{text=Back}} {{class=button}} {{click=goMenu}}>`;
 			tagParser.toHTML(this.template).then((elementsArray) => {
 				this.elementsArray = elementsArray;
 				this.scoreTable = this.elementsArray[0];
-				this.loadingLabel = this.elementsArray[1];
-				this.paginator = this.elementsArray[2];
-				this.loadingLabel.hide();
+				this.paginator = this.elementsArray[1];
 				const div = document.createElement('div');
-				div.setAttribute('class', 'highScore-page__list');
+				div.setAttribute('class', 'main-content__leaders-page');
 				this.elementsArray.forEach((el) => {
 					div.appendChild(el.render());
 				});
@@ -77,9 +72,5 @@ export default class HighScore extends BaseView {
 
 	afterRender() {
 		return super.afterRender();
-	}
-
-	updateScore() {
-		this.loadingLabel.show();
 	}
 }

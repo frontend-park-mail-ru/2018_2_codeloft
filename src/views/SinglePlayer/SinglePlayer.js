@@ -38,7 +38,7 @@ export default class SinglePlayer extends BaseView {
 			tagParser.toHTML(this.template).then((elementsArray) => {
 				this.elementsArray = elementsArray;
 				const div = document.createElement('div');
-				div.setAttribute('class', 'block-game_simple');
+				div.setAttribute('class', 'main-content__game-block');
 				this.elementsArray.forEach((el) => {
 					div.appendChild(el.render());
 				});

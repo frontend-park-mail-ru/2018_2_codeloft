@@ -11,12 +11,9 @@ import SinglePlayer from './views/SinglePlayer/SinglePlayer.js';
 import URLS from './modules/Consts/Consts.js';
 import userService from './services/UserService/UserService.js';
 
-import './static/css/main-page.css';
-import './static/css/about-page.css';
-import './static/css/signIn-page.css';
-import './static/css/signUp-page.css';
-import './static/css/user-page.css';
-import './static/css/leaderboard-page.css';
+import './static/css/about-page.scss';
+import './static/css/user-page.scss';
+import './static/css/leaderboard-page.scss';
 
 userService.checkAuth()
 	.then(() => {
