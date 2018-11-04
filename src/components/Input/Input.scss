@@ -14,9 +14,9 @@
   outline:none;
   background-color: #E6FFFF;
   font-family: 'Press Start 2P', cursive;
-}
 
-.input:focus {
-  border-color: #E6FFFF;
-  animation: neon-light 13s steps(1, start) infinite reverse;
+  &:focus {
+    border-color: #E6FFFF;
+    animation: neon-light 13s steps(1, start) infinite reverse;
+  }
 }

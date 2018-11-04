@@ -5,7 +5,7 @@ import tagParser from '../../modules/TagParser/TagParser.js';
 import PagePointer from '../../components/PagePointer/PagePointer.js';
 import eventBus from '../../modules/EventBus/EventBus.js';
 import Transport from '../../modules/Transport/Transport.js';
-
+import '../../static/css/leaderboard-page.scss';
 
 export default class HighScore extends BaseView {
 	build() {

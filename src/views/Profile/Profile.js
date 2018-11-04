@@ -2,7 +2,7 @@
 
 import BaseView from '../BaseView/BaseView.js';
 import tagParser from '../../modules/TagParser/TagParser.js';
-import userService from '../../services/UserService/UserService.js';
+import '../../static/css/user-page.scss';
 
 export default class Profile extends BaseView {
 	constructor() {

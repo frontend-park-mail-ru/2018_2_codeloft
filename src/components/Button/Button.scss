@@ -11,10 +11,10 @@
 .button {
   @extend %base-button;
   color: $default-label-color;
-}
 
-.button span {
-  cursor: pointer;
+  & span {
+    cursor: pointer;
+  }
 }
 
 .main-button {
@@ -22,8 +22,8 @@
   color: $main-button-color;
   border: 0;
   background-color: rgba(0, 0, 0, 0);
-}
 
-.main-button span {
-  cursor: pointer;
+  & span {
+    cursor: pointer;
+  }
 }

@@ -2,6 +2,7 @@
 
 import BaseView from '../BaseView/BaseView.js';
 import tagParser from '../../modules/TagParser/TagParser.js';
+import '../../static/css/about-page.scss';
 
 const RULESTEXT = `In our game you will play for a motorcyclist, 
 	    which leaves a bright trace. Other players or bots will also
