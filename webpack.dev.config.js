@@ -34,9 +34,9 @@ module.exports = Merge(common, {
 		},
 		proxy: [
 			{
-				context: ['api/**'],
+				context: ['/api/**'],
 				target: 'https://backend.codeloft.ru',
-				pathRewrite: { '^/api/': '/' },
+				pathRewrite: { '^/api': '/' },
 				secure: false,
 				onProxyReq: (proxyReq, req, res) => {
 					proxyReq.setHeader('Host', 'codeloft.ru');

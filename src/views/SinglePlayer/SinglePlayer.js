@@ -62,7 +62,7 @@ export default class SinglePlayer extends BaseView {
 	}
 
 	handleGameProcess() {
-		this.ctx = document.getElementsByClassName('game-block')[0].getContext('2d');
+		this.ctx = document.getElementsByClassName('game-field')[0].getContext('2d');
 		this.ctx.fillStyle = 'rgb(0, 0, 200)';
 		this.ctx.fillRect(this.x, this.y, 30, 30);
 	}

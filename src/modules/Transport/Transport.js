@@ -1,6 +1,6 @@
 const server = '';
 
-const urlBack = 'https://backend.codeloft.ru';
+const urlBack = '';
 
 /**
  * Module with methods for HTTP-requests
