@@ -27,10 +27,11 @@ export default class SignIn extends BaseView {
 					form.appendChild(el.render());
 				});
 				const div = document.createElement('div');
+				div.setAttribute('class', 'main-content__signIn-block');
 				div.appendChild(form);
 				div.appendChild(elementsArray[5].render());
-				div.setAttribute('class', 'main-content__signIn-block');
 				this.element = div;
+				this._innerName = 'SignIn';
 				resolve();
 			});
 		});

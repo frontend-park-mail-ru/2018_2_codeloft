@@ -35,6 +35,7 @@ export default class SignUp extends BaseView {
 				div.appendChild(form);
 				div.appendChild(elementsArray[9].render());
 				this.element = div;
+				this._innerName = 'SignUp';
 				resolve();
 			});
 		});

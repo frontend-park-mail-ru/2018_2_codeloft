@@ -1,3 +1,5 @@
+@import './reset.scss';
+
 .profile-block__avatar {
   cursor: default;
   border-radius: 10vmin;
@@ -6,11 +8,11 @@
   display: block;
   margin: 6vmin auto 3vmin;
   user-select: none;
-  border-color: #FFE64D;
+  border-color: $yellow-color;
   animation: neon-dark 13s steps(1, start) infinite reverse;
 }
 
-.user-page__input {
+.profile-block__input {
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 4vmin;
@@ -22,13 +24,13 @@
   padding-left: 20px;
   font-size: 2vmin;
   outline: none;
-  background-color: #E6FFFF;
+  background-color: $yellow-color;
   font-family: 'Press Start 2P', cursive;
-}
 
-.user-page__input:focus {
-  border-color: #E6FFFF;
-  animation: neon-light 13s steps(1, start) infinite reverse;
+  &:focus {
+    border-color: $yellow-color;
+    animation: neon-light 13s steps(1, start) infinite reverse;
+  }
 }
 
 @keyframes neon-light {

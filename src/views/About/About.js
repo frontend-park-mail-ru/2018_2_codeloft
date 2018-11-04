@@ -25,6 +25,7 @@ export default class About extends BaseView {
 				});
 				this.element = div;
 				this.logoText = 'About';
+				this._innerName = 'About';
 				resolve();
 			});
 		});

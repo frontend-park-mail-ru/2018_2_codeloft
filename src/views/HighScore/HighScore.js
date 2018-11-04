@@ -24,6 +24,7 @@ export default class HighScore extends BaseView {
 				});
 				this.element = div;
 				this.logoText = 'Leaders';
+				this._innerName = 'Score';
 				this.currentPage = 1;
 				this.paginate(this.currentPage);
 				eventBus.on('getPage', this.paginate.bind(this));

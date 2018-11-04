@@ -10,6 +10,7 @@ import HighScore from './views/HighScore/HighScore.js';
 import SinglePlayer from './views/SinglePlayer/SinglePlayer.js';
 import URLS from './modules/Consts/Consts.js';
 import userService from './services/UserService/UserService.js';
+import './static/css/reset.scss';
 
 userService.checkAuth()
 	.then(() => {

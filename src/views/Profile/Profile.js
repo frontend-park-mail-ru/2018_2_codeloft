@@ -26,6 +26,7 @@ export default class Profile extends BaseView {
 				this.element = div;
 				this.userBlock = this.elementsArray[1];
 				this.logoText = 'Your profile';
+				this._innerName = 'Profile';
 				resolve();
 			});
 		});

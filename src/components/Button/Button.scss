@@ -1,4 +1,4 @@
-@import "../../static/css/main-page.scss";
+@import "../../static/css/reset.scss";
 
 %base-button {
   margin-top: 3vmin;
@@ -10,7 +10,7 @@
 
 .button {
   @extend %base-button;
-  color: $default-label-color;
+  color: $light-neon-color;
 
   & span {
     cursor: pointer;
@@ -19,7 +19,7 @@
 
 .main-button {
   @extend %base-button;
-  color: $main-button-color;
+  color: $yellow-color;
   border: 0;
   background-color: rgba(0, 0, 0, 0);
 

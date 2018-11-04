@@ -2,6 +2,7 @@
 
 import BaseView from '../BaseView/BaseView.js';
 import tagParser from '../../modules/TagParser/TagParser.js';
+import '../../static/css/main-page.scss';
 
 export default class menu extends BaseView {
 	build() {
@@ -20,6 +21,7 @@ export default class menu extends BaseView {
 					div.appendChild(el.render());
 				});
 				this.element = div;
+				this._innerName = 'Main';
 				resolve();
 			});
 		});

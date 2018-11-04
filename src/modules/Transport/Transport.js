@@ -1,5 +1,3 @@
-const server = '';
-
 const urlBack = '/api';
 
 /**
@@ -38,7 +36,7 @@ export default class Transport {
 	 * @return {Promise}
 	 */
 	static FSend(adr, method, body = {}) {
-		const url = server + adr;
+		const url = adr;
 		const fPar = {
 			method: method,
 			headers: {
@@ -54,21 +52,5 @@ export default class Transport {
 			};
 		}
 		return fetch(url, fPar);
-	}
-
-	static GetHTML(template, context) {
-		const url = 'https://codeloft.ru/template';
-		const fPar = {
-			method: 'GET',
-			headers: {
-				Host: 'localhost',
-			},
-			mode: 'cors',
-		};
-		let params = `?template=${template}`;
-		Object.keys(context).forEach((field) => {
-			params += `&${field}=${context[field]}`;
-		});
-		return fetch(url + params, fPar);
 	}
 }

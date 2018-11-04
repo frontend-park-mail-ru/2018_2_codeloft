@@ -1,4 +1,4 @@
-@import "../../static/css/main-page.scss";
+@import "../../static/css/reset.scss";
 
 .input {
   margin-left: auto;
@@ -12,11 +12,11 @@
   padding-left: 20px;
   font-size: 2vmin;
   outline:none;
-  background-color: #E6FFFF;
+  background-color: $light-neon-color;
   font-family: 'Press Start 2P', cursive;
 
   &:focus {
-    border-color: #E6FFFF;
+    border-color: $light-neon-color;
     animation: neon-light 13s steps(1, start) infinite reverse;
   }
 }

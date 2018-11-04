@@ -1,7 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
-
-$default-label-color: #E6FFFF;
-$main-button-color: #FFE64D;
+@import './reset.scss';
 
 .main-content__logo {
   margin-top: 7vmin;
@@ -9,63 +6,6 @@ $main-button-color: #FFE64D;
   font-size: 10vmin;
   text-align: center;
   user-select: none;
-  color: #FFE64D;
+  color: $yellow-color;
   animation: neon-text-dark 13s steps(1, start) infinite reverse;
-}
-
-body {
-  background-color: #0C141F;
-  font-family: 'Press Start 2P', cursive;
-}
-
-@keyframes neon-text-light {
-  0% {
-    text-shadow: 0 0 10px #6FC3DF;
-  }
-
-  20% {
-    text-shadow: 0 0 20px #6FC3DF;
-  }
-
-  40% {
-    text-shadow: 0 0 40px #6FC3DF;
-  }
-
-  60% {
-    text-shadow: 0 0 60px #6FC3DF;
-  }
-
-  80% {
-    text-shadow: 0 0 80px #6FC3DF;
-  }
-
-  100% {
-    text-shadow: 0 0 100px #6FC3DF;
-  }
-}
-
-@keyframes neon-text-dark {
-  0% {
-    text-shadow: 0 0 10px #DF740C;
-  }
-
-  20% {
-    text-shadow: 0 0 20px #DF740C;
-  }
-
-  40% {
-    text-shadow: 0 0 40px #DF740C;
-  }
-
-  60% {
-    text-shadow: 0 0 60px #DF740C;
-  }
-
-  80% {
-    text-shadow: 0 0 80px #DF740C;
-  }
-
-  100% {
-    text-shadow: 0 0 100px #DF740C;
-  }
 }

@@ -14,6 +14,7 @@ export default class BaseView {
 		this.elementsArray = [];
 		this._needAuth = false;
 		this.logoText = 'Tron 2D';
+		this._innerName = '';
 		this.mainLogo = document.getElementsByClassName(MAIN_LABEL)[0];
 		eventBus.on('enterPressed', this.mainEvent.bind(this));
 		eventBus.on('loggedIn', this.handlePrivateComponents.bind(this));
@@ -28,6 +29,10 @@ export default class BaseView {
 				resolve();
 			});
 		});
+	}
+
+	getName() {
+		return this._innerName;
 	}
 
 	mainEvent() {

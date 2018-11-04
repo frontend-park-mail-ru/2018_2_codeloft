@@ -1,8 +1,10 @@
+@import '../../static/css/reset.scss';
+
 .about-block__rules-text {
-    margin-top: 7vmin;
-    margin-bottom: 6vmin;
-    text-align: center;
-    font-size: 4vmin;
-    cursor: default;
-    color: #E6FFFF;
+  margin-top: 7vmin;
+  margin-bottom: 6vmin;
+  text-align: center;
+  font-size: 4vmin;
+  cursor: default;
+  color: $light-neon-color;
 }

@@ -12,6 +12,7 @@ export default class SinglePlayer extends BaseView {
 		this.x = 0;
 		this.y = 0;
 		this.gameMode = false;
+		this._innerName = 'SinglePlayer';
 		document.addEventListener('keydown', (key) => {
 			if (this.gameMode) {
 				const button = String.fromCharCode(key.keyCode || key.charCode);
