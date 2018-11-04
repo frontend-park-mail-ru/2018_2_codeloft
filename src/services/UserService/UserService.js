@@ -35,7 +35,7 @@ class UserService {
 	}
 
 	checkAuth() {
-		return Transport.Get('/api/session')
+		return Transport.Get('/session')
 			.then((response) => {
 				if (response.status === 200) {
 					return response.json();
@@ -57,7 +57,7 @@ class UserService {
 			login: login,
 			password: password,
 		};
-		return Transport.Delete('/api/session', requestBody)
+		return Transport.Delete('/session', requestBody)
 			.then(() => {
 				this._clearUserData();
 				eventBus.emit('loggedOut');
@@ -66,11 +66,11 @@ class UserService {
 	}
 
 	logIn(requestBody) {
-		return this._handleAuthResponse(Transport.Post('/api/session', requestBody));
+		return this._handleAuthResponse(Transport.Post('/session', requestBody));
 	}
 
 	register(requestBody) {
-		return this._handleAuthResponse(Transport.Post('/api/user', requestBody));
+		return this._handleAuthResponse(Transport.Post('/user', requestBody));
 	}
 
 	_handleAuthResponse(_fetch) {

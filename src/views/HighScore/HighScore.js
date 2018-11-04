@@ -57,7 +57,7 @@ export default class HighScore extends BaseView {
 		if (tempPage > 5 || tempPage < 1) {
 			return;
 		}
-		Transport.Get(`/api/user?page=${tempPage}&page_size=5`)
+		Transport.Get(`/user?page=${tempPage}&page_size=5`)
 			.then((usersJSON) => usersJSON.json())
 			.then((users) => {
 				this.scoreTable.render().innerHTML = '';

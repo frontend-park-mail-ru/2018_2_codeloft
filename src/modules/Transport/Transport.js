@@ -1,6 +1,6 @@
 const server = '';
 
-const urlBack = '';
+const urlBack = '/api';
 
 /**
  * Module with methods for HTTP-requests

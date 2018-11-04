@@ -3,26 +3,12 @@ const Path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const isProduction = process.argv.indexOf('-p') >= 0;
 const outPath = Path.join(__dirname, 'dist');
 const sourcePath = Path.join(__dirname, './src');
 
 module.exports = {
-	optimization: {
-		splitChunks: {
-			cacheGroups: {
-				styles: {
-					name: 'styles',
-					test: /\.css$/,
-					chunks: 'all',
-					enforce: true,
-				},
-			},
-		},
-	},
 	context: sourcePath,
 	entry: {
 		main: [
@@ -53,59 +39,44 @@ module.exports = {
 				loader: 'handlebars-loader',
 				exclude: /(node_modules|bower_components)/,
 			},
-			// {
-			// 	test: /\.scss$/,
-			// 	loaders: [
-			// 		'style-loader',
-			// 		'css-loader',
-			// 		{
-			// 			loader: 'resolve-url-loader',
-			// 		},
-			// 		'sass-loader',
-			// 	],
-			// },
-			{
-				test: /\.css$/,
-				use: [
-					MiniCssExtractPlugin.loader,
-					'css-loader',
-					'resolve-url-loader',
-				],
-				// use: ExtractTextPlugin.extract({
-				// 	fallback: 'style-loader',
-				// 	use: [
-				// 		{
-				// 			loader: 'css-loader',
-				// 			query: {
-				// 				modules: true,
-				// 				sourceMap: !isProduction,
-				// 				importLoaders: 1,
-				// 				localIdentName: '[local]__[hash:base64:5]',
-				// 			},
-				// 		},
-				// 		{
-				// 			loader: 'postcss-loader',
-				// 			options: {
-				// 				ident: 'postcss',
-				// 				plugins: [
-				// 					require('postcss-import')({addDependencyTo: Webpack}),
-				// 					require('postcss-url')(),
-				// 					require('postcss-cssnext')(),
-				// 					require('postcss-reporter')(),
-				// 					require('postcss-browser-reporter')({disabled: isProduction}),
-				// 				],
-				// 			},
-				// 		},
-				// 	],
-				// }),
-			},
 			{
 				test: /\.scss$/,
-				use: [
-					'style-loader', // creates style nodes from JS strings
-					'css-loader', // translates CSS into CommonJS
-					'sass-loader', // compiles Sass to CSS, using Node Sass by default
+				loaders: [
+					'style-loader',
+					'css-loader',
+					'resolve-url-loader',
+					'sass-loader',
 				],
+			},
+			{
+				test: /\.css$/,
+				use: ExtractTextPlugin.extract({
+					fallback: 'style-loader',
+					use: [
+						{
+							loader: 'css-loader',
+							query: {
+								modules: true,
+								sourceMap: !isProduction,
+								importLoaders: 1,
+								localIdentName: '[local]__[hash:base64:5]',
+							},
+						},
+						{
+							loader: 'postcss-loader',
+							options: {
+								ident: 'postcss',
+								plugins: [
+									require('postcss-import')({addDependencyTo: Webpack}),
+									require('postcss-url')(),
+									require('postcss-cssnext')(),
+									require('postcss-reporter')(),
+									require('postcss-browser-reporter')({disabled: isProduction}),
+								],
+							},
+						},
+					],
+				}),
 			},
 			{
 				test: /\.html$/,
@@ -123,15 +94,12 @@ module.exports = {
 	},
 	plugins: [
 		new Webpack.optimize.AggressiveMergingPlugin(),
-		// new ExtractTextPlugin({
-		// 	filename: 'bundle.css',
-		// 	// disable: !isProduction,
-		// }),
+		new ExtractTextPlugin({
+			filename: 'styles.css',
+			disable: !isProduction
+		}),
 		new HtmlWebpackPlugin({
 			template: 'index.html',
-		}),
-		new MiniCssExtractPlugin({
-			filename: 'bundle.css',
 		}),
 	],
 };
