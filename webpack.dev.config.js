@@ -27,18 +27,19 @@ module.exports = Merge(common, {
 		hot: true,
 		historyApiFallback: true,
 		progress: true,
+		open: true,
 		port: 1000,
 		stats: {
 			warnings: false,
 		},
 		// proxy: [
 		// 	{
-		// 		context: ['/api/**'],
+		// 		context: ['/**'],
 		// 		target: 'https://backend.codeloft.ru',
-		// 		pathRewrite: {'^/api': '/'},
+		// 		pathRewrite: { '^/': '/' },
 		// 		secure: false,
 		// 		onProxyReq: (proxyReq, req, res) => {
-		// 			proxyReq.setHeader('Host', 'backend.codeloft.ru');
+		// 			proxyReq.setHeader('Host', 'codeloft.ru');
 		// 		},
 		// 	},
 		// ],
