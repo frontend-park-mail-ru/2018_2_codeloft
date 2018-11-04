@@ -12,6 +12,7 @@ export default class SinglePlayer extends BaseView {
 		this.x = 0;
 		this.y = 0;
 		this.gameMode = false;
+		this._innerName = 'SinglePlayer';
 		document.addEventListener('keydown', (key) => {
 			if (this.gameMode) {
 				const button = String.fromCharCode(key.keyCode || key.charCode);
@@ -38,7 +39,7 @@ export default class SinglePlayer extends BaseView {
 			tagParser.toHTML(this.template).then((elementsArray) => {
 				this.elementsArray = elementsArray;
 				const div = document.createElement('div');
-				div.setAttribute('class', 'block-game_simple');
+				div.setAttribute('class', 'main-content__game-block');
 				this.elementsArray.forEach((el) => {
 					div.appendChild(el.render());
 				});
@@ -62,7 +63,7 @@ export default class SinglePlayer extends BaseView {
 	}
 
 	handleGameProcess() {
-		this.ctx = document.getElementsByClassName('game-block')[0].getContext('2d');
+		this.ctx = document.getElementsByClassName('game-field')[0].getContext('2d');
 		this.ctx.fillStyle = 'rgb(0, 0, 200)';
 		this.ctx.fillRect(this.x, this.y, 30, 30);
 	}

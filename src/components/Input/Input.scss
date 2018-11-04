@@ -1,0 +1,22 @@
+@import "../../static/css/reset.scss";
+
+.input {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 4vmin;
+  min-height: 4vmin;
+  min-width: 45vmin;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding-left: 20px;
+  font-size: 2vmin;
+  outline:none;
+  background-color: $light-neon-color;
+  font-family: 'Press Start 2P', cursive;
+
+  &:focus {
+    border-color: $light-neon-color;
+    animation: neon-light 13s steps(1, start) infinite reverse;
+  }
+}

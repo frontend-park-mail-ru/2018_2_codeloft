@@ -2,7 +2,6 @@
 
 import BaseView from '../BaseView/BaseView.js';
 import tagParser from '../../modules/TagParser/TagParser.js';
-//import Validator from '../../modules/Validator/Validator.js';
 import eventHandler from '../../modules/EventHandler/EventHandler.js';
 import userService from '../../services/UserService/UserService.js';
 
@@ -14,23 +13,25 @@ export default class SignIn extends BaseView {
 	build() {
 		eventHandler.addHandler('btnSignInSubmit', () => this.submit());
 		return new Promise((resolve) => {
-			this.template = `<Label {{name=login}} {{class=login-page_error}}>
-						<Input {{name=login}} {{class=login-page__signInInput}} {{placeholder=Enter your login}} {{check=loginMin loginMax russian}}>
-						<Label {{name=password}} {{class=login-page_error}}>
-                        <Input {{name=password}} {{class=login-page__signInInput}} {{placeholder=Enter your password}} {{type=password}} {{check=passwordMin passwordMax russian}}>
-                        <Button {{class=main-page__menu__button__do}} {{text=Sign in}} {{click=btnSignInSubmit}}>
-                        <Button {{class=main-page__button}} {{text=Back}} {{click=goMenu}}>`;
+			this.template = `<Label {{name=login}} {{class=error-label}}>
+						<Input {{name=login}} {{class=input}} {{placeholder=Enter your login}} {{check=loginMin loginMax russian}}>
+						<Label {{name=password}} {{class=error-label}}>
+                        <Input {{name=password}} {{class=input}} {{placeholder=Enter your password}} {{type=password}} {{check=passwordMin passwordMax russian}}>
+                        <Button {{class=main-button form__submit-button}} {{text=Sign in}} {{click=btnSignInSubmit}}>
+                        <Button {{class=button}} {{text=Back}} {{click=goMenu}}>`;
 			tagParser.toHTML(this.template).then((elementsArray) => {
 				this.elementsArray = elementsArray.slice(0, 5);
 				const form = document.createElement('form');
+				form.setAttribute('class', 'sinIn-block__form');
 				this.elementsArray.forEach((el) => {
 					form.appendChild(el.render());
 				});
 				const div = document.createElement('div');
+				div.setAttribute('class', 'main-content__signIn-block');
 				div.appendChild(form);
 				div.appendChild(elementsArray[5].render());
-				div.setAttribute('class', 'signIn-page_menu');
 				this.element = div;
+				this._innerName = 'SignIn';
 				resolve();
 			});
 		});

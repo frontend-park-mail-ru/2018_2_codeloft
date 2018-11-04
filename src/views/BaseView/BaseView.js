@@ -5,15 +5,16 @@ import userService from '../../services/UserService/UserService.js';
 import router from '../../modules/Router/Router.js';
 import URLS from '../../modules/Consts/Consts.js';
 
-const MAIN_ELEMENT = 'main-page__menu';
-const MAIN_LABEL = 'main-page__menu__logo';
+const MAIN_ELEMENT = 'main-content';
+const MAIN_LABEL = 'main-content__logo';
 
 export default class BaseView {
 	constructor() {
 		this.element = null;
 		this.elementsArray = [];
 		this._needAuth = false;
-		this.logoText = 'Tron:remastered';
+		this.logoText = 'Tron 2D';
+		this._innerName = '';
 		this.mainLogo = document.getElementsByClassName(MAIN_LABEL)[0];
 		eventBus.on('enterPressed', this.mainEvent.bind(this));
 		eventBus.on('loggedIn', this.handlePrivateComponents.bind(this));
@@ -28,6 +29,10 @@ export default class BaseView {
 				resolve();
 			});
 		});
+	}
+
+	getName() {
+		return this._innerName;
 	}
 
 	mainEvent() {

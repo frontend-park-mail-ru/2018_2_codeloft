@@ -20,7 +20,7 @@ class Validator {
 			passwordMax: 'Password must be at most 20 symbols long',
 			email: 'Wrong email format',
 			russian: 'Please use only latin characters',
-			passwordsEquality: 'Password doesn\'t match',
+			passwordsEquality: 'Passwords don\'t match',
 		};
 	}
 

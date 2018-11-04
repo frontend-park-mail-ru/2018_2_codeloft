@@ -3,6 +3,8 @@
 import MainComponent from '../MainComponent/MainComponent.js';
 import template from './Input.hbs';
 
+import './Input.scss';
+
 export default class Input extends MainComponent {
 	constructor() {
 		super();

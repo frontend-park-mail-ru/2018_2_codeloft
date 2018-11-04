@@ -10,13 +10,7 @@ import HighScore from './views/HighScore/HighScore.js';
 import SinglePlayer from './views/SinglePlayer/SinglePlayer.js';
 import URLS from './modules/Consts/Consts.js';
 import userService from './services/UserService/UserService.js';
-
-import './static/css/main-page.css';
-import './static/css/about-page.css';
-import './static/css/signIn-page.css';
-import './static/css/signUp-page.css';
-import './static/css/user-page.css';
-import './static/css/leaderboard-page.css';
+import './static/css/reset.scss';
 
 userService.checkAuth()
 	.then(() => {

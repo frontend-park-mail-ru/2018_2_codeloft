@@ -2,7 +2,6 @@
 
 import BaseView from '../BaseView/BaseView.js';
 import tagParser from '../../modules/TagParser/TagParser.js';
-//import Validator from '../../modules/Validator/Validator.js';
 import eventHandler from '../../modules/EventHandler/EventHandler.js';
 import userService from '../../services/UserService/UserService.js';
 
@@ -14,26 +13,29 @@ export default class SignUp extends BaseView {
 	build() {
 		eventHandler.addHandler('btnSignUpSubmit', () => this.submit());
 		return new Promise((resolve) => {
-			this.template = `<Label {{name=login}} {{class=login-page_error}}>
-						<Input {{name=login}} {{class=login-page__signUpInput}} {{placeholder=Enter your login}} {{check=loginMin loginMax russian}}>
-						<Label {{name=email}} {{class=login-page_error}}>
-					    <Input {{name=email}} {{class=login-page__signUpInput}} {{placeholder=Enter your email}} {{check=email russian}}>
-					    <Label {{name=password}} {{class=login-page_error}}>
-                        <Input {{name=password}} {{class=login-page__signUpInput}} {{placeholder=Enter your password}} {{type=password}} {{check=passwordMin passwordMax russian}}>
-                        <Label {{name=passwordConfirm}} {{class=login-page_error}}>
-                        <Input {{name=passwordConfirm}} {{class=login-page__signUpInput}} {{placeholder=Repeat your password}} {{type=password}} {{check=passwordsEquality russian}}>
-                        <Button {{class=main-page__menu__button__do}} {{text=Sign up}} {{click=btnSignUpSubmit}}>
-                        <Button {{class=main-page__menu__button}} {{text=Back}} {{click=goMenu}}>`;
+			this.template = `<Label {{name=login}} {{class=error-label}}>
+						<Input {{name=login}} {{class=input}} {{placeholder=Enter your login}} {{check=loginMin loginMax russian}}>
+						<Label {{name=email}} {{class=error-label}}>
+					    <Input {{name=email}} {{class=input}} {{placeholder=Enter your email}} {{check=email russian}}>
+					    <Label {{name=password}} {{class=error-label}}>
+                        <Input {{name=password}} {{class=input}} {{placeholder=Enter your password}} {{type=password}} {{check=passwordMin passwordMax russian}}>
+                        <Label {{name=passwordConfirm}} {{class=error-label}}>
+                        <Input {{name=passwordConfirm}} {{class=input}} {{placeholder=Repeat your password}} {{type=password}} {{check=passwordsEquality russian}}>
+                        <Button {{class=main-button form__submit-button}} {{text=Sign up}} {{click=btnSignUpSubmit}}>
+                        <Button {{class=button}} {{text=Back}} {{click=goMenu}}>`;
 			tagParser.toHTML(this.template).then((elementsArray) => {
 				this.elementsArray = elementsArray.slice(0, 9);
 				const form = document.createElement('form');
+				form.setAttribute('class', 'signIn-block__form');
 				this.elementsArray.forEach((el) => {
 					form.appendChild(el.render());
 				});
 				const div = document.createElement('div');
+				div.setAttribute('class', 'signUp-page');
 				div.appendChild(form);
 				div.appendChild(elementsArray[9].render());
 				this.element = div;
+				this._innerName = 'SignUp';
 				resolve();
 			});
 		});

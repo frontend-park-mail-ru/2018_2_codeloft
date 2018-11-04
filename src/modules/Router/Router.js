@@ -13,7 +13,7 @@ class Router {
 		document.addEventListener('keydown', (key) => {
 			if (key.key === 'Enter') {
 				this.currentView.mainEvent();
-			} else if (key.key === 'Escape') {
+			} else if (key.key === 'Escape' && this.currentView.getName() !== 'Main') {
 				this.go(URLS.MENU);
 			}
 		});
