@@ -10,7 +10,7 @@ addons:
 script:
   - npm run eslint
   - npm test
-  - if [ "$TRAVIS_BRANCH" = "testing" ]; then npm run build:tesing fi 
+  - if [ "$TRAVIS_BRANCH" = "testing" ]; then npm run build:tesing; fi 
 after_success:
   - chmod +x ./to_machine_deploy.sh
   # - if [ "$TRAVIS_BRANCH" = "master" ]; then ./to_machine_deploy.sh prod; fi
