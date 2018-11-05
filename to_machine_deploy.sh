@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# BUILD=${1:-testing}
+BUILD=${1:-testing}
 
 mkdir ~/archive
 
@@ -8,9 +8,7 @@ mv dist/* ~/archive
 
 tar -czf ~/package.tgz ~/archive
 
-stat --printf="%s" ~/package.tgz
-
 export SSHPASS=$DEPLOY_PASS
-sshpass -e scp -o StrictHostKeychecking=no ~/package.tgz travis@codeloft.ru:/home/travis/Deploy 
-sshpass -e ssh -o StrictHostKeychecking=no travis@codeloft.ru "cd /home/travis/Deploy && ./deploy.sh"
+sshpass -e scp -o StrictHostKeychecking=no ~/package.tgz $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH 
+sshpass -e ssh -o StrictHostKeychecking=no $DEPLOY_USER@$DEPLOY_HOST "cd $DEPLOY_PATH && ./deploy.sh ${BUILD}"
 
