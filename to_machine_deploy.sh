@@ -4,7 +4,7 @@ BUILD=${1:-testing}
 
 mkdir ~/archive
 
-mv ./dist/* ~/archive
+mv dist/* ~/archive
 
 tar -czf ~/package.tgz ~/archive
 
