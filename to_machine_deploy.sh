@@ -2,11 +2,11 @@
 
 BUILD=${1:-testing}
 
-mkdir archive
+mkdir ~/archive
 
-mv ./dist/* archive
+mv ./dist/* ~/archive
 
-tar -czf package.tgz archive
+tar -czf ~/package.tgz ~/archive
 
 export SSHPASS=$DEPLOY_PASS
 sshpass -e scp -o StrictHostKeychecking=no package.tgz $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH 
