@@ -1,9 +1,9 @@
 'user strict';
 
 export default class Player {
-	constructor(x, y, speed, radius, context, color) {
+	constructor(x, y, speed, radius, context, colorArray) {
 		this.context = context;
-		this.color = color;
+		this.colorArray = colorArray;
 
 		this.userCoord = {
 		    x: x,
@@ -15,8 +15,15 @@ export default class Player {
 
 	draw() {
 		this.context.beginPath();
+
+		const gradient = this.context.createRadialGradient(this.userCoord.x, this.userCoord.y,
+			0, this.userCoord.x, this.userCoord.y, this.userCoord.radius);
+		gradient.addColorStop(0, this.colorArray[0]);
+		gradient.addColorStop(0.5, this.colorArray[1]);
+		gradient.addColorStop(1, this.colorArray[2]);
+
 		this.context.arc(this.userCoord.x, this.userCoord.y, this.userCoord.radius, 0, Math.PI * 2, false);
-		this.context.fillStyle = this.color;
+		this.context.fillStyle = gradient;
 		this.context.fill();
 		this.context.closePath();
 	}

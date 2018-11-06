@@ -10,8 +10,10 @@ export default class SinglePlayer extends BaseView {
 	constructor() {
 		super();
 		this._needAuth = true;
-		this.x = 0;
-		this.y = 0;
+		// this.x = 0;
+		// this.y = 0;
+
+		this.playerColorArray = ['#E6FFFF', '#6FC3DF', 'rgba(111, 195, 223, 0)'];
 
 		this._innerName = 'SinglePlayer';
 		this.context = undefined;
@@ -73,7 +75,7 @@ export default class SinglePlayer extends BaseView {
 		this.canvas.height = window.innerHeight;
 		this.context = this.canvas.getContext('2d');
 
-		const player = new Player(window.innerWidth / 2, window.innerHeight / 2, 3, 30, this.context, '#fa4c2b');
+		const player = new Player(window.innerWidth / 2, window.innerHeight / 2, 3, 30, this.context, this.playerColorArray);
 		player.draw();
 
 		this.eventKeyDown = document.addEventListener('keydown', (event) => {
@@ -107,7 +109,7 @@ export default class SinglePlayer extends BaseView {
 				break;
 			}
 		});
-		this.eventKeyDown = document.addEventListener('keyup', (event) => {
+		this.eventKeyUp = document.addEventListener('keyup', (event) => {
 			switch (event.keyCode) {
 			case 87 || 38:
 				this.keyUp = false;
@@ -150,6 +152,10 @@ export default class SinglePlayer extends BaseView {
 
 	hide() {
 		super.hide();
-		this.gameMode = false;
+		// this.gameMode = false;
+
+		cancelAnimationFrame(this.animationId);
+		document.removeEventListener('keydown', this.eventKeyDown, false);
+		document.removeEventListener('keyup', this.eventKeyUp, false);
 	}
 }
