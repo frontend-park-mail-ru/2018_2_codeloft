@@ -10,6 +10,7 @@ module.exports = {
 		"fetch": false,
 		"document": false,
 		"window": false,
+		"navigator": false,
 	},
 	"extends": "airbnb",
 	"rules": {

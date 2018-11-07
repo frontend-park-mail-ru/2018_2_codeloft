@@ -2,8 +2,7 @@
 
 import BaseView from '../BaseView/BaseView.js';
 import tagParser from '../../modules/TagParser/TagParser.js';
-import router from '../../modules/Router/Router.js';
-import URLS from '../../modules/Consts/Consts.js';
+import Socket from '../../services/WebSocketService/WebSocketService.js';
 
 export default class SinglePlayer extends BaseView {
 	constructor() {
@@ -63,6 +62,12 @@ export default class SinglePlayer extends BaseView {
 	}
 
 	handleGameProcess() {
+		const ws = new Socket('wss://backend.codeloft.ru/gamews');
+		const message = {
+			type: 'connect_player',
+		};
+		ws.send(message);
+		ws.close();
 		this.ctx = document.getElementsByClassName('game-field')[0].getContext('2d');
 		this.ctx.fillStyle = 'rgb(0, 0, 200)';
 		this.ctx.fillRect(this.x, this.y, 30, 30);
