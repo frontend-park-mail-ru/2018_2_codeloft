@@ -39,8 +39,7 @@ this.addEventListener('fetch', (event) => {
 				}
 
 				return fetch(event.request);
-
 			})
-			.catch((error) => console.log('WTF', error)));
-
+			.catch((error) => console.log('WTF', error))
+	);
 });
