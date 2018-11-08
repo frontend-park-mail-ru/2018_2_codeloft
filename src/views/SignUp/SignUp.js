@@ -31,7 +31,7 @@ export default class SignUp extends BaseView {
 					form.appendChild(el.render());
 				});
 				const div = document.createElement('div');
-				div.setAttribute('class', 'signUp-page');
+				div.setAttribute('class', 'main-content__signUp-block');
 				div.appendChild(form);
 				div.appendChild(elementsArray[9].render());
 				this.element = div;
