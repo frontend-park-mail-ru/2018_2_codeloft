@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/frontend-park-mail-ru/2018_2_codeloft.svg?branch=testing)](https://travis-ci.org/frontend-park-mail-ru/2018_2_codeloft)
 ## Многопользовательская браузерная игра Tron Remastered
 
 - [Ссылки](#references)

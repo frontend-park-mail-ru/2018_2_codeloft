@@ -1,6 +1,7 @@
 'use strict';
 
 import Transport from '../../modules/Transport/Transport.js';
+import eventBus from '../../modules/EventBus/EventBus.js';
 
 /**
  * Module user data
@@ -8,46 +9,92 @@ import Transport from '../../modules/Transport/Transport.js';
  */
 class UserService {
 	/**
-     * @constructor
-     */
+	 * @constructor
+	 */
 	constructor() {
-		this.user = null;
+		this._clearUserData();
+		this.errorMessages = {
+			400: 'Incorrect login or password',
+		};
 	}
 
 	/**
-     * Get data from backend
-     * @return {Transport|*}
-     */
-	GetData() {
-		return Transport.Get('/user').then((userData) => {
-			this.user = userData;
-		});
+	 * Get user data
+	 * @return {*}
+	 */
+	getUserInfo(property) {
+		return this.userInfo[property];
 	}
 
 	/**
-     * Get user data
-     * @return {*}
-     */
-	GetUser() {
-		return this.user;
+	 * Check, that user in system
+	 * @return {*}
+	 */
+	isLogIn() {
+		return !!this.userInfo.login;
+	}
+
+	checkAuth() {
+		return Transport.Get('/session')
+			.then((response) => {
+				if (response.status === 200) {
+					return response.json();
+				}
+				throw response.status;
+			})
+			.then((userInfo) => {
+				this.userInfo = userInfo;
+				return 'ok';
+			}).catch(() => this._clearUserData());
 	}
 
 	/**
-     * Check, that user in system
-     * @return {*}
-     */
-	IsLogIn() {
-		return !!this.user;
+	 * Log out user
+	 * @return {*}
+	 */
+	logOut(login, password) {
+		const requestBody = {
+			login: login,
+			password: password,
+		};
+		return Transport.Delete('/session', requestBody)
+			.then(() => {
+				this._clearUserData();
+				eventBus.emit('loggedOut');
+				return 'ok';
+			});
 	}
 
-	/**
-     * Log out user
-     * @return {*}
-     */
-	LogOut() {
-		return Transport.Post('/logout', {}).then(() => {
-			this.user = null;
-		});
+	logIn(requestBody) {
+		return this._handleAuthResponse(Transport.Post('/session', requestBody));
+	}
+
+	register(requestBody) {
+		return this._handleAuthResponse(Transport.Post('/user', requestBody));
+	}
+
+	_handleAuthResponse(_fetch) {
+		return _fetch
+			.then((response) => {
+				if (response.status === 200) {
+					return response.json();
+				}
+				throw response.status;
+			})
+			.then((userInfo) => {
+				this.userInfo = userInfo;
+				eventBus.emit('loggedIn');
+				return 'ok';
+			})
+			.catch((status) => status);
+	}
+
+	_clearUserData() {
+		this.userInfo = {
+			login: null,
+			email: null,
+			score: null,
+		};
 	}
 }
 

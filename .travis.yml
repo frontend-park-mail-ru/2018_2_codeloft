@@ -1,0 +1,18 @@
+language: node_js
+sudo: false
+node_js:
+- '10'
+addons:
+  apt:
+    packages:
+      - sshpass
+
+script:
+  - npm run eslint
+  - npm test
+  - if [ "$TRAVIS_BRANCH" = "testing" ]; then npm run build:testing; fi 
+after_success:
+  - chmod +x ./to_machine_deploy.sh
+  # - if [ "$TRAVIS_BRANCH" = "master" ]; then ./to_machine_deploy.sh prod; fi
+  - if [ "$TRAVIS_BRANCH" = "testing" ]; then ./to_machine_deploy.sh testing; fi 
+

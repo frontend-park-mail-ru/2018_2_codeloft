@@ -1,14 +1,11 @@
 'use strict';
 
 import MainComponent from '../MainComponent/MainComponent.js';
+import template from './Block.hbs';
 
 export default class Block extends MainComponent {
-
-	compile(data) {
-		this.template = `<${data.tag} name="{{name}}" class="{{class}}">{{text}}</${data.tag}>`;
-		this.template = Handlebars.compile(this.template);
-		this.template(data);
-		super.compile(data);
+	constructor() {
+		super();
+		this.template = template;
 	}
-
 }

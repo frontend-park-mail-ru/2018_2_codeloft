@@ -1,0 +1,29 @@
+@import "../../static/css/reset.scss";
+
+%base-button {
+  margin-top: 3vmin;
+  text-align: center;
+  font-size: 6vmin;
+  user-select: none;
+  animation: neon-text-light 13s steps(1, start) infinite reverse;
+}
+
+.button {
+  @extend %base-button;
+  color: $light-neon-color;
+
+  & span {
+    cursor: pointer;
+  }
+}
+
+.main-button {
+  @extend %base-button;
+  color: $yellow-color;
+  border: 0;
+  background-color: rgba(0, 0, 0, 0);
+
+  & span {
+    cursor: pointer;
+  }
+}

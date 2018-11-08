@@ -1,7 +1,4 @@
-const server='';
-
-const urlBack = 'https://apoj.herokuapp.com';
-// const urlBack = 'https://codeloft-back.now.sh';
+const urlBack = '/api';
 
 /**
  * Module with methods for HTTP-requests
@@ -9,51 +6,51 @@ const urlBack = 'https://apoj.herokuapp.com';
  */
 export default class Transport {
 	/**
-     * Perform Get requests with specified address
-     * @param {string} adr - address of request
-     * @return {Promise}
-     */
+	 ** Perform Get requests with specified address
+	 * @param {string} adr - address of request
+	 * @return {Promise}
+	 */
 	static Get(adr) {
-		return Transport.FSend(urlBack + adr, 'get');
+		return Transport.FSend(urlBack + adr, 'GET');
 	}
 
 	/**
-     * Perform Post requests with specified address
-     * @param {string} adr - address of request
-     * @param {*} body - body of request
-     * @return {Promise}
-     */
+	 * Perform Post requests with specified address
+	 * @param {string} adr - address of request
+	 * @param {*} body - body of request
+	 * @return {Promise}
+	 */
 	static Post(adr, body) {
-		return Transport.FSend(urlBack + adr, 'post', body);
+		return Transport.FSend(urlBack + adr, 'POST', body);
+	}
+
+	static Delete(adr, body) {
+		return Transport.FSend(urlBack + adr, 'DELETE', body);
 	}
 
 	/**
-     * Perform requests with specified address
-     * @param {string} adr - address of request
-     * @param {string} method - method of request
-     * @param {*} [body={}] - body of request
-     * @return {Promise}
-     */
+	 * Perform requests with specified address
+	 * @param {string} adr - address of request
+	 * @param {string} method - method of request
+	 * @param {*} [body={}] - body of request
+	 * @return {Promise}
+	 */
 	static FSend(adr, method, body = {}) {
-		const url = server+adr;
+		const url = adr;
 		const fPar = {
 			method: method,
-			// mode: 'cors',
+			headers: {
+				Host: 'localhost',
+			},
+			mode: 'cors',
 			credentials: 'include',
 		};
-		if (method === 'post') {
+		if (method === 'POST') {
 			fPar.body = JSON.stringify(body);
 			fPar.headers = {
 				'Content-Type': 'application/json; charset=utf-8',
 			};
 		}
-		return fetch(url, fPar)
-			.then((response) => {
-				if (response.status >= 400) {
-					throw response;
-				}
-
-				return response.json();
-			});
+		return fetch(url, fPar);
 	}
 }

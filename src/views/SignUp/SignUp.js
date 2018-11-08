@@ -2,92 +2,88 @@
 
 import BaseView from '../BaseView/BaseView.js';
 import tagParser from '../../modules/TagParser/TagParser.js';
-import Validation from '../../modules/Validation/Validation.js';
-import UserService from '../../services/UserService/UserService.js';
-import router from '../../modules/Router/Router.js';
-import Transport from '../../modules/Transport/Transport.js';
 import eventHandler from '../../modules/EventHandler/EventHandler.js';
+import userService from '../../services/UserService/UserService.js';
 
+const validator = require('../../modules/Validator/Validator.js');
+
+const Validator = validator.Validator;
 
 export default class SignUp extends BaseView {
 	build() {
-		eventHandler.addHandler('btnSignUpSubmit', () => {
-			if (this.isValid(this.inputs, this.errorsFields)) {
-				let request = {};
-				this.inputs.forEach(input => {
-					if (input.name === 'login') {
-						request.login = input.value;
-					}
-					if (input.name === 'email') {
-						request.email = input.value;
-					}
-					if (input.name === 'password') {
-						request.password = input.value;
-					}
+		eventHandler.addHandler('btnSignUpSubmit', () => this.submit());
+		return new Promise((resolve) => {
+			this.template = `<Label {{name=login}} {{class=error-label}}>
+						<Input {{name=login}} {{class=input}} {{placeholder=Enter your login}} {{check=loginMin loginMax russian}}>
+						<Label {{name=email}} {{class=error-label}}>
+					    <Input {{name=email}} {{class=input}} {{placeholder=Enter your email}} {{check=email russian}}>
+					    <Label {{name=password}} {{class=error-label}}>
+                        <Input {{name=password}} {{class=input}} {{placeholder=Enter your password}} {{type=password}} {{check=passwordMin passwordMax russian}}>
+                        <Label {{name=passwordConfirm}} {{class=error-label}}>
+                        <Input {{name=passwordConfirm}} {{class=input}} {{placeholder=Repeat your password}} {{type=password}} {{check=passwordsEquality russian}}>
+                        <Button {{class=main-button form__submit-button}} {{text=Sign up}} {{click=btnSignUpSubmit}}>
+                        <Button {{class=button}} {{text=Back}} {{click=goMenu}}>`;
+			tagParser.toHTML(this.template).then((elementsArray) => {
+				this.elementsArray = elementsArray.slice(0, 9);
+				const form = document.createElement('form');
+				form.setAttribute('class', 'signIn-block__form');
+				this.elementsArray.forEach((el) => {
+					form.appendChild(el.render());
 				});
-				const adr = '/signup';
-
-				Transport.Post(adr, request).then(() => {
-					UserService.GetData().then(() => {
-						router.go('/');
-					}).catch((response) => {
-						console.log(response);
-					});
-				}).catch((response) => {
-					if (!response.json) {
-						console.log(response);
-						return;
-					}
-					response.json().then((json) => console.log(json));
-				});
-			}
-		});
-
-		this.template = `<Block {{name=login}} {{class=signUpErrorField}}>
-						<Input {{name=login}} {{class=game-input signUpInput}} {{placeholder=Enter your login}}>
-						<Block {{name=email}} {{class=signUpErrorField}}>
-					    <Input {{name=email}} {{class=game-input signUpInput}} {{placeholder=Enter your email}}>
-					    <Block {{name=password}} {{class=signUpErrorField}}>
-                        <Input {{name=password}} {{class=game-input signUpInput}} {{placeholder=Enter your password}} {{type=password}}>
-                        <Block {{name=passwordConfirm}} {{class=signUpErrorField}}>
-                        <Input {{name=passwordConfirm}} {{class=game-input signUpInput}} {{placeholder=Repeat your password}} {{type=password}}>
-                        <Button {{class=buttonGame}} {{text=Sign up}} {{click=btnSignUpSubmit}}>
-                        <Button {{class=buttonGame}} {{text=Back}} {{click=goMenu}}>`;
-
-		this.element = tagParser.toHTML(this.template, {'class': 'signUp-page__menu'}, 'form');
-	}
-
-	addEffects() {
-		this.inputs = [...document.getElementsByClassName('signUpInput')];
-		this.errorsFields = [...document.getElementsByClassName('signUpErrorField')];
-
-		this.inputs.forEach((input, i) => {
-			input.addEventListener('blur', () => {
-				this.errorsFields[i].innerHTML = '';
-				this.inputs[i].style.borderColor = 'black';
-				this.isValid([input], [this.errorsFields[i]]);
+				const div = document.createElement('div');
+				div.setAttribute('class', 'signUp-page');
+				div.appendChild(form);
+				div.appendChild(elementsArray[9].render());
+				this.element = div;
+				this._innerName = 'SignUp';
+				resolve();
 			});
 		});
 	}
 
-	showErrors(errors, errorFields, inputs) {
-		errorFields.forEach((errorField, i) => {
-			errors.forEach((err, i) => {
-				if (errorField.getAttribute('name') === err.class[1]) {
-					errorField.innerHTML = err.innerHTML;
-					// inputs[i].style.borderColor = 'red';
-				}
+	submit() {
+		if (this.validator.isValid()) {
+			const requestBody = {};
+			Object.keys(this.inputs).forEach((input) => {
+				requestBody[input] = this.inputs[input].render().value;
 			});
-		});
-	}
-
-	isValid(inputs = [], errorFields = []) {
-		const errors = new Validation(this.inputs).checkAllFields();
-
-		if (errors.length === 0) {
-			return true;
+			userService.register(requestBody)
+				.then((ans) => {
+					this.errorLabels.login.render().innerText = this.errorMessages[ans] || 'Internal error';
+					this.errorLabels.login.show();
+					setTimeout(() => this.errorLabels.login.hide(), 3000);
+				});
 		}
-		this.showErrors(errors, errorFields, inputs);
-		return false;
+	}
+
+	afterRender() {
+		this.mainEvent = this.submit;
+		return new Promise((resolve) => {
+			this.inputs = {
+				login: this.elementsArray[1],
+				email: this.elementsArray[3],
+				password: this.elementsArray[5],
+				passwordConfirm: this.elementsArray[7],
+			};
+			this.errorLabels = {
+				login: this.elementsArray[0],
+				email: this.elementsArray[2],
+				password: this.elementsArray[4],
+				passwordConfirm: this.elementsArray[6],
+			};
+			Object.keys(this.errorLabels).forEach((label) => {
+				this.errorLabels[label].hide();
+			});
+			this.validator = new Validator(this.inputs, this.errorLabels);
+			Object.keys(this.inputs).forEach((input) => {
+				this.inputs[input].render().addEventListener('blur', () => {
+					this.validator.checkInput(input);
+				});
+			});
+			this.errorMessages = {
+				400: 'User with a such login already exists',
+			};
+			resolve();
+		});
 	}
 }

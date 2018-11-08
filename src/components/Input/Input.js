@@ -1,11 +1,18 @@
 'use strict';
 
 import MainComponent from '../MainComponent/MainComponent.js';
+import template from './Input.hbs';
+
+import './Input.scss';
 
 export default class Input extends MainComponent {
-	compile(data) {
-		this.template = Handlebars.compile('<input name="{{name}}" class="{{class}}" type="{{type}}" placeholder="{{placeholder}}">');
-		this.template(data);
-		super.compile(data);
+	constructor() {
+		super();
+		this.template = template;
+	}
+
+	compile(context) {
+		this.check = context.check;
+		return super.compile(context);
 	}
 }

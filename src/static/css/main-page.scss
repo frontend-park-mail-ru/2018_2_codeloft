@@ -1,0 +1,11 @@
+@import './reset.scss';
+
+.main-content__logo {
+  margin-top: 7vmin;
+  margin-bottom: 6vmin;
+  font-size: 10vmin;
+  text-align: center;
+  user-select: none;
+  color: $yellow-color;
+  animation: neon-text-dark 13s steps(1, start) infinite reverse;
+}
