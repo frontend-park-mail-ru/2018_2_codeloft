@@ -10,18 +10,20 @@ import HighScore from './views/HighScore/HighScore.js';
 import SinglePlayer from './views/SinglePlayer/SinglePlayer.js';
 import URLS from './modules/Consts/Consts.js';
 import userService from './services/UserService/UserService.js';
+import serviceWorkerRegister from './services/ServiceWorker/ServiceWorker.js';
 import './static/css/reset.scss';
+
+serviceWorkerRegister();
 
 userService.checkAuth()
 	.then(() => {
 		router
-			.add('/', new Main())
+			.add(URLS.MENU, new Main())
 			.add(URLS.ABOUT, new About())
 			.add(URLS.SIGN_IN, new SignIn())
 			.add(URLS.SIGN_UP, new SignUp())
 			.add(URLS.PROFILE, new Profile())
 			.add(URLS.HIGH_SCORE, new HighScore())
 			.add(URLS.SINGLE_PLAYER, new SinglePlayer());
-
 		router.start();
 	});

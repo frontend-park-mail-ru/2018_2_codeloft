@@ -2,7 +2,8 @@ const Merge = require('webpack-merge');
 const Path = require('path');
 
 const common = require('./webpack.common.config.js');
-var OpenBrowserPlugin = require('open-browser-webpack-plugin');
+const OpenBrowserPlugin = require('open-browser-webpack-plugin');
+
 const sourcePath = Path.join(__dirname, 'src');
 
 module.exports = Merge(common, {

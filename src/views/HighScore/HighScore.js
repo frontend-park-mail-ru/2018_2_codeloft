@@ -18,7 +18,7 @@ export default class HighScore extends BaseView {
 				this.scoreTable = this.elementsArray[0];
 				this.paginator = this.elementsArray[1];
 				const div = document.createElement('div');
-				div.setAttribute('class', 'main-content__leaders-page');
+				div.setAttribute('class', 'main-content__leaders-block');
 				this.elementsArray.forEach((el) => {
 					div.appendChild(el.render());
 				});
