@@ -2,6 +2,7 @@ const Webpack = require('webpack');
 const Path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const isProduction = process.argv.indexOf('-p') >= 0;
@@ -101,5 +102,9 @@ module.exports = {
 		new HtmlWebpackPlugin({
 			template: 'index.html',
 		}),
+		new CopyWebpackPlugin(([
+			{ from: Path.join(__dirname, 'src/worker.js'), to: Path.join(outPath, 'worker.js') },
+			{ from: Path.join(__dirname, 'src/static'), to: Path.join(outPath, 'static') }
+		]))
 	],
 };
