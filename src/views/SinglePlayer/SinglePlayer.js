@@ -120,6 +120,19 @@ export default class SinglePlayer extends BaseView {
 		this.playerCoord.y = matrixHeightCellPixels * (this.playerInMatrix.y + 1) - matrixHeightCellPixels / 2;
 	}
 
+	regame() {
+		this.mapArray = [
+			[0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0],
+		];
+	}
+
 	handleGameProcess() {
 		this.canvas = document.getElementsByClassName('game-field')[0];
 		this.canvas.width = window.innerWidth;
@@ -144,7 +157,6 @@ export default class SinglePlayer extends BaseView {
 	hide() {
 		super.hide();
 		// this.gameMode = false;
-
 		cancelAnimationFrame(this.animationId);
 		document.removeEventListener('keydown', this.eventKeyDown, false);
 	}
@@ -156,16 +168,7 @@ export default class SinglePlayer extends BaseView {
 			this.playerInMatrix.x++;
 			this.updateUserCoord();
 		} else {
-			this.mapArray = [
-				[0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0],
-			];
+			this.regame();
 			router.go(URLS.MENU);
 		}
 	}
@@ -176,16 +179,7 @@ export default class SinglePlayer extends BaseView {
 			this.playerInMatrix.x--;
 			this.updateUserCoord();
 		} else {
-			this.mapArray = [
-				[0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0],
-			];
+			this.regame();
 			router.go(URLS.MENU);
 		}
 	}
@@ -196,16 +190,7 @@ export default class SinglePlayer extends BaseView {
 			this.playerInMatrix.y++;
 			this.updateUserCoord();
 		} else {
-			this.mapArray = [
-				[0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0],
-			];
+			this.regame();
 			router.go(URLS.MENU);
 		}
 	}
@@ -216,16 +201,7 @@ export default class SinglePlayer extends BaseView {
 			this.playerInMatrix.y--;
 			this.updateUserCoord();
 		} else {
-			this.mapArray = [
-				[0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0],
-			];
+			this.regame();
 			router.go(URLS.MENU);
 		}
 	}
