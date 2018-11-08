@@ -37,6 +37,7 @@ export default class SinglePlayer extends BaseView {
 		};
 
 		this.mapArray[this.playerInMatrix.x][this.playerInMatrix.y] = 1;
+		console.log(this.mapArray);
 
 		this._innerName = 'SinglePlayer';
 		this.context = undefined;
@@ -147,7 +148,6 @@ export default class SinglePlayer extends BaseView {
 
 		cancelAnimationFrame(this.animationId);
 		document.removeEventListener('keydown', this.eventKeyDown, false);
-		// document.removeEventListener('keyup', this.eventKeyUp, false);
 	}
 
 	userMoveRight(playerXCoord, playerYCoord) {
@@ -157,6 +157,16 @@ export default class SinglePlayer extends BaseView {
 			this.playerInMatrix.x++;
 			this.updateUserCoord();
 		} else {
+			this.mapArray = [
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+			];
 			router.go(URLS.MENU);
 		}
 	}
@@ -167,6 +177,16 @@ export default class SinglePlayer extends BaseView {
 			this.playerInMatrix.x--;
 			this.updateUserCoord();
 		} else {
+			this.mapArray = [
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+			];
 			router.go(URLS.MENU);
 		}
 	}
@@ -177,6 +197,16 @@ export default class SinglePlayer extends BaseView {
 			this.playerInMatrix.y++;
 			this.updateUserCoord();
 		} else {
+			this.mapArray = [
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+			];
 			router.go(URLS.MENU);
 		}
 	}
@@ -187,6 +217,16 @@ export default class SinglePlayer extends BaseView {
 			this.playerInMatrix.y--;
 			this.updateUserCoord();
 		} else {
+			this.mapArray = [
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+			];
 			router.go(URLS.MENU);
 		}
 	}

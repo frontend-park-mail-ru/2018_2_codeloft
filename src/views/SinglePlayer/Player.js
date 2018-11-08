@@ -16,14 +16,18 @@ export default class Player {
 	draw() {
 		this.context.beginPath();
 
-		const gradient = this.context.createRadialGradient(this.userCoord.x, this.userCoord.y,
-			0, this.userCoord.x, this.userCoord.y, this.userCoord.radius);
-		gradient.addColorStop(0, this.colorArray[0]);
-		gradient.addColorStop(0.5, this.colorArray[1]);
+		// const gradient = this.context.createRadialGradient(this.userCoord.x, this.userCoord.y,
+		// 	0, this.userCoord.x, this.userCoord.y, this.userCoord.radius);
+		// gradient.addColorStop(0, this.colorArray[0]);
+		// gradient.addColorStop(0.5, this.colorArray[1]);
 		// gradient.addColorStop(1, this.colorArray[2]);
 
-		this.context.arc(this.userCoord.x, this.userCoord.y, this.userCoord.radius, 0, Math.PI * 2, false);
-		this.context.fillStyle = gradient;
+		// this.context.arc(this.userCoord.x, this.userCoord.y, this.userCoord.radius, 0, Math.PI * 2, false);
+		// this.context.fillStyle = gradient;
+
+		this.context.rect(this.userCoord.x, this.userCoord.y, this.userCoord.radius, this.userCoord.radius);
+		this.context.fillStyle = this.colorArray[1];
+
 		this.context.fill();
 		this.context.closePath();
 	}
@@ -53,28 +57,6 @@ export default class Player {
 
 		this.draw();
 	}
-
-	// update(keyUp, keyDown, keyLeft, keyRight) {
-	// 	const borderLeft = this.userCoord.x - this.userCoord.radius >= 0;
-	// 	const borderRight = this.userCoord.x + this.userCoord.radius <= window.innerWidth;
-	// 	const borderUp = this.userCoord.y - this.userCoord.radius > 0;
-	// 	const borderDown = this.userCoord.y + this.userCoord.radius < window.innerHeight;
-	//
-	// 	if (keyLeft === true && borderLeft) {
-	// 		this.userCoord.x -= this.userCoord.speed;
-	// 	}
-	// 	if (keyRight === true && borderRight) {
-	// 		this.userCoord.x += this.userCoord.speed;
-	// 	}
-	// 	if (keyUp === true && borderUp) {
-	// 		this.userCoord.y -= this.userCoord.speed;
-	// 	}
-	// 	if (keyDown === true && borderDown) {
-	// 		this.userCoord.y += this.userCoord.speed;
-	// 	}
-	//
-	// 	this.draw();
-	// }
 
 	getPlayerCoord() {
 	    return this.userCoord;
