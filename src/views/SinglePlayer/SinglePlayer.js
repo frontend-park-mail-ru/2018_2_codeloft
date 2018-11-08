@@ -172,7 +172,7 @@ export default class SinglePlayer extends BaseView {
 	}
 
 	userMoveDown(playerXCoord, playerYCoord) {
-		if (playerYCoord + 1 <= this.mapArray.length) {
+		if (playerYCoord + 1 <= this.mapArray.length && this.mapArray[playerYCoord + 1][playerXCoord] !== 1) {
 			this.mapArray[playerYCoord + 1][playerXCoord] = 1;
 			this.playerInMatrix.y++;
 			this.updateUserCoord();
@@ -182,7 +182,7 @@ export default class SinglePlayer extends BaseView {
 	}
 
 	userMoveUp(playerXCoord, playerYCoord) {
-		if (playerYCoord - 1 >= 0) {
+		if (playerYCoord - 1 >= 0 && this.mapArray[playerYCoord - 1][playerXCoord] !== 1) {
 			this.mapArray[playerYCoord - 1][playerXCoord] = 1;
 			this.playerInMatrix.y--;
 			this.updateUserCoord();

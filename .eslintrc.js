@@ -98,7 +98,7 @@ module.exports = {
 		],
 		"no-undef": [
 			"off"
-		]
+		],
 		"comma-dangle": [
 			"off"
 		],
