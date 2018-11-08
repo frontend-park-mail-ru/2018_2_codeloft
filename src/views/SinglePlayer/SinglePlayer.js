@@ -10,39 +10,38 @@ export default class SinglePlayer extends BaseView {
 	constructor() {
 		super();
 		this._needAuth = true;
-		// this.x = 0;
-		// this.y = 0;
 
 		this.playerColorArray = ['#E6FFFF', '#6FC3DF', 'rgba(111, 195, 223, 0)'];
+
+		this.mapArray = [
+			[0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0],
+		];
+
+		this.playerInMatrix = {
+			x: 3,
+			y: 3,
+		};
+
+		this.playerCoord = {
+			x: 0,
+			y: 0,
+			radius: 10,
+			speed: 3,
+		};
+
+		this.mapArray[this.playerInMatrix.x][this.playerInMatrix.y] = 1;
 
 		this._innerName = 'SinglePlayer';
 		this.context = undefined;
 		this.eventKeyDown = undefined;
-
-		this.keyUp = false;
-		this.keyDown = false;
-		this.keyLeft = false;
-		this.keyRight = false;
-
-		// this.gameMode = false;
-		// document.addEventListener('keydown', (key) => {
-		// 	if (this.gameMode) {
-		// 		const button = String.fromCharCode(key.keyCode || key.charCode);
-		// 		this.ctx.fillStyle = ('rgb(255, 255, 255');
-		// 		this.ctx.fillRect(this.x, this.y, 30, 30);
-		// 		this.ctx.fillStyle = 'rgb(0, 0, 200)';
-		// 		if (button === 'S') {
-		// 			this.y += 10;
-		// 		} else if (button === 'W') {
-		// 			this.y -= 10;
-		// 		} else if (button === 'D') {
-		// 			this.x += 10;
-		// 		} else if (button === 'A') {
-		// 			this.x -= 10;
-		// 		}
-		// 		this.ctx.fillRect(this.x, this.y, 30, 30);
-		// 	}
-		// });
+		this.eventKeyUp = undefined;
 	}
 
 	build() {
@@ -64,9 +63,48 @@ export default class SinglePlayer extends BaseView {
 	afterRender() {
 		return new Promise((resolve) => {
 			// this.gameMode = true;
+
+			this.eventKeyDown = document.addEventListener('keydown', (event) => {
+				switch (event.keyCode) {
+				case 87:
+					this.userMoveUp(this.playerInMatrix.x, this.playerInMatrix.y);
+					break;
+				case 65:
+					this.userMoveLeft(this.playerInMatrix.x, this.playerInMatrix.y);
+					break;
+				case 83:
+					this.userMoveDown(this.playerInMatrix.x, this.playerInMatrix.y);
+					break;
+				case 68:
+					this.userMoveRight(this.playerInMatrix.x, this.playerInMatrix.y);
+					break;
+				case 38:
+					this.userMoveUp(this.playerInMatrix.x, this.playerInMatrix.y);
+					break;
+				case 37:
+					this.userMoveLeft(this.playerInMatrix.x, this.playerInMatrix.y);
+					break;
+				case 40:
+					this.userMoveDown(this.playerInMatrix.x, this.playerInMatrix.y);
+					break;
+				case 39:
+					this.userMoveRight(this.playerInMatrix.x, this.playerInMatrix.y);
+					break;
+				default:
+					break;
+				}
+			});
+
 			this.handleGameProcess();
 			resolve();
 		});
+	}
+
+	updateUserCoord() {
+		const matrixWidthCellPixels = window.innerWidth / this.mapArray[this.playerInMatrix.y].length;
+		const matrixHeightCellPixels = window.innerHeight / this.mapArray.length;
+		this.playerCoord.x = matrixWidthCellPixels * (this.playerInMatrix.x + 1) - matrixWidthCellPixels / 2;
+		this.playerCoord.y = matrixHeightCellPixels * (this.playerInMatrix.y + 1) - matrixHeightCellPixels / 2;
 	}
 
 	handleGameProcess() {
@@ -75,78 +113,18 @@ export default class SinglePlayer extends BaseView {
 		this.canvas.height = window.innerHeight;
 		this.context = this.canvas.getContext('2d');
 
-		const player = new Player(window.innerWidth / 2, window.innerHeight / 2, 3, 30, this.context, this.playerColorArray);
+		this.updateUserCoord();
+
+		const player = new Player(this.playerCoord.x, this.playerCoord.y,
+			this.playerCoord.speed, this.playerCoord.radius, this.context, this.playerColorArray);
 		player.draw();
-
-		this.eventKeyDown = document.addEventListener('keydown', (event) => {
-			switch (event.keyCode) {
-			case 87 || 38:
-				this.keyUp = true;
-				break;
-			case 65 || 37:
-				this.keyLeft = true;
-				break;
-			case 83 || 40:
-				this.keyDown = true;
-				break;
-			case 68 || 39:
-				this.keyRight = true;
-				break;
-
-			case 38:
-				this.keyUp = true;
-				break;
-			case 37:
-				this.keyLeft = true;
-				break;
-			case 40:
-				this.keyDown = true;
-				break;
-			case 39:
-				this.keyRight = true;
-				break;
-			default:
-				break;
-			}
-		});
-		this.eventKeyUp = document.addEventListener('keyup', (event) => {
-			switch (event.keyCode) {
-			case 87 || 38:
-				this.keyUp = false;
-				break;
-			case 65 || 37:
-				this.keyLeft = false;
-				break;
-			case 83 || 40:
-				this.keyDown = false;
-				break;
-			case 68 || 39:
-				this.keyRight = false;
-				break;
-
-			case 38:
-				this.keyUp = false;
-				break;
-			case 37:
-				this.keyLeft = false;
-				break;
-			case 40:
-				this.keyDown = false;
-				break;
-			case 39:
-				this.keyRight = false;
-				break;
-			default:
-				break;
-			}
-		});
 
 		const animate = () => {
 			this.animationId = requestAnimationFrame(animate);
-			this.context.clearRect(0, 0, window.innerWidth, window.innerHeight);
-			player.update(this.keyUp, this.keyDown, this.keyLeft, this.keyRight);
-		};
+			// this.context.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
+			player.update(this.playerCoord.x, this.playerCoord.y);
+		};
 		animate();
 	}
 
@@ -156,6 +134,38 @@ export default class SinglePlayer extends BaseView {
 
 		cancelAnimationFrame(this.animationId);
 		document.removeEventListener('keydown', this.eventKeyDown, false);
-		document.removeEventListener('keyup', this.eventKeyUp, false);
+		// document.removeEventListener('keyup', this.eventKeyUp, false);
+	}
+
+	userMoveRight(playerXCoord, playerYCoord) {
+		if (playerXCoord + 1 <= this.mapArray[playerYCoord].length) {
+			this.mapArray[playerYCoord][playerXCoord + 1] = 1;
+			this.playerInMatrix.x++;
+			this.updateUserCoord();
+		}
+	}
+
+	userMoveLeft(playerXCoord, playerYCoord) {
+		if (playerXCoord - 1 >= 0) {
+			this.mapArray[playerYCoord][playerXCoord - 1] = 1;
+			this.playerInMatrix.x--;
+			this.updateUserCoord();
+		}
+	}
+
+	userMoveDown(playerXCoord, playerYCoord) {
+		if (playerYCoord + 1 <= this.mapArray.length) {
+			this.mapArray[playerYCoord + 1][playerXCoord] = 1;
+			this.playerInMatrix.y++;
+			this.updateUserCoord();
+		}
+	}
+
+	userMoveUp(playerXCoord, playerYCoord) {
+		if (playerYCoord - 1 >= 0) {
+			this.mapArray[playerYCoord - 1][playerXCoord] = 1;
+			this.playerInMatrix.y--;
+			this.updateUserCoord();
+		}
 	}
 }
