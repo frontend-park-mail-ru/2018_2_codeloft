@@ -42,6 +42,11 @@ export default class SinglePlayer extends BaseView {
 		this.context = undefined;
 		this.eventKeyDown = undefined;
 		this.eventKeyUp = undefined;
+
+		this.moveUp = false;
+		this.moveDown = false;
+		this.moveLeft = false;
+		this.moveRight = false;
 	}
 
 	build() {
@@ -67,27 +72,35 @@ export default class SinglePlayer extends BaseView {
 			this.eventKeyDown = document.addEventListener('keydown', (event) => {
 				switch (event.keyCode) {
 				case 87:
+					this.moveUp = true;
 					this.userMoveUp(this.playerInMatrix.x, this.playerInMatrix.y);
 					break;
 				case 65:
+					this.moveLeft = true;
 					this.userMoveLeft(this.playerInMatrix.x, this.playerInMatrix.y);
 					break;
 				case 83:
+					this.moveDown = true;
 					this.userMoveDown(this.playerInMatrix.x, this.playerInMatrix.y);
 					break;
 				case 68:
+					this.moveRight = true;
 					this.userMoveRight(this.playerInMatrix.x, this.playerInMatrix.y);
 					break;
 				case 38:
+					this.moveUp = true;
 					this.userMoveUp(this.playerInMatrix.x, this.playerInMatrix.y);
 					break;
 				case 37:
+					this.moveLeft = true;
 					this.userMoveLeft(this.playerInMatrix.x, this.playerInMatrix.y);
 					break;
 				case 40:
+					this.moveDown = true;
 					this.userMoveDown(this.playerInMatrix.x, this.playerInMatrix.y);
 					break;
 				case 39:
+					this.moveRight = true;
 					this.userMoveRight(this.playerInMatrix.x, this.playerInMatrix.y);
 					break;
 				default:
@@ -138,18 +151,23 @@ export default class SinglePlayer extends BaseView {
 	}
 
 	userMoveRight(playerXCoord, playerYCoord) {
-		if (playerXCoord + 1 <= this.mapArray[playerYCoord].length) {
+		if (playerXCoord + 1 <= this.mapArray[playerYCoord].length
+			&& this.mapArray[playerYCoord][playerXCoord + 1] !== 1) {
 			this.mapArray[playerYCoord][playerXCoord + 1] = 1;
 			this.playerInMatrix.x++;
 			this.updateUserCoord();
+		} else {
+			router.go(URLS.MENU);
 		}
 	}
 
 	userMoveLeft(playerXCoord, playerYCoord) {
-		if (playerXCoord - 1 >= 0) {
+		if (playerXCoord - 1 >= 0 && this.mapArray[playerYCoord][playerXCoord - 1] !== 1) {
 			this.mapArray[playerYCoord][playerXCoord - 1] = 1;
 			this.playerInMatrix.x--;
 			this.updateUserCoord();
+		} else {
+			router.go(URLS.MENU);
 		}
 	}
 
@@ -158,6 +176,8 @@ export default class SinglePlayer extends BaseView {
 			this.mapArray[playerYCoord + 1][playerXCoord] = 1;
 			this.playerInMatrix.y++;
 			this.updateUserCoord();
+		} else {
+			router.go(URLS.MENU);
 		}
 	}
 
@@ -166,6 +186,8 @@ export default class SinglePlayer extends BaseView {
 			this.mapArray[playerYCoord - 1][playerXCoord] = 1;
 			this.playerInMatrix.y--;
 			this.updateUserCoord();
+		} else {
+			router.go(URLS.MENU);
 		}
 	}
 }
