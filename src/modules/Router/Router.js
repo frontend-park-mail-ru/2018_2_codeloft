@@ -25,9 +25,7 @@ class Router {
 	 * Вызывается при старте приложения
 	 */
 	start() {
-		window.onpopstate = (event => {
-			this._onRoute(window.location.pathname);
-		});
+		window.onpopstate = (() => this._onRoute(window.location.pathname));
 		eventBus.on('loggedIn', this.goMenu.bind(this));
 		eventBus.on('loggedOut', this.goMenu.bind(this));
 		this._onRoute(window.location.pathname);
@@ -42,6 +40,7 @@ class Router {
 		const view = this.routesMap[pathname];
 
 		if (!view) {
+			this.go(URLS.MENU);
 			return;
 		}
 

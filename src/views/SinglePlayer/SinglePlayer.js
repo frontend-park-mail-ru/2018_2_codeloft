@@ -2,8 +2,6 @@
 
 import BaseView from '../BaseView/BaseView.js';
 import tagParser from '../../modules/TagParser/TagParser.js';
-import router from '../../modules/Router/Router.js';
-import URLS from '../../modules/Consts/Consts.js';
 
 export default class SinglePlayer extends BaseView {
 	constructor() {

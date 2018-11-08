@@ -10,6 +10,8 @@ module.exports = {
 		"fetch": false,
 		"document": false,
 		"window": false,
+		"navigator": false,
+		"WebSocket": false,
 	},
 	"extends": "airbnb",
 	"rules": {
@@ -90,6 +92,9 @@ module.exports = {
 		],
 		"no-trailing-spaces": [
 			"off"
-		]
+		],
+		"comma-dangle": [
+			"off"
+		],
 	}
 };
