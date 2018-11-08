@@ -37,7 +37,6 @@ export default class SinglePlayer extends BaseView {
 		};
 
 		this.mapArray[this.playerInMatrix.x][this.playerInMatrix.y] = 1;
-		console.log(this.mapArray);
 
 		this._innerName = 'SinglePlayer';
 		this.context = undefined;
