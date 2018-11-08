@@ -93,6 +93,12 @@ module.exports = {
 		"no-trailing-spaces": [
 			"off"
 		],
+		"no-mixed-spaces-and-tabs": [
+			"off"
+		],
+		"no-undef": [
+			"off"
+		],
 		"comma-dangle": [
 			"off"
 		],

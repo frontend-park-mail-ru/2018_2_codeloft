@@ -2,33 +2,52 @@
 
 import BaseView from '../BaseView/BaseView.js';
 import tagParser from '../../modules/TagParser/TagParser.js';
+import router from '../../modules/Router/Router.js';
+import URLS from '../../modules/Consts/Consts.js';
+import Player from './Player.js';
 
 export default class SinglePlayer extends BaseView {
 	constructor() {
 		super();
 		this._needAuth = true;
-		this.x = 0;
-		this.y = 0;
-		this.gameMode = false;
+
+		this.playerColorArray = ['#E6FFFF', '#6FC3DF', 'rgba(111, 195, 223, 0)'];
+
+		this.mapArray = [
+			[0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0],
+		];
+
+		this.playerInMatrix = {
+			x: 3,
+			y: 3,
+		};
+
+		this.playerCoord = {
+			x: 0,
+			y: 0,
+			radius: 10,
+			speed: 3,
+		};
+
+		this.mapArray[this.playerInMatrix.x][this.playerInMatrix.y] = 1;
+		console.log(this.mapArray);
+
 		this._innerName = 'SinglePlayer';
-		document.addEventListener('keydown', (key) => {
-			if (this.gameMode) {
-				const button = String.fromCharCode(key.keyCode || key.charCode);
-				this.ctx.fillStyle = ('rgb(255, 255, 255');
-				this.ctx.fillRect(this.x, this.y, 30, 30);
-				this.ctx.fillStyle = 'rgb(0, 0, 200)';
-				if (button === 'S') {
-					this.y += 10;
-				} else if (button === 'W') {
-					this.y -= 10;
-				} else if (button === 'D') {
-					this.x += 10;
-				} else if (button === 'A') {
-					this.x -= 10;
-				}
-				this.ctx.fillRect(this.x, this.y, 30, 30);
-			}
-		});
+		this.context = undefined;
+		this.eventKeyDown = undefined;
+		this.eventKeyUp = undefined;
+
+		this.moveUp = false;
+		this.moveDown = false;
+		this.moveLeft = false;
+		this.moveRight = false;
 	}
 
 	build() {
@@ -49,20 +68,166 @@ export default class SinglePlayer extends BaseView {
 
 	afterRender() {
 		return new Promise((resolve) => {
-			this.gameMode = true;
+			// this.gameMode = true;
+
+			this.eventKeyDown = document.addEventListener('keydown', (event) => {
+				switch (event.keyCode) {
+				case 87:
+					this.moveUp = true;
+					this.userMoveUp(this.playerInMatrix.x, this.playerInMatrix.y);
+					break;
+				case 65:
+					this.moveLeft = true;
+					this.userMoveLeft(this.playerInMatrix.x, this.playerInMatrix.y);
+					break;
+				case 83:
+					this.moveDown = true;
+					this.userMoveDown(this.playerInMatrix.x, this.playerInMatrix.y);
+					break;
+				case 68:
+					this.moveRight = true;
+					this.userMoveRight(this.playerInMatrix.x, this.playerInMatrix.y);
+					break;
+				case 38:
+					this.moveUp = true;
+					this.userMoveUp(this.playerInMatrix.x, this.playerInMatrix.y);
+					break;
+				case 37:
+					this.moveLeft = true;
+					this.userMoveLeft(this.playerInMatrix.x, this.playerInMatrix.y);
+					break;
+				case 40:
+					this.moveDown = true;
+					this.userMoveDown(this.playerInMatrix.x, this.playerInMatrix.y);
+					break;
+				case 39:
+					this.moveRight = true;
+					this.userMoveRight(this.playerInMatrix.x, this.playerInMatrix.y);
+					break;
+				default:
+					break;
+				}
+			});
+
 			this.handleGameProcess();
 			resolve();
 		});
 	}
 
-	hide() {
-		super.hide();
-		this.gameMode = false;
+	updateUserCoord() {
+		const matrixWidthCellPixels = window.innerWidth / this.mapArray[this.playerInMatrix.y].length;
+		const matrixHeightCellPixels = window.innerHeight / this.mapArray.length;
+		this.playerCoord.x = matrixWidthCellPixels * (this.playerInMatrix.x + 1) - matrixWidthCellPixels / 2;
+		this.playerCoord.y = matrixHeightCellPixels * (this.playerInMatrix.y + 1) - matrixHeightCellPixels / 2;
 	}
 
 	handleGameProcess() {
-		this.ctx = document.getElementsByClassName('game-field')[0].getContext('2d');
-		this.ctx.fillStyle = 'rgb(0, 0, 200)';
-		this.ctx.fillRect(this.x, this.y, 30, 30);
+		this.canvas = document.getElementsByClassName('game-field')[0];
+		this.canvas.width = window.innerWidth;
+		this.canvas.height = window.innerHeight;
+		this.context = this.canvas.getContext('2d');
+
+		this.updateUserCoord();
+
+		const player = new Player(this.playerCoord.x, this.playerCoord.y,
+			this.playerCoord.speed, this.playerCoord.radius, this.context, this.playerColorArray);
+		player.draw();
+
+		const animate = () => {
+			this.animationId = requestAnimationFrame(animate);
+			// this.context.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+			player.update(this.playerCoord.x, this.playerCoord.y);
+		};
+		animate();
+	}
+
+	hide() {
+		super.hide();
+		// this.gameMode = false;
+
+		cancelAnimationFrame(this.animationId);
+		document.removeEventListener('keydown', this.eventKeyDown, false);
+	}
+
+	userMoveRight(playerXCoord, playerYCoord) {
+		if (playerXCoord + 1 <= this.mapArray[playerYCoord].length
+			&& this.mapArray[playerYCoord][playerXCoord + 1] !== 1) {
+			this.mapArray[playerYCoord][playerXCoord + 1] = 1;
+			this.playerInMatrix.x++;
+			this.updateUserCoord();
+		} else {
+			this.mapArray = [
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+			];
+			router.go(URLS.MENU);
+		}
+	}
+
+	userMoveLeft(playerXCoord, playerYCoord) {
+		if (playerXCoord - 1 >= 0 && this.mapArray[playerYCoord][playerXCoord - 1] !== 1) {
+			this.mapArray[playerYCoord][playerXCoord - 1] = 1;
+			this.playerInMatrix.x--;
+			this.updateUserCoord();
+		} else {
+			this.mapArray = [
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+			];
+			router.go(URLS.MENU);
+		}
+	}
+
+	userMoveDown(playerXCoord, playerYCoord) {
+		if (playerYCoord + 1 <= this.mapArray.length && this.mapArray[playerYCoord + 1][playerXCoord] !== 1) {
+			this.mapArray[playerYCoord + 1][playerXCoord] = 1;
+			this.playerInMatrix.y++;
+			this.updateUserCoord();
+		} else {
+			this.mapArray = [
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+			];
+			router.go(URLS.MENU);
+		}
+	}
+
+	userMoveUp(playerXCoord, playerYCoord) {
+		if (playerYCoord - 1 >= 0 && this.mapArray[playerYCoord - 1][playerXCoord] !== 1) {
+			this.mapArray[playerYCoord - 1][playerXCoord] = 1;
+			this.playerInMatrix.y--;
+			this.updateUserCoord();
+		} else {
+			this.mapArray = [
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+			];
+			router.go(URLS.MENU);
+		}
 	}
 }

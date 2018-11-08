@@ -9,6 +9,10 @@ body {
   font-family: 'Press Start 2P', cursive;
 }
 
+.game-field {
+  border: 2px solid #DF740C;
+}
+
 @keyframes neon-text-light {
   0% {
     text-shadow: 0 0 10px $light-neon-color;

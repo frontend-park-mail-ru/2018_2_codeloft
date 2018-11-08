@@ -5,7 +5,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const isProduction = process.argv.indexOf('-p') >= 0;
 const outPath = Path.join(__dirname, 'dist');
 const sourcePath = Path.join(__dirname, './src');
 
@@ -58,22 +57,8 @@ module.exports = {
 							loader: 'css-loader',
 							query: {
 								modules: true,
-								sourceMap: !isProduction,
 								importLoaders: 1,
 								localIdentName: '[local]__[hash:base64:5]',
-							},
-						},
-						{
-							loader: 'postcss-loader',
-							options: {
-								ident: 'postcss',
-								plugins: [
-									require('postcss-import')({addDependencyTo: Webpack}),
-									require('postcss-url')(),
-									require('postcss-cssnext')(),
-									require('postcss-reporter')(),
-									require('postcss-browser-reporter')({disabled: isProduction}),
-								],
 							},
 						},
 					],
@@ -86,18 +71,13 @@ module.exports = {
 			{
 				test: /\.(jpe?g|png|gif|svg)$/i,
 				loader: 'url-loader?limit=10000!img-loader?progressive=true',
-			},
-			{
-				test: /\.(ttf|otf|eot|woff(2)?)(\?[a-z0-9]+)?$/,
-				loader: 'file-loader?name=fonts/[name].[ext]',
-			},
+			}
 		],
 	},
 	plugins: [
 		new Webpack.optimize.AggressiveMergingPlugin(),
 		new ExtractTextPlugin({
 			filename: 'styles.css',
-			disable: !isProduction
 		}),
 		new HtmlWebpackPlugin({
 			template: 'index.html',
