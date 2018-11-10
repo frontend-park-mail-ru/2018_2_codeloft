@@ -160,8 +160,6 @@ export default class SinglePlayer extends BaseView {
 
 		const animate = () => {
 			this.animationId = requestAnimationFrame(animate);
-			// this.context.clearRect(0, 0, window.innerWidth, window.innerHeight);
-
 			player.update(this.playerCoord.x, this.playerCoord.y);
 		};
 		animate();
@@ -169,7 +167,6 @@ export default class SinglePlayer extends BaseView {
 
 	hide() {
 		super.hide();
-		// this.gameMode = false;
 
 		cancelAnimationFrame(this.animationId);
 		document.removeEventListener('keydown', this.eventKeyDown, false);
@@ -182,7 +179,11 @@ export default class SinglePlayer extends BaseView {
 			this.playerInMatrix.x++;
 			this.updateUserCoord();
 		} else {
-			router.go(URLS.MENU);
+			this.playerInMatrix.x++;
+			this.updateUserCoord();
+			setTimeout(() => {
+				router.go(URLS.MENU);
+			}, 1000);
 		}
 	}
 
@@ -192,7 +193,11 @@ export default class SinglePlayer extends BaseView {
 			this.playerInMatrix.x--;
 			this.updateUserCoord();
 		} else {
-			router.go(URLS.MENU);
+			this.playerInMatrix.x--;
+			this.updateUserCoord();
+			setTimeout(() => {
+				router.go(URLS.MENU);
+			}, 1000);
 		}
 	}
 
@@ -202,7 +207,11 @@ export default class SinglePlayer extends BaseView {
 			this.playerInMatrix.y++;
 			this.updateUserCoord();
 		} else {
-			router.go(URLS.MENU);
+			this.playerInMatrix.y++;
+			this.updateUserCoord();
+			setTimeout(() => {
+				router.go(URLS.MENU);
+			}, 1000);
 		}
 	}
 
@@ -212,7 +221,11 @@ export default class SinglePlayer extends BaseView {
 			this.playerInMatrix.y--;
 			this.updateUserCoord();
 		} else {
-			router.go(URLS.MENU);
+			this.playerInMatrix.y--;
+			this.updateUserCoord();
+			setTimeout(() => {
+				router.go(URLS.MENU);
+			}, 1000);
 		}
 	}
 }
