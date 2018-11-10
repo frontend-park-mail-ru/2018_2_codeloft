@@ -21,7 +21,6 @@ export default class Player {
 		// gradient.addColorStop(0, this.colorArray[0]);
 		// gradient.addColorStop(0.5, this.colorArray[1]);
 		// gradient.addColorStop(1, this.colorArray[2]);
-
 		// this.context.arc(this.userCoord.x, this.userCoord.y, this.userCoord.radius, 0, Math.PI * 2, false);
 		// this.context.fillStyle = gradient;
 
