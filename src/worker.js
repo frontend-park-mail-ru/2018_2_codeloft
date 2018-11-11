@@ -16,9 +16,7 @@ this.addEventListener('install', (event) => {
 	event.waitUntil(
 		caches.open('codeloft_cache')
 			.then((cache) => cache.addAll(URLS))
-			.catch((error) => {
-				console.log(error);
-			})
+			.catch((error) => console.log(error))
 	);
 });
 
@@ -29,7 +27,6 @@ this.addEventListener('fetch', (event) => {
 	event.respondWith(
 		caches.match(event.request)
 			.then((cache) => {
-				console.log(cache);
 				if (cache) {
 					return cache;
 				}
