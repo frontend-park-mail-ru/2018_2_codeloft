@@ -15,31 +15,23 @@ this.addEventListener('install', (event) => {
 	console.log('SW installed');
 	event.waitUntil(
 		caches.open('codeloft_cache')
-			.then((cache) => {
-				console.log('Adding urls...');
-				return cache.addAll(Object.keys(URLS));
-			})
-			.catch((error) => {
-				console.log(error);
-			})
+			.then((cache) => cache.addAll(URLS))
+			.catch((error) => console.log(error))
 	);
 });
 
 this.addEventListener('fetch', (event) => {
 	if (navigator.onLine) {
-		// return fetch(event.request);
-		return;
+		return fetch(event.request);
 	}
-	console.log('from cache');
 	event.respondWith(
 		caches.match(event.request)
 			.then((cache) => {
 				if (cache) {
 					return cache;
 				}
-
 				return fetch(event.request);
 			})
-			.catch((error) => console.log('WTF', error))
+			.catch((error) => console.log('Failed', error))
 	);
 });
