@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mv src/static dist
+#mv src/static dist
 
 tar -czf package.tgz dist
 
