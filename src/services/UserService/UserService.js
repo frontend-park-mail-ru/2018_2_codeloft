@@ -53,7 +53,7 @@ class UserService {
 	 * @return {*}
 	 */
 	logOut(login, password) {
-		const requestBody = {
+		const request = {
 			login: login,
 			password: password,
 		};

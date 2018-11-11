@@ -11,7 +11,7 @@ import SinglePlayer from './views/SinglePlayer/SinglePlayer.js';
 import URLS from './modules/Consts/Consts.js';
 import userService from './services/UserService/UserService.js';
 import serviceWorkerRegister from './services/ServiceWorker/ServiceWorker.js';
-import './static/css/reset.scss';
+import './static/css/main-page.scss';
 
 serviceWorkerRegister();
 

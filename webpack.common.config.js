@@ -1,9 +1,6 @@
-const Webpack = require('webpack');
 const Path = require('path');
-
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const outPath = Path.join(__dirname, 'dist');
 const sourcePath = Path.join(__dirname, './src');
@@ -44,25 +41,8 @@ module.exports = {
 				loaders: [
 					'style-loader',
 					'css-loader',
-					'resolve-url-loader',
 					'sass-loader',
 				],
-			},
-			{
-				test: /\.css$/,
-				use: ExtractTextPlugin.extract({
-					fallback: 'style-loader',
-					use: [
-						{
-							loader: 'css-loader',
-							query: {
-								modules: true,
-								importLoaders: 1,
-								localIdentName: '[local]__[hash:base64:5]',
-							},
-						},
-					],
-				}),
 			},
 			{
 				test: /\.html$/,
@@ -75,16 +55,11 @@ module.exports = {
 		],
 	},
 	plugins: [
-		new Webpack.optimize.AggressiveMergingPlugin(),
-		new ExtractTextPlugin({
-			filename: 'styles.css',
-		}),
 		new HtmlWebpackPlugin({
 			template: 'index.html',
 		}),
 		new CopyWebpackPlugin(([
 			{ from: Path.join(__dirname, 'src/worker.js'), to: Path.join(outPath, 'worker.js') },
-			{ from: Path.join(__dirname, 'src/static'), to: Path.join(outPath, 'static') }
 		]))
 	],
 };
