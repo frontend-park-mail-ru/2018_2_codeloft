@@ -14,6 +14,7 @@ class Router {
 			if (key.key === 'Enter') {
 				this.currentView.mainEvent();
 			} else if (key.key === 'Escape' && this.currentView.getName() !== 'Main') {
+				this.currentView.showMainLabel();
 				this.go(URLS.MENU);
 			}
 		});
@@ -37,6 +38,10 @@ class Router {
 	 * @private
 	 */
 	_onRoute(pathname) {
+		if (this.currentView) {
+			this.currentView.hide();
+		}
+
 		const view = this.routesMap[pathname];
 
 		if (!view) {
@@ -44,9 +49,6 @@ class Router {
 			return;
 		}
 
-		if (this.currentView) {
-			this.currentView.hide();
-		}
 		this.currentView = view;
 		this.currentView.show();
 	}

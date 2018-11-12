@@ -1,0 +1,7 @@
+@import '../../static/css/reset.scss';
+
+.game-field {
+  position: absolute;
+  border: 4px solid $dark-neon-color;
+  height: 100%;
+}

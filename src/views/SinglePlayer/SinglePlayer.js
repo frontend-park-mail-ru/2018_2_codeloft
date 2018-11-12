@@ -4,7 +4,8 @@ import BaseView from '../BaseView/BaseView.js';
 import tagParser from '../../modules/TagParser/TagParser.js';
 import router from '../../modules/Router/Router.js';
 import URLS from '../../modules/Consts/Consts.js';
-import Player from './Player.js';
+// import Player from './Player.js';
+import SinglePlayerHandler from '../../game/SinglePlayer/SinglePlayerHandler.js';
 
 export default class SinglePlayer extends BaseView {
 	constructor() {
@@ -65,53 +66,55 @@ export default class SinglePlayer extends BaseView {
 
 	afterRender() {
 		return new Promise((resolve) => {
+			this.hideMainLabel();
 			// this.gameMode = true;
-
-			this.canvas = document.getElementsByClassName('game-field')[0];
-			this.canvas.width = window.innerWidth;
-			this.canvas.height = window.innerHeight;
-			this.context = this.canvas.getContext('2d');
-
-			this.eventKeyDown = document.addEventListener('keydown', (event) => {
-				switch (event.keyCode) {
-				case 87:
-					this.moveUp = true;
-					this.userMoveUp(this.playerInMatrix.x, this.playerInMatrix.y);
-					break;
-				case 65:
-					this.moveLeft = true;
-					this.userMoveLeft(this.playerInMatrix.x, this.playerInMatrix.y);
-					break;
-				case 83:
-					this.moveDown = true;
-					this.userMoveDown(this.playerInMatrix.x, this.playerInMatrix.y);
-					break;
-				case 68:
-					this.moveRight = true;
-					this.userMoveRight(this.playerInMatrix.x, this.playerInMatrix.y);
-					break;
-				case 38:
-					this.moveUp = true;
-					this.userMoveUp(this.playerInMatrix.x, this.playerInMatrix.y);
-					break;
-				case 37:
-					this.moveLeft = true;
-					this.userMoveLeft(this.playerInMatrix.x, this.playerInMatrix.y);
-					break;
-				case 40:
-					this.moveDown = true;
-					this.userMoveDown(this.playerInMatrix.x, this.playerInMatrix.y);
-					break;
-				case 39:
-					this.moveRight = true;
-					this.userMoveRight(this.playerInMatrix.x, this.playerInMatrix.y);
-					break;
-				default:
-					break;
-				}
-			});
-
-			this.handleGameProcess();
+			// this.canvas = document.getElementsByClassName('game-field')[0];
+			// this.canvas.width = window.innerWidth;
+			// this.canvas.height = window.innerHeight;
+			// this.context = this.canvas.getContext('2d');
+			//
+			// this.eventKeyDown = document.addEventListener('keydown', (event) => {
+			// 	switch (event.keyCode) {
+			// 	case 87:
+			// 		this.moveUp = true;
+			// 		this.userMoveUp(this.playerInMatrix.x, this.playerInMatrix.y);
+			// 		break;
+			// 	case 65:
+			// 		this.moveLeft = true;
+			// 		this.userMoveLeft(this.playerInMatrix.x, this.playerInMatrix.y);
+			// 		break;
+			// 	case 83:
+			// 		this.moveDown = true;
+			// 		this.userMoveDown(this.playerInMatrix.x, this.playerInMatrix.y);
+			// 		break;
+			// 	case 68:
+			// 		this.moveRight = true;
+			// 		this.userMoveRight(this.playerInMatrix.x, this.playerInMatrix.y);
+			// 		break;
+			// 	case 38:
+			// 		this.moveUp = true;
+			// 		this.userMoveUp(this.playerInMatrix.x, this.playerInMatrix.y);
+			// 		break;
+			// 	case 37:
+			// 		this.moveLeft = true;
+			// 		this.userMoveLeft(this.playerInMatrix.x, this.playerInMatrix.y);
+			// 		break;
+			// 	case 40:
+			// 		this.moveDown = true;
+			// 		this.userMoveDown(this.playerInMatrix.x, this.playerInMatrix.y);
+			// 		break;
+			// 	case 39:
+			// 		this.moveRight = true;
+			// 		this.userMoveRight(this.playerInMatrix.x, this.playerInMatrix.y);
+			// 		break;
+			// 	default:
+			// 		break;
+			// 	}
+			// });
+			//
+			// this.handleGameProcess();
+			this._gameHandler = new SinglePlayerHandler();
+			this._gameHandler.startGame();
 			resolve();
 		});
 	}
@@ -166,10 +169,10 @@ export default class SinglePlayer extends BaseView {
 	}
 
 	hide() {
+		this._gameHandler.stopGame();
 		super.hide();
-
-		cancelAnimationFrame(this.animationId);
-		document.removeEventListener('keydown', this.eventKeyDown, false);
+		// cancelAnimationFrame(this.animationId);
+		// document.removeEventListener('keydown', this.eventKeyDown, false);
 	}
 
 	userMoveRight(playerXCoord, playerYCoord) {
