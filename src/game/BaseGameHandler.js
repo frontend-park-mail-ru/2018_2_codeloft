@@ -25,6 +25,7 @@ export default class BaseGameHandler {
 			this._protagonist = new Player(true);
 		}
 		this.keyHandler = this.keyControl.bind(this);
+		this._gameLoops = [];
 	}
 
 	keyControl(event) {
@@ -52,12 +53,14 @@ export default class BaseGameHandler {
 		window.addEventListener('keydown', this.keyHandler);
 		window.addEventListener('keyup', this.keyHandler);
 		window.addEventListener('keypress', this.keyHandler);
-		setInterval(this.gameLoop.bind(this), 50);
+		// this._gameLoops.push(setInterval(this.gameLoop.bind(this), 50));
+		this._gameLoops.push(setInterval(this._arena.spawnGoal.bind(this._arena), 1000));
 	}
 
 	stopGame() {
 		window.removeEventListener('keydown', this.keyHandler);
 		window.removeEventListener('keyup', this.keyHandler);
 		window.removeEventListener('keypress', this.keyHandler);
+		this._gameLoops.forEach((loop) => clearInterval(loop));
 	}
 }

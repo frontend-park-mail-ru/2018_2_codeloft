@@ -130,8 +130,6 @@ export default class SinglePlayer extends BaseView {
 	hide() {
 		this._gameHandler.stopGame();
 		super.hide();
-		// cancelAnimationFrame(this.animationId);
-		// document.removeEventListener('keydown', this.eventKeyDown, false);
 	}
 
 	userMoveRight(playerXCoord, playerYCoord) {
