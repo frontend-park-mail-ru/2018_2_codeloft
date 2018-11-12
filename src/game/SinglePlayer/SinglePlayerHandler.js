@@ -6,8 +6,4 @@ export default class SinglePlayerHandler extends BaseGameHandler{
 	constructor(players = [new Player()]) {
 		super(players);
 	}
-
-	gameLoop() {
-
-	}
 }

@@ -63,7 +63,7 @@ export default class BaseView {
 	}
 
 	show() {
-		this.preRender()
+		return this.preRender()
 			.then(() => {
 				if (!this.element) {
 					return this.init();

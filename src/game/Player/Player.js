@@ -5,8 +5,10 @@ export default class Player {
 		this._radius = 4;
 		this._color = color;
 		this._isProtagonist = isProtagonist;
-		this._xSpeed = 2;
-		this._ySpeed = 2;
+		this._speed = 2;
+		this._xSpeed = 0;
+		this._ySpeed = 0;
+		this._traceArray = [];
 	}
 
 	isMain() {
@@ -29,15 +31,32 @@ export default class Player {
 		return this._radius;
 	}
 
-	move(action) {
+	setDirection(action) {
 		if (action === 'RIGHT') {
-			this._xCoord += this._xSpeed;
+			this._xSpeed = this._speed;
 		} else if (action === 'TOP') {
-			this._yCoord -= this._ySpeed;
+			this._ySpeed = -this._speed;
 		} else if (action === 'LEFT') {
-			this._xCoord -= this._xSpeed;
+			this._xSpeed = -this._speed;
 		} else if (action === 'DOWN') {
-			this._yCoord += this._ySpeed;
+			this._ySpeed = this._speed;
 		}
+	}
+
+	removeDirection(action) {
+		if (action === 'RIGHT') {
+			this._xSpeed = 0;
+		} else if (action === 'TOP') {
+			this._ySpeed = 0;
+		} else if (action === 'LEFT') {
+			this._xSpeed = 0;
+		} else if (action === 'DOWN') {
+			this._ySpeed = 0;
+		}
+	}
+
+	move() {
+		this._xCoord += this._xSpeed;
+		this._yCoord += this._ySpeed;
 	}
 }

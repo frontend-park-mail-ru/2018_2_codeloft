@@ -27,5 +27,10 @@ export default class Arena {
 		this._context.fillStyle = player.getColor();
 		this._context.fill();
 		this._context.closePath();
+		return player;
+	}
+
+	spawnGoal() {
+
 	}
 }

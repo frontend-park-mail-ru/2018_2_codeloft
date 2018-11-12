@@ -31,17 +31,28 @@ export default class BaseGameHandler {
 		if (event.type === 'keypress' || event.type === 'keydown') {
 			const action = this.keyCodeMap[event.keyCode];
 			if (action) {
-				this._arena.clearPlayer(this._protagonist);
-				this._protagonist.move(action);
-				this._arena.drawPlayer(this._protagonist);
+				this._protagonist.setDirection(action);
 			}
+		} else if (event.type === 'keyup') {
+			const action = this.keyCodeMap[event.keyCode];
+			if (action) {
+				this._protagonist.setDirection(action);
+			}
+			this._protagonist.removeDirection(action);
 		}
+	}
+
+	gameLoop() {
+		this._arena.clearPlayer(this._protagonist);
+		this._protagonist.move();
+		this._arena.drawPlayer(this._protagonist);
 	}
 
 	startGame() {
 		window.addEventListener('keydown', this.keyHandler);
 		window.addEventListener('keyup', this.keyHandler);
 		window.addEventListener('keypress', this.keyHandler);
+		setInterval(this.gameLoop.bind(this), 50);
 	}
 
 	stopGame() {
