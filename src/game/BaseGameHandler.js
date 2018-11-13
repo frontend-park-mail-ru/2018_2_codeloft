@@ -19,7 +19,7 @@ export default class BaseGameHandler {
 			if (player.isMain()) {
 				this._protagonist = player;
 			}
-			this._arena.drawPlayer(player);
+			//this._arena.drawPlayer(player);
 		});
 		if (!this._protagonist) {
 			this._protagonist = new Player(true);
@@ -53,7 +53,7 @@ export default class BaseGameHandler {
 		window.addEventListener('keydown', this.keyHandler);
 		window.addEventListener('keyup', this.keyHandler);
 		window.addEventListener('keypress', this.keyHandler);
-		// this._gameLoops.push(setInterval(this.gameLoop.bind(this), 50));
+		this._gameLoops.push(setInterval(this.gameLoop.bind(this), 50));
 		this._gameLoops.push(setInterval(this._arena.spawnGoal.bind(this._arena), 1000));
 	}
 

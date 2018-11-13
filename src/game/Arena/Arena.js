@@ -40,27 +40,32 @@ export default class Arena {
 	}
 
 	spawnGoal() {
-		console.log(this._xMax);
 		const firstX = Math.floor(Math.random() * (this._xMax - this._xZero + 1) + this._xZero);
 		const firstY = Math.floor(Math.random() * (this._yMax - this._yZero + 1) + this._yZero);
 
-		const secondX = Math.floor(Math.random() * (firstX + 20 - firstX + 1)) + firstX;
-		const secondY = Math.floor(Math.random() * (firstY + 20 - firstY + 1)) + firstY;
+		const secondX = Math.floor(Math.random() * (firstX + 500 - firstX + 1)) + firstX;
+		const secondY = Math.floor(Math.random() * (firstY + 500 - firstY + 1)) + firstY;
 
 		console.log(firstX);
-		// console.log(firstY);
+		console.log(firstY);
 		console.log('______________________________');
 		// console.log(secondX);
 		// console.log(secondY);
 
+		this._context.globalCompositeOperation = 'source-over';
+		this._context.beginPath();
+		this._context.arc(Math.floor(firstX / 10) + 1, Math.floor(firstY / 10) + 1, 2, 0, 2 * Math.PI);
+		this._context.arc(Math.floor(secondX / 10) + 1, Math.floor(secondY / 10) + 1, 2, 0, 2 * Math.PI);
+		this._context.fillStyle = '#FFE64D';
+		this._context.fill();
+		this._context.closePath();
+
 		// this._context.globalCompositeOperation = 'source-over';
 		this._context.beginPath();
-		this._context.arc(firstX, firstY, 5, 0, 2 * Math.PI);
-		//this._context.arc(secondX, secondY, 2, 0, 2 * Math.PI);
-		// this._context.moveTo(firstX, firstY);
-		// this._context.lineTo(secondX, secondY);
-		this._context.fillStyle = 'green';
-		this._context.fill();
+		this._context.moveTo(firstX / 10 + 1, firstY / 10 + 1);
+		this._context.lineTo(secondX / 10 + 1, secondY / 10 + 1);
+		this._context.strokeStyle = '#FFE64D';
+		this._context.stroke();
 		this._context.closePath();
 	}
 }
