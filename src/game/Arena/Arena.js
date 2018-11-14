@@ -24,7 +24,8 @@ export default class Arena {
 
 	clearField() {
 		this._context.beginPath();
-		this._context.clearRect(0, 0, this._xMax, this._yMax);
+		this._context.fillStyle = '#0C141F';
+		this._context.fillRect(this._xMin, this._yMin, this._xMax, this._yMax);
 		this._context.closePath();
 		this._context.beginPath();
 	}
