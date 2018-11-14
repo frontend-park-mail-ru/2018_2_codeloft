@@ -46,6 +46,7 @@ export default class BaseGameHandler {
 	gameLoop() {
 		this._arena.clearPlayer(this._protagonist);
 		this._arena.checkBorderCollision(this._protagonist);
+		this._arena.checkGoalCollision(this._protagonist);
 		this._protagonist.move();
 		this._arena.drawPlayer(this._protagonist);
 	}
@@ -54,8 +55,9 @@ export default class BaseGameHandler {
 		window.addEventListener('keydown', this.keyHandler);
 		window.addEventListener('keyup', this.keyHandler);
 		window.addEventListener('keypress', this.keyHandler);
-		this._gameLoops.push(setInterval(this.gameLoop.bind(this), 50));
-		this._gameLoops.push(setInterval(this._arena.spawnGoal.bind(this._arena), 1000));
+		this._gameLoops.push(setInterval(this.gameLoop.bind(this), 30));
+		this._arena.spawnGoal();
+		// this._gameLoops.push(setInterval(this._arena.spawnGoal.bind(this._arena), 50000));
 	}
 
 	stopGame() {
