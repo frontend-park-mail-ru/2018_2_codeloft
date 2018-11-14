@@ -59,11 +59,16 @@ export default class Arena {
 			const secondY = Math.floor(Math.random() * (firstY + 200 - firstY + 20)) + firstY + 20;
 
 			this._currentGoal = new Goal(firstX, firstY, secondX, secondY);
+			this.drawGoal();
+		}
+	}
 
+	drawGoal() {
+		if (this._currentGoal) {
 			this._context.globalCompositeOperation = 'source-over';
 			this._context.beginPath();
-			this._context.arc(firstX, firstY, 10, 0, 2 * Math.PI);
-			this._context.arc(secondX, secondY, 10, 0, 2 * Math.PI);
+			this._context.arc(this._currentGoal.getCoords().x1, this._currentGoal.getCoords().y1, 10, 0, 2 * Math.PI);
+			this._context.arc(this._currentGoal.getCoords().x2, this._currentGoal.getCoords().y2, 10, 0, 2 * Math.PI);
 			this._context.fillStyle = '#FFE64D';
 			this._context.fill();
 			this._context.closePath();
@@ -71,8 +76,8 @@ export default class Arena {
 			// setInterval(this.goalAnimate, 50);
 
 			this._context.beginPath();
-			this._context.moveTo(firstX, firstY);
-			this._context.lineTo(secondX, secondY);
+			this._context.moveTo(this._currentGoal.getCoords().x1, this._currentGoal.getCoords().y1);
+			this._context.lineTo(this._currentGoal.getCoords().x2, this._currentGoal.getCoords().y2);
 			this._context.strokeStyle = '#FFE64D';
 			this._context.lineWidth = 5;
 			this._context.stroke();

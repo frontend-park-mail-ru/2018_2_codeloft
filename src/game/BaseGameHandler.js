@@ -62,13 +62,15 @@ export default class BaseGameHandler {
 		this._arena.checkGoalCollision(this._protagonist);
 		this._protagonist.move();
 		this._arena.drawPlayer(this._protagonist);
+		this._arena.clearGoal();
+		this._arena.drawGoal();
 	}
 
 	startGame() {
 		window.addEventListener('keydown', this.keyHandler);
 		window.addEventListener('keyup', this.keyHandler);
 		window.addEventListener('keypress', this.keyHandler);
-		this._gameLoops.push(setInterval(this.gameLoop.bind(this), 20));
+		this._gameLoops.push(setInterval(this.gameLoop.bind(this), 5));
 		this._arena.spawnGoal();
 		// this._gameLoops.push(setInterval(this._arena.spawnGoal.bind(this._arena), 50000));
 	}
