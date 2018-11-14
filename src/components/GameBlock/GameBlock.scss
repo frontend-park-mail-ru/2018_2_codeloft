@@ -2,10 +2,9 @@
 
 .game-field {
   position: absolute;
-  //border: 4px solid $dark-neon-color;
   justify-content: center;
   height: 100%;
   width: 100%;
-  outline: 5px solid $dark-neon-color;
+  outline: 5px solid #3EC8AC;
   outline-offset: -5px;
 }

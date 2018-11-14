@@ -3,7 +3,7 @@ import Player from './Player/Player.js';
 import eventBus from '../modules/EventBus/EventBus.js';
 
 export default class BaseGameHandler {
-	constructor(players = [new Player(true)]) {
+	constructor(players) {
 		this.keyCodeMap = {
 			a: 'LEFT',
 			w: 'TOP',
@@ -27,12 +27,14 @@ export default class BaseGameHandler {
 			}
 			this._arena.drawPlayer(player);
 		});
+		this.players = players;
 		if (!this._protagonist) {
 			this._protagonist = new Player(true);
 		}
 		this.keyHandler = this.keyControl.bind(this);
 		this._gameLoops = [];
-		eventBus.on('goalCollision', this.handleGoalCollision.bind(this));
+		this._goalHandler = this.handleGoalCollision.bind(this);
+		eventBus.on('goalCollision', this._goalHandler);
 	}
 
 	keyControl(event) {
@@ -52,6 +54,10 @@ export default class BaseGameHandler {
 	}
 
 	handleGoalCollision(player) {
+		if (player === this._protagonist) {
+			player.addScore(10);
+			eventBus.emit('scoreRedraw', player.getScore());
+		}
 		this._arena.clearGoal();
 		this._arena.spawnGoal();
 	}
@@ -80,5 +86,6 @@ export default class BaseGameHandler {
 		window.removeEventListener('keyup', this.keyHandler);
 		window.removeEventListener('keypress', this.keyHandler);
 		this._gameLoops.forEach((loop) => clearInterval(loop));
+		eventBus.off('goalCollision', this._goalHandler);
 	}
 }

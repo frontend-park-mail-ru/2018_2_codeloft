@@ -5,10 +5,10 @@ export default class Player {
 		this._radius = 20;
 		this._color = color;
 		this._isProtagonist = isProtagonist;
-		this._speed = 1;
+		this._speed = 2;
 		this._xSpeed = 0;
 		this._ySpeed = 0;
-		this._traceArray = [];
+		this._score = 0;
 	}
 
 	isMain() {
@@ -46,6 +46,14 @@ export default class Player {
 		if (keyPressedMap.DOWN) {
 			this._ySpeed += this._speed;
 		}
+	}
+
+	addScore(value) {
+		this._score += value;
+	}
+
+	getScore() {
+		return this._score;
 	}
 
 	move() {

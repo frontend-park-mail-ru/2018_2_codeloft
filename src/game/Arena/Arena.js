@@ -40,14 +40,15 @@ export default class Arena {
 		}
 	}
 
-	drawPlayer(player = new Player()) {
-		this._context.globalCompositeOperation = 'source-over';
-		this._context.beginPath();
-		this._context.arc(player.getX(), player.getY(), player.getRadius(), 0, 2 * Math.PI);
-		this._context.fillStyle = player.getColor();
-		this._context.fill();
-		this._context.closePath();
-		return player;
+	drawPlayer(player) {
+		if (player) {
+			this._context.globalCompositeOperation = 'source-over';
+			this._context.beginPath();
+			this._context.arc(player.getX(), player.getY(), player.getRadius(), 0, 2 * Math.PI);
+			this._context.fillStyle = player.getColor();
+			this._context.fill();
+			this._context.closePath();
+		}
 	}
 
 	spawnGoal() {
@@ -114,8 +115,8 @@ export default class Arena {
 	}
 
 	checkGoalCollision(player) {
-		if (player.getY() <= this._currentGoal.calculateY(player.getX()) + 10
-			&& player.getY() >= this._currentGoal.calculateY(player.getX()) - 10
+		if (player.getY() <= this._currentGoal.calculateY(player.getX()) + 5
+			&& player.getY() >= this._currentGoal.calculateY(player.getX()) - 5
 			&& this._currentGoal.inInterval(player.getY())) {
 			eventBus.emit('goalCollision', player);
 		}
