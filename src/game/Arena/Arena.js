@@ -13,7 +13,6 @@ export default class Arena {
 		window.addEventListener('resize', this.resizeGameField.bind(this));
 		this._currentGoal = {};
 		this.resizeGameField();
-		this._goalCollision = false;
 		this.clearField();
 	}
 
@@ -52,16 +51,14 @@ export default class Arena {
 	}
 
 	spawnGoal() {
-		if (!this._goalCollision) {
-			const firstX = Math.floor(Math.random() * (this._xMax - 300 - this._xMin + 20) + this._xMin + 20);
-			const firstY = Math.floor(Math.random() * (this._yMax - 300 - this._yMin + 20) + this._yMin + 20);
+		const firstX = Math.floor(Math.random() * (this._xMax - 300 - this._xMin + 20) + this._xMin + 20);
+		const firstY = Math.floor(Math.random() * (this._yMax - 300 - this._yMin + 20) + this._yMin + 20);
 
-			const secondX = Math.floor(Math.random() * (firstX + 200 - firstX + 20)) + firstX + 20;
-			const secondY = Math.floor(Math.random() * (firstY + 200 - firstY + 20)) + firstY + 20;
+		const secondX = Math.floor(Math.random() * (firstX + 200 - firstX + 20)) + firstX + 20;
+		const secondY = Math.floor(Math.random() * (firstY + 200 - firstY + 20)) + firstY + 20;
 
-			this._currentGoal = new Goal(firstX, firstY, secondX, secondY);
-			this.drawGoal();
-		}
+		this._currentGoal = new Goal(firstX, firstY, secondX, secondY);
+		this.drawGoal();
 	}
 
 	drawGoal() {
@@ -98,8 +95,6 @@ export default class Arena {
 			this._context.fill();
 			this._context.closePath();
 
-			this._goalCollision = false;
-
 			this._context.beginPath();
 			this._context.moveTo(this._currentGoal.getCoords().x1, this._currentGoal.getCoords().y1);
 			this._context.lineTo(this._currentGoal.getCoords().x2, this._currentGoal.getCoords().y2);
@@ -122,11 +117,7 @@ export default class Arena {
 		if (player.getY() <= this._currentGoal.calculateY(player.getX()) + 10
 			&& player.getY() >= this._currentGoal.calculateY(player.getX()) - 10
 			&& this._currentGoal.inInterval(player.getY())) {
-			if (!this._goalCollision) {
-				console.log('col');
-				this._goalCollision = true;
-				eventBus.emit('goalCollision', player);
-			}
+			eventBus.emit('goalCollision', player);
 		}
 	}
 
