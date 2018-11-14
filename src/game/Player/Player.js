@@ -5,7 +5,7 @@ export default class Player {
 		this._radius = 20;
 		this._color = color;
 		this._isProtagonist = isProtagonist;
-		this._speed = 5;
+		this._speed = 4;
 		this._xSpeed = 0;
 		this._ySpeed = 0;
 		this._traceArray = [];
@@ -31,27 +31,20 @@ export default class Player {
 		return this._radius;
 	}
 
-	setDirection(action) {
-		if (action === 'RIGHT') {
-			this._xSpeed = this._speed;
-		} else if (action === 'TOP') {
-			this._ySpeed = -this._speed;
-		} else if (action === 'LEFT') {
-			this._xSpeed = -this._speed;
-		} else if (action === 'DOWN') {
-			this._ySpeed = this._speed;
+	setDirection(keyPressedMap) {
+		this._xSpeed = 0;
+		this._ySpeed = 0;
+		if (keyPressedMap.RIGHT) {
+			this._xSpeed += this._speed;
 		}
-	}
-
-	removeDirection(action) {
-		if (action === 'RIGHT') {
-			this._xSpeed = 0;
-		} else if (action === 'TOP') {
-			this._ySpeed = 0;
-		} else if (action === 'LEFT') {
-			this._xSpeed = 0;
-		} else if (action === 'DOWN') {
-			this._ySpeed = 0;
+		if (keyPressedMap.TOP) {
+			this._ySpeed -= this._speed;
+		}
+		if (keyPressedMap.LEFT) {
+			this._xSpeed -= this._speed;
+		}
+		if (keyPressedMap.DOWN) {
+			this._ySpeed += this._speed;
 		}
 	}
 

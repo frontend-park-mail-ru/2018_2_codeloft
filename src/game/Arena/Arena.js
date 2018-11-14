@@ -6,10 +6,10 @@ export default class Arena {
 	constructor() {
 		this._gameBlock = document.getElementsByClassName('game-field')[0];
 		this._context = this._gameBlock.getContext('2d');
-		this._xZero = this._gameBlock.getBoundingClientRect().x;
-		this._yZero = this._gameBlock.getBoundingClientRect().y;
-		this._xMax = this._gameBlock.getBoundingClientRect().width - this._xZero;
-		this._yMax = this._gameBlock.getBoundingClientRect().height - this._yZero;
+		this._xMin = this._gameBlock.getBoundingClientRect().x;
+		this._yMin = this._gameBlock.getBoundingClientRect().y;
+		this._xMax = this._gameBlock.getBoundingClientRect().width - this._xMin;
+		this._yMax = this._gameBlock.getBoundingClientRect().height - this._yMin;
 		window.addEventListener('resize', this.resizeGameField.bind(this));
 		this._currentGoal = {};
 		this.resizeGameField();
@@ -51,37 +51,37 @@ export default class Arena {
 	}
 
 	spawnGoal() {
-		const firstX = Math.floor(Math.random() * (this._xMax - 300 - this._xZero + 20) + this._xZero + 20);
-		const firstY = Math.floor(Math.random() * (this._yMax - 300 - this._yZero + 20) + this._yZero + 20);
+		if (!this._goalCollision) {
+			const firstX = Math.floor(Math.random() * (this._xMax - 300 - this._xMin + 20) + this._xMin + 20);
+			const firstY = Math.floor(Math.random() * (this._yMax - 300 - this._yMin + 20) + this._yMin + 20);
 
-		const secondX = Math.floor(Math.random() * (firstX + 200 - firstX + 20)) + firstX + 20;
-		const secondY = Math.floor(Math.random() * (firstY + 200 - firstY + 20)) + firstY + 20;
+			const secondX = Math.floor(Math.random() * (firstX + 200 - firstX + 20)) + firstX + 20;
+			const secondY = Math.floor(Math.random() * (firstY + 200 - firstY + 20)) + firstY + 20;
 
-		this._currentGoal = new Goal(firstX, firstY, secondX, secondY);
+			this._currentGoal = new Goal(firstX, firstY, secondX, secondY);
 
-		this._context.globalCompositeOperation = 'source-over';
-		this._context.beginPath();
-		this._context.arc(firstX, firstY, 10, 0, 2 * Math.PI);
-		this._context.arc(secondX, secondY, 10, 0, 2 * Math.PI);
-		this._context.fillStyle = '#FFE64D';
-		this._context.fill();
-		this._context.closePath();
+			this._context.globalCompositeOperation = 'source-over';
+			this._context.beginPath();
+			this._context.arc(firstX, firstY, 10, 0, 2 * Math.PI);
+			this._context.arc(secondX, secondY, 10, 0, 2 * Math.PI);
+			this._context.fillStyle = '#FFE64D';
+			this._context.fill();
+			this._context.closePath();
 
-		// setInterval(this.goalAnimate, 50);
+			// setInterval(this.goalAnimate, 50);
 
-		this._context.beginPath();
-		this._context.moveTo(firstX, firstY);
-		this._context.lineTo(secondX, secondY);
-		this._context.strokeStyle = '#FFE64D';
-		this._context.lineWidth = 5;
-		this._context.stroke();
-		this._context.closePath();
-
-		this._goalCollision = false;
+			this._context.beginPath();
+			this._context.moveTo(firstX, firstY);
+			this._context.lineTo(secondX, secondY);
+			this._context.strokeStyle = '#FFE64D';
+			this._context.lineWidth = 5;
+			this._context.stroke();
+			this._context.closePath();
+		}
 	}
 
 	clearGoal() {
-	    if (this._currentGoal) {
+		if (this._currentGoal) {
 			this._context.globalCompositeOperation = 'destination-out';
 			this._context.beginPath();
 			this._context.arc(this._currentGoal.getCoords().x1, this._currentGoal.getCoords().y1,
@@ -92,13 +92,15 @@ export default class Arena {
 			this._context.fill();
 			this._context.closePath();
 
-		    this._context.beginPath();
-		    this._context.moveTo(this._currentGoal.getCoords().x1, this._currentGoal.getCoords().y1);
-		    this._context.lineTo(this._currentGoal.getCoords().x2, this._currentGoal.getCoords().y2);
-		    this._context.strokeStyle = '#FFE64D';
-		    this._context.lineWidth = 7;
-		    this._context.stroke();
-		    this._context.closePath();
+			this._goalCollision = false;
+
+			this._context.beginPath();
+			this._context.moveTo(this._currentGoal.getCoords().x1, this._currentGoal.getCoords().y1);
+			this._context.lineTo(this._currentGoal.getCoords().x2, this._currentGoal.getCoords().y2);
+			this._context.strokeStyle = '#FFE64D';
+			this._context.lineWidth = 7;
+			this._context.stroke();
+			this._context.closePath();
 		}
 	}
 
@@ -113,25 +115,27 @@ export default class Arena {
 	checkGoalCollision(player) {
 		if (player.getY() <= this._currentGoal.calculateY(player.getX()) + 10
 			&& player.getY() >= this._currentGoal.calculateY(player.getX()) - 10
-			&& this._currentGoal.inInterval(player.getY())
-			&& !this._goalCollision) {
-			this._goalCollision = true;
-			eventBus.emit('goalCollision', player);
+			&& this._currentGoal.inInterval(player.getY())) {
+			if (!this._goalCollision) {
+				console.log('col');
+				this._goalCollision = true;
+				eventBus.emit('goalCollision', player);
+			}
 		}
 	}
 
 	checkBorderCollision(player) {
-		if (player.getX() < this._xZero) {
+		if (player.getX() < this._xMin) {
 			player.setX(this._xMax);
 		}
-		if (player.getY() < this._yZero) {
+		if (player.getY() < this._yMin) {
 			player.setY(this._yMax);
 		}
 		if (player.getX() > this._xMax) {
-			player.setX(this._xZero);
+			player.setX(this._xMin);
 		}
 		if (player.getY() > this._yMax) {
-			player.setY(this._yZero);
+			player.setY(this._yMin);
 		}
 	}
 }

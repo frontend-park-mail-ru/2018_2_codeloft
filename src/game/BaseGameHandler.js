@@ -5,14 +5,20 @@ import eventBus from '../modules/EventBus/EventBus.js';
 export default class BaseGameHandler {
 	constructor(players = [new Player(true)]) {
 		this.keyCodeMap = {
-			37: 'LEFT',
-			38: 'TOP',
-			39: 'RIGHT',
-			40: 'DOWN',
-			65: 'LEFT',
-			87: 'TOP',
-			68: 'RIGHT',
-			83: 'DOWN',
+			a: 'LEFT',
+			w: 'TOP',
+			d: 'RIGHT',
+			s: 'DOWN',
+			ArrowLeft: 'LEFT',
+			ArrowUp: 'TOP',
+			ArrowRight: 'RIGHT',
+			ArrowDown: 'DOWN',
+		};
+		this.pressedKeysMap = {
+			LEFT: false,
+			TOP: false,
+			RIGHT: false,
+			DOWN: false,
 		};
 		this._arena = new Arena();
 		players.forEach((player) => {
@@ -31,16 +37,17 @@ export default class BaseGameHandler {
 
 	keyControl(event) {
 		if (event.type === 'keypress' || event.type === 'keydown') {
-			const action = this.keyCodeMap[event.keyCode];
+			const action = this.keyCodeMap[event.key];
 			if (action) {
-				this._protagonist.setDirection(action);
+				this.pressedKeysMap[action] = true;
+				this._protagonist.setDirection(this.pressedKeysMap);
 			}
 		} else if (event.type === 'keyup') {
-			const action = this.keyCodeMap[event.keyCode];
+			const action = this.keyCodeMap[event.key];
 			if (action) {
-				this._protagonist.setDirection(action);
+				this.pressedKeysMap[action] = false;
+				this._protagonist.setDirection(this.pressedKeysMap);
 			}
-			this._protagonist.removeDirection(action);
 		}
 	}
 
