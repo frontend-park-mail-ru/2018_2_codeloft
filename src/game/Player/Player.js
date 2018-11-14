@@ -5,7 +5,7 @@ export default class Player {
 		this._radius = 20;
 		this._color = color;
 		this._isProtagonist = isProtagonist;
-		this._speed = 10;
+		this._speed = 5;
 		this._xSpeed = 0;
 		this._ySpeed = 0;
 		this._traceArray = [];
