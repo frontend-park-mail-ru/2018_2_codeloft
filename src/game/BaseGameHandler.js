@@ -26,6 +26,7 @@ export default class BaseGameHandler {
 		}
 		this.keyHandler = this.keyControl.bind(this);
 		this._gameLoops = [];
+		eventBus.on('goalCollision', this.handleGoalCollision.bind(this));
 	}
 
 	keyControl(event) {
@@ -41,6 +42,11 @@ export default class BaseGameHandler {
 			}
 			this._protagonist.removeDirection(action);
 		}
+	}
+
+	handleGoalCollision(player) {
+		this._arena.clearGoal();
+		this._arena.spawnGoal();
 	}
 
 	gameLoop() {

@@ -1,5 +1,6 @@
 import Player from '../Player/Player.js';
 import Goal from '../Goal/Goal.js';
+import eventBus from '../../modules/EventBus/EventBus.js';
 
 export default class Arena {
 	constructor() {
@@ -76,6 +77,28 @@ export default class Arena {
 		this._context.closePath();
 	}
 
+	clearGoal() {
+	    if (this._currentGoal) {
+			this._context.globalCompositeOperation = 'destination-out';
+			this._context.beginPath();
+			this._context.arc(this._currentGoal.getCoords().x1, this._currentGoal.getCoords().y1,
+				this._currentGoal.getRadius() + 2, 0, 2 * Math.PI);
+			this._context.arc(this._currentGoal.getCoords().x2, this._currentGoal.getCoords().y2,
+				this._currentGoal.getRadius() + 2, 0, 2 * Math.PI);
+			this._context.fillStyle = '#0C141F';
+			this._context.fill();
+			this._context.closePath();
+
+		    this._context.beginPath();
+		    this._context.moveTo(this._currentGoal.getCoords().x1, this._currentGoal.getCoords().y1);
+		    this._context.lineTo(this._currentGoal.getCoords().x2, this._currentGoal.getCoords().y2);
+		    this._context.strokeStyle = '#FFE64D';
+		    this._context.lineWidth = 7;
+		    this._context.stroke();
+		    this._context.closePath();
+		}
+	}
+
 	goalAnimate(x, y) {
 		this._context.beginPath();
 		this._context.arc(x, y, 10, 0, 2 * Math.PI);
@@ -88,7 +111,7 @@ export default class Arena {
 		if (player.getY() <= this._currentGoal.calculateY(player.getX()) + 10
 		&& player.getY() >= this._currentGoal.calculateY(player.getX()) - 10
 		&& this._currentGoal.inInterval(player.getY())) {
-			alert('yeah');
+			eventBus.emit('goalCollision', player);
 		}
 	}
 

@@ -34,12 +34,6 @@ export default class SinglePlayer extends BaseView {
 		});
 	}
 
-	afterRender() {
-		return new Promise((resolve) => {
-			resolve();
-		});
-	}
-
 	hide() {
 		this._gameHandler.stopGame();
 		super.hide();
