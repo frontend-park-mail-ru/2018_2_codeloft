@@ -16,8 +16,8 @@ export default class Goal {
 	}
 
 	inInterval(y) {
-		return y <= Math.max(this._yCoord1, this._yCoord2) + 2
-			&& y >= Math.min(this._yCoord1, this._yCoord2) - 2;
+		return y <= Math.max(this._yCoord1, this._yCoord2)
+			&& y >= Math.min(this._yCoord1, this._yCoord2);
 	}
 
 	getRadius() {

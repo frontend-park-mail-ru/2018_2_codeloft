@@ -13,6 +13,7 @@ export default class Arena {
 		window.addEventListener('resize', this.resizeGameField.bind(this));
 		this._currentGoal = {};
 		this.resizeGameField();
+		this._goalCollision = false;
 		this.clearField();
 	}
 
@@ -75,6 +76,8 @@ export default class Arena {
 		this._context.lineWidth = 5;
 		this._context.stroke();
 		this._context.closePath();
+
+		this._goalCollision = false;
 	}
 
 	clearGoal() {
@@ -109,8 +112,10 @@ export default class Arena {
 
 	checkGoalCollision(player) {
 		if (player.getY() <= this._currentGoal.calculateY(player.getX()) + 10
-		&& player.getY() >= this._currentGoal.calculateY(player.getX()) - 10
-		&& this._currentGoal.inInterval(player.getY())) {
+			&& player.getY() >= this._currentGoal.calculateY(player.getX()) - 10
+			&& this._currentGoal.inInterval(player.getY())
+			&& !this._goalCollision) {
+			this._goalCollision = true;
 			eventBus.emit('goalCollision', player);
 		}
 	}
