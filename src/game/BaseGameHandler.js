@@ -4,25 +4,25 @@ import eventBus from '../modules/EventBus/EventBus.js';
 
 export default class BaseGameHandler {
 	constructor(players) {
-		this.keyCodeMap = {
-			a: 'LEFT',
-			w: 'TOP',
-			d: 'RIGHT',
-			s: 'DOWN',
-			ArrowLeft: 'LEFT',
-			ArrowUp: 'TOP',
-			ArrowRight: 'RIGHT',
-			ArrowDown: 'DOWN',
-		};
 		this.pressedKeysMap = {
 			LEFT: false,
 			TOP: false,
 			RIGHT: false,
 			DOWN: false,
 		};
+		this.keyCodeMap = {
+			37: 'LEFT',
+			38: 'TOP',
+			39: 'RIGHT',
+			40: 'DOWN',
+			65: 'LEFT',
+			87: 'TOP',
+			68: 'RIGHT',
+			83: 'DOWN',
+		};
 		this._arena = new Arena();
 		players.forEach((player) => {
-			if (player.isMain()) {
+			if (player.main()) {
 				this._protagonist = player;
 			}
 			this._arena.drawPlayer(player);
@@ -30,6 +30,7 @@ export default class BaseGameHandler {
 		this.players = players;
 		if (!this._protagonist) {
 			this._protagonist = new Player(true);
+			this.players.push(this._protagonist);
 		}
 		this.keyHandler = this.keyControl.bind(this);
 		this._gameLoops = [];
@@ -39,13 +40,13 @@ export default class BaseGameHandler {
 
 	keyControl(event) {
 		if (event.type === 'keypress' || event.type === 'keydown') {
-			const action = this.keyCodeMap[event.key];
+			const action = this.keyCodeMap[event.keyCode];
 			if (action) {
 				this.pressedKeysMap[action] = true;
 				this._protagonist.setDirection(this.pressedKeysMap);
 			}
 		} else if (event.type === 'keyup') {
-			const action = this.keyCodeMap[event.key];
+			const action = this.keyCodeMap[event.keyCode];
 			if (action) {
 				this.pressedKeysMap[action] = false;
 				this._protagonist.setDirection(this.pressedKeysMap);
@@ -53,23 +54,25 @@ export default class BaseGameHandler {
 		}
 	}
 
-	handleGoalCollision(player) {
-		if (player === this._protagonist) {
-			player.addScore(10);
-			eventBus.emit('scoreRedraw', player.getScore());
+	handleGoalCollision(details) {
+		if (details.player === this._protagonist) {
+			details.player.addScore(details.scoreBonus);
+			eventBus.emit('scoreRedraw', details.player.getScore());
 		}
 		this._arena.clearGoal();
 		this._arena.spawnGoal();
 	}
 
 	gameLoop() {
-		this._arena.clearPlayer(this._protagonist);
-		this._arena.checkBorderCollision(this._protagonist);
-		this._arena.checkGoalCollision(this._protagonist);
-		this._protagonist.move();
 		this._arena.clearField();
-		this._arena.drawPlayer(this._protagonist);
-		this._arena.drawGoal();
+		this.players.forEach((player) => {
+			this._arena.clearPlayer(player);
+			this._arena.checkBorderCollision(player);
+			this._arena.checkGoalCollision(player);
+			player.move();
+			this._arena.drawPlayer(player);
+			this._arena.drawGoal();
+		});
 	}
 
 	startGame() {

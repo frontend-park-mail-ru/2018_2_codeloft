@@ -9,6 +9,8 @@ export default class Goal {
 		this.c2 = this.getCoords().x2 * this.getCoords().y1
             - this.getCoords().x1 * this.getCoords().y2;
 		this.c3 = this.getCoords().x2 - this.getCoords().x1;
+		this.length = Math.sqrt((this._xCoord1 - this._xCoord2) * (this._xCoord1 - this._xCoord2)
+			+ (this._yCoord1 - this._yCoord2) * (this._yCoord1 - this._yCoord2));
 	}
 
 	calculateY(x) {
@@ -18,6 +20,10 @@ export default class Goal {
 	inInterval(y) {
 		return y <= Math.max(this._yCoord1, this._yCoord2)
 			&& y >= Math.min(this._yCoord1, this._yCoord2);
+	}
+
+	getLength() {
+		return this.length;
 	}
 
 	getRadius() {

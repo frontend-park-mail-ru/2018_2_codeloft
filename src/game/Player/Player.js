@@ -11,7 +11,7 @@ export default class Player {
 		this._score = 0;
 	}
 
-	isMain() {
+	main() {
 		return this._isProtagonist;
 	}
 
@@ -34,6 +34,8 @@ export default class Player {
 	setDirection(keyPressedMap) {
 		this._xSpeed = 0;
 		this._ySpeed = 0;
+
+
 		if (keyPressedMap.RIGHT) {
 			this._xSpeed += this._speed;
 		}
@@ -45,6 +47,12 @@ export default class Player {
 		}
 		if (keyPressedMap.DOWN) {
 			this._ySpeed += this._speed;
+		}
+
+
+		if (this._xSpeed && this._ySpeed) {
+			this._xSpeed *= 0.7;
+			this._ySpeed *= 0.7;
 		}
 	}
 

@@ -1,6 +1,7 @@
-import Player from '../Player/Player.js';
 import Goal from '../Goal/Goal.js';
 import eventBus from '../../modules/EventBus/EventBus.js';
+
+const SCORE_RATE = 2;
 
 export default class Arena {
 	constructor() {
@@ -10,8 +11,10 @@ export default class Arena {
 		this._yMin = this._gameBlock.getBoundingClientRect().y;
 		this._xMax = this._gameBlock.getBoundingClientRect().width - this._xMin;
 		this._yMax = this._gameBlock.getBoundingClientRect().height - this._yMin;
-		window.addEventListener('resize', this.resizeGameField.bind(this));
+		this._diagonal = Math.sqrt((this._xMax - this._xMin) * (this._xMax - this._xMin)
+			+ (this._yMax - this._yMin) * (this._yMax - this._yMin));
 		this._currentGoal = {};
+		window.addEventListener('resize', this.resizeGameField.bind(this));
 		this.resizeGameField();
 		this.clearField();
 	}
@@ -55,8 +58,8 @@ export default class Arena {
 		const firstX = Math.floor(Math.random() * (this._xMax - 300 - this._xMin + 20) + this._xMin + 20);
 		const firstY = Math.floor(Math.random() * (this._yMax - 300 - this._yMin + 20) + this._yMin + 20);
 
-		const secondX = Math.floor(Math.random() * (firstX + 200 - firstX + 20)) + firstX + 20;
-		const secondY = Math.floor(Math.random() * (firstY + 200 - firstY + 20)) + firstY + 20;
+		const secondX = Math.floor(Math.random() * (firstX + 150 - firstX + 30)) + firstX + 30;
+		const secondY = Math.floor(Math.random() * (firstY + 150 - firstY + 30)) + firstY + 30;
 
 		this._currentGoal = new Goal(firstX, firstY, secondX, secondY);
 		this.drawGoal();
@@ -118,7 +121,10 @@ export default class Arena {
 		if (player.getY() <= this._currentGoal.calculateY(player.getX()) + 5
 			&& player.getY() >= this._currentGoal.calculateY(player.getX()) - 5
 			&& this._currentGoal.inInterval(player.getY())) {
-			eventBus.emit('goalCollision', player);
+			eventBus.emit('goalCollision', {
+				player: player,
+				scoreBonus: Math.round(this._diagonal / (SCORE_RATE * this._currentGoal.getLength()))
+			});
 		}
 	}
 
