@@ -31,8 +31,8 @@ export default class Arena {
 			const deltaY1 = this._currentGoal.getCoords().y1 - (player.getY() + player.getDirection().y);
 			const deltaX2 = this._currentGoal.getCoords().x2 - (player.getX() + player.getDirection().x);
 			const deltaY2 = this._currentGoal.getCoords().y2 - (player.getY() + player.getDirection().y);
-			if (Math.sqrt(deltaX1 * deltaX1 + deltaY1 * deltaY1) <= player.getRadius() + this._currentGoal.getRadius() + 1
-				|| Math.sqrt(deltaX2 * deltaX2 + deltaY2 * deltaY2) <= player.getRadius() + this._currentGoal.getRadius() + 1) {
+			if (Math.sqrt(deltaX1 * deltaX1 + deltaY1 * deltaY1) < player.getRadius() + this._currentGoal.getRadius()
+				|| Math.sqrt(deltaX2 * deltaX2 + deltaY2 * deltaY2) < player.getRadius() + this._currentGoal.getRadius()) {
 				return false;
 			}
 			return true;
@@ -74,8 +74,8 @@ export default class Arena {
 		const firstX = Math.floor(Math.random() * (this._xMax - 300 - this._xMin + 20) + this._xMin + 20);
 		const firstY = Math.floor(Math.random() * (this._yMax - 300 - this._yMin + 20) + this._yMin + 20);
 
-		const secondX = Math.floor(Math.random() * (firstX + 150 - firstX + 30)) + firstX + 30;
-		const secondY = Math.floor(Math.random() * (firstY + 150 - firstY + 30)) + firstY + 30;
+		const secondX = Math.floor(Math.random() * (firstX + 150 - firstX + 40)) + firstX + 40;
+		const secondY = Math.floor(Math.random() * (firstY + 150 - firstY + 40)) + firstY + 40;
 
 		this._currentGoal = new Goal(firstX, firstY, secondX, secondY);
 		this.drawGoal();
