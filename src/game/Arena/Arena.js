@@ -11,6 +11,7 @@ export default class Arena {
 		this._yMin = this._gameBlock.getBoundingClientRect().y;
 		this._xMax = this._gameBlock.getBoundingClientRect().width - this._xMin;
 		this._yMax = this._gameBlock.getBoundingClientRect().height - this._yMin;
+
 		this._diagonal = Math.sqrt((this._xMax - this._xMin) * (this._xMax - this._xMin)
 			+ (this._yMax - this._yMin) * (this._yMax - this._yMin));
 		this._currentGoal = {};
