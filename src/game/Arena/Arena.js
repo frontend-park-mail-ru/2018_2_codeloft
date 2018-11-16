@@ -31,8 +31,8 @@ export default class Arena {
 			const deltaY1 = this._currentGoal.getCoords().y1 - (player.getY() + player.getDirection().y);
 			const deltaX2 = this._currentGoal.getCoords().x2 - (player.getX() + player.getDirection().x);
 			const deltaY2 = this._currentGoal.getCoords().y2 - (player.getY() + player.getDirection().y);
-			if (Math.sqrt(deltaX1 * deltaX1 + deltaY1 * deltaY1) < player.getRadius() + this._currentGoal.getRadius()
-				|| Math.sqrt(deltaX2 * deltaX2 + deltaY2 * deltaY2) < player.getRadius() + this._currentGoal.getRadius()) {
+			if (Math.sqrt(deltaX1 * deltaX1 + deltaY1 * deltaY1) < player.getRadius() + this._currentGoal.getRadius() - 1
+				|| Math.sqrt(deltaX2 * deltaX2 + deltaY2 * deltaY2) < player.getRadius() + this._currentGoal.getRadius() - 1) {
 				return false;
 			}
 			return true;
@@ -86,9 +86,9 @@ export default class Arena {
 			this._context.globalCompositeOperation = 'source-over';
 			this._context.beginPath();
 			this._context.arc(this._currentGoal.getCoords().x1, this._currentGoal.getCoords().y1,
-				this._currentGoal.getRadius(), 0, 2 * Math.PI);
+				this._currentGoal.getRadius() + 2, 0, 2 * Math.PI);
 			this._context.arc(this._currentGoal.getCoords().x2, this._currentGoal.getCoords().y2,
-				this._currentGoal.getRadius(), 0, 2 * Math.PI);
+				this._currentGoal.getRadius() + 2, 0, 2 * Math.PI);
 			this._context.fillStyle = '#FFE64D';
 			this._context.fill();
 			this._context.closePath();
