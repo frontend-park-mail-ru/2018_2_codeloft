@@ -56,6 +56,18 @@ export default class Player {
 		}
 	}
 
+	resetDiretions() {
+		this._xSpeed = 0;
+		this._ySpeed = 0;
+	}
+
+	getDirection() {
+		return {
+			x: this._xSpeed,
+			y: this._ySpeed,
+		};
+	}
+
 	addScore(value) {
 		this._score += value;
 	}

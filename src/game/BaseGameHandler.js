@@ -69,7 +69,9 @@ export default class BaseGameHandler {
 			this._arena.clearPlayer(player);
 			this._arena.checkBorderCollision(player);
 			this._arena.checkGoalCollision(player);
-			player.move();
+			if (this._arena.canMove(player)) {
+				player.move();
+			}
 			this._arena.drawPlayer(player);
 			this._arena.drawGoal();
 		});
