@@ -12,6 +12,6 @@ export default class SinglePlayerHandler extends BaseGameHandler {
 			eventBus.emit('scoreRedraw', details.player.getScore());
 		}
 		this._arena.clearGoal();
-		this._arena.spawnGoal();
+		this._arena.spawnGoal(this.players);
 	}
 }

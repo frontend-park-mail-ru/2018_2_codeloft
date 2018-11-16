@@ -55,12 +55,10 @@ export default class BaseGameHandler {
 	}
 
 	handleGoalCollision(details) {
-		if (details.player === this._protagonist) {
-			details.player.addScore(details.scoreBonus);
-			eventBus.emit('scoreRedraw', details.player.getScore());
-		}
+		details.player.addScore(details.scoreBonus);
+		eventBus.emit('scoreRedraw', details.player.getScore());
 		this._arena.clearGoal();
-		this._arena.spawnGoal();
+		this._arena.spawnGoal(this.players);
 	}
 
 	gameLoop() {
@@ -82,7 +80,7 @@ export default class BaseGameHandler {
 		window.addEventListener('keyup', this.keyHandler);
 		window.addEventListener('keypress', this.keyHandler);
 		this._gameLoops.push(setInterval(this.gameLoop.bind(this), 5));
-		this._arena.spawnGoal();
+		this._arena.spawnGoal(this.players);
 		// this._gameLoops.push(setInterval(this._arena.spawnGoal.bind(this._arena), 50000));
 	}
 

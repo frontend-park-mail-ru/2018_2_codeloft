@@ -2,6 +2,7 @@ import Goal from '../Goal/Goal.js';
 import eventBus from '../../modules/EventBus/EventBus.js';
 
 const SCORE_RATE = 2;
+const GOAL_RADIUS = 10;
 
 export default class Arena {
 	constructor() {
@@ -70,15 +71,37 @@ export default class Arena {
 		}
 	}
 
-	spawnGoal() {
-		const firstX = Math.floor(Math.random() * (this._xMax - 300 - this._xMin + 20) + this._xMin + 20);
-		const firstY = Math.floor(Math.random() * (this._yMax - 300 - this._yMin + 20) + this._yMin + 20);
+	_checkCollision(players, coords) {
+		let collision = false;
+		players.forEach((player) => {
+			const deltaX1 = coords.firstX - (player.getX() + player.getDirection().x);
+			const deltaY1 = coords.firstY - (player.getY() + player.getDirection().y);
+			const deltaX2 = coords.secondX - (player.getX() + player.getDirection().x);
+			const deltaY2 = coords.secondY - (player.getY() + player.getDirection().y);
+			if (Math.sqrt(deltaX1 * deltaX1 + deltaY1 * deltaY1) < player.getRadius() + GOAL_RADIUS - 1) {
+				collision = true;
+			}
+			if (Math.sqrt(deltaX2 * deltaX2 + deltaY2 * deltaY2) < player.getRadius() + GOAL_RADIUS - 1) {
+				collision = true;
+			}
+		});
+		return collision;
+	}
 
-		const secondX = Math.floor(Math.random() * (firstX + 150 - firstX + 40)) + firstX + 40;
-		const secondY = Math.floor(Math.random() * (firstY + 150 - firstY + 40)) + firstY + 40;
+	spawnGoal(players) {
+		const coords = {};
+		coords.firstX = Math.floor(Math.random() * (this._xMax - 300 - this._xMin + 20) + this._xMin + 20);
+		coords.firstY = Math.floor(Math.random() * (this._yMax - 300 - this._yMin + 20) + this._yMin + 20);
 
-		this._currentGoal = new Goal(firstX, firstY, secondX, secondY);
-		this.drawGoal();
+		coords.secondX = Math.floor(Math.random() * (coords.firstX + 150 - coords.firstX + 40)) + coords.firstX + 40;
+		coords.secondY = Math.floor(Math.random() * (coords.firstY + 150 - coords.firstY + 40)) + coords.firstY + 40;
+
+		if (!this._checkCollision(players, coords)) {
+			this._currentGoal = new Goal(coords.firstX, coords.firstY, coords.secondX, coords.secondY);
+			this.drawGoal();
+		} else {
+			this.spawnGoal(players);
+		}
 	}
 
 	drawGoal() {
@@ -136,7 +159,7 @@ export default class Arena {
 	}
 
 	checkGoalCollision(player) {
-		if (player.getY() <= this._currentGoal.calculateY(player.getX()) + 5
+		if (this._currentGoal && player.getY() <= this._currentGoal.calculateY(player.getX()) + 5
 			&& player.getY() >= this._currentGoal.calculateY(player.getX()) - 5
 			&& this._currentGoal.inInterval(player.getY())) {
 			eventBus.emit('goalCollision', {
