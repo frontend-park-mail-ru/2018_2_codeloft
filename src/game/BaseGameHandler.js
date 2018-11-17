@@ -1,15 +1,8 @@
 import Arena from './Arena/Arena.js';
 import Player from './Player/Player.js';
-import eventBus from '../modules/EventBus/EventBus.js';
 
 export default class BaseGameHandler {
 	constructor(players) {
-		this.pressedKeysMap = {
-			LEFT: false,
-			UP: false,
-			RIGHT: false,
-			DOWN: false,
-		};
 		this.keyCodeMap = {
 			37: 'LEFT',
 			38: 'UP',
@@ -34,55 +27,28 @@ export default class BaseGameHandler {
 		}
 		this.keyHandler = this.keyControl.bind(this);
 		this._gameLoops = [];
-		this._goalHandler = this.handleGoalCollision.bind(this);
-		eventBus.on('goalCollision', this._goalHandler);
 	}
 
 	keyControl(event) {
-		if (event.type === 'keypress' || event.type === 'keydown') {
-			const action = this.keyCodeMap[event.keyCode];
-			if (action) {
-				this.pressedKeysMap[action] = true;
-				this._protagonist.setDirection(action);
-			}
+		const action = this.keyCodeMap[event.keyCode];
+		if (action) {
+			this._protagonist.setDirection(action);
 		}
 	}
 
-	handleGoalCollision(details) {
-		details.player.addScore(details.scoreBonus);
-		eventBus.emit('scoreRedraw', details.player.getScore());
-		this._arena.clearGoal();
-		this._arena.spawnGoal(this.players);
-	}
-
 	gameLoop() {
-		this._arena.clearField();
-		this.players.forEach((player) => {
-			this._arena.clearPlayer(player);
-			this._arena.checkBorderCollision(player);
-			this._arena.checkGoalCollision(player);
-			if (this._arena.canMove(player)) {
-				player.move();
-			}
-			this._arena.drawPlayer(player);
-			this._arena.drawGoal();
-		});
+
 	}
 
 	startGame() {
 		window.addEventListener('keydown', this.keyHandler);
-		window.addEventListener('keyup', this.keyHandler);
 		window.addEventListener('keypress', this.keyHandler);
 		this._gameLoops.push(setInterval(this.gameLoop.bind(this), 5));
-		this._arena.spawnGoal(this.players);
-		// this._gameLoops.push(setInterval(this._arena.spawnGoal.bind(this._arena), 50000));
 	}
 
 	stopGame() {
 		window.removeEventListener('keydown', this.keyHandler);
-		window.removeEventListener('keyup', this.keyHandler);
 		window.removeEventListener('keypress', this.keyHandler);
 		this._gameLoops.forEach((loop) => clearInterval(loop));
-		eventBus.off('goalCollision', this._goalHandler);
 	}
 }
