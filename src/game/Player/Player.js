@@ -9,6 +9,12 @@ export default class Player {
 		this._xSpeed = this._speed;
 		this._ySpeed = 0;
 		this._score = 0;
+		this.speedHandleMap = {
+			RIGHT: () => this._xSpeed = this._speed,
+			LEFT: () => this._xSpeed = -this._speed,
+			UP: () => this._ySpeed = -this._speed,
+			DOWN: () => this._ySpeed = this._speed,
+		};
 	}
 
 	main() {
@@ -31,29 +37,10 @@ export default class Player {
 		return this._radius;
 	}
 
-	setDirection(keyPressedMap) {
+	setDirection(action) {
 		this._xSpeed = 0;
 		this._ySpeed = 0;
-
-
-		if (keyPressedMap.RIGHT) {
-			this._xSpeed += this._speed;
-		}
-		if (keyPressedMap.TOP) {
-			this._ySpeed -= this._speed;
-		}
-		if (keyPressedMap.LEFT) {
-			this._xSpeed -= this._speed;
-		}
-		if (keyPressedMap.DOWN) {
-			this._ySpeed += this._speed;
-		}
-
-
-		if (this._xSpeed && this._ySpeed) {
-			this._xSpeed *= 0.7;
-			this._ySpeed *= 0.7;
-		}
+		this.speedHandleMap[action]();
 	}
 
 	resetDiretions() {
