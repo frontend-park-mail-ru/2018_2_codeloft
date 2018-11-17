@@ -49,7 +49,7 @@ export default class BaseGameHandler {
 			const action = this.keyCodeMap[event.keyCode];
 			if (action) {
 				this.pressedKeysMap[action] = false;
-				this._protagonist.setDirection(this.pressedKeysMap);
+				//this._protagonist.setDirection(this.pressedKeysMap);
 			}
 		}
 	}
