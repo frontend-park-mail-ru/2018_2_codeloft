@@ -26,4 +26,8 @@ export default class menu extends BaseView {
 			});
 		});
 	}
+
+	escapeEvent() {
+
+	}
 }
