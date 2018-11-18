@@ -17,8 +17,8 @@ export default class Timer {
 		this.check();
 	}
 
-	getPassedTime() {
-		return this._passed;
+	getTimeLeft() {
+		return this._duration - this._passed;
 	}
 
 	addDuration(sec) {

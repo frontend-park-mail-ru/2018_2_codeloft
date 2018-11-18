@@ -15,6 +15,8 @@ export default class SinglePlayerHandler extends BaseGameHandler {
 	handleGoalCollision(details) {
 		details.player.addScore(details.scoreBonus);
 		eventBus.emit('scoreRedraw', details.player.getScore());
+		this._gameTimer.addDuration(Math.round(details.scoreBonus / 4));
+		eventBus.emit('timerTick', this._gameTimer.getTimeLeft());
 		this._arena.clearGoal();
 		this._arena.spawnGoal(this.players);
 	}
