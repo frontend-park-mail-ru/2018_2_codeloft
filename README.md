@@ -11,7 +11,8 @@
 
 - [Ветка разработки](https://github.com/frontend-park-mail-ru/2018_2_codeloft/tree/testing)
 - [Release ветка](https://github.com/frontend-park-mail-ru/2018_2_codeloft/tree/master)
-- [Деплой](https://codeloft.now.sh)
+- [Деплой - prod](https://codeloft.ru)
+- [Деплой - develop](http://codeloft.ru:3000)
 
 ## Описание <a name="description"></a>
 

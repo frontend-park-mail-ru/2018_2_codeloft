@@ -13,7 +13,7 @@ export default class BaseView {
 		this.element = null;
 		this.elementsArray = [];
 		this._needAuth = false;
-		this.logoText = 'Tron 2D';
+		this._logoText = 'Tron 2D';
 		this._innerName = '';
 		this.mainLogo = document.getElementsByClassName(MAIN_LABEL)[0];
 		eventBus.on('enterPressed', this.mainEvent.bind(this));
@@ -24,7 +24,6 @@ export default class BaseView {
 	init() {
 		return new Promise((resolve) => {
 			this.build().then(() => {
-				this.hide();
 				document.getElementsByClassName(MAIN_ELEMENT)[0].appendChild(this.render());
 				resolve();
 			});
@@ -33,6 +32,14 @@ export default class BaseView {
 
 	getName() {
 		return this._innerName;
+	}
+
+	hideMainLabel() {
+		this.mainLogo.style.display = 'none';
+	}
+
+	showMainLabel() {
+		this.mainLogo.style.display = 'block';
 	}
 
 	mainEvent() {
@@ -56,7 +63,7 @@ export default class BaseView {
 	}
 
 	show() {
-		this.preRender()
+		return this.preRender()
 			.then(() => {
 				if (!this.element) {
 					return this.init();
@@ -66,7 +73,8 @@ export default class BaseView {
 			.then(() => {
 				if (!this.needAuth() || userService.isLogIn()) {
 					this.afterRender().then(() => {
-						this.mainLogo.innerHTML = this.logoText;
+						this.mainLogo.innerHTML = this._logoText;
+						this.mainLogo.style.display = 'block';
 						this.element.style.display = 'block';
 					});
 				} else {
