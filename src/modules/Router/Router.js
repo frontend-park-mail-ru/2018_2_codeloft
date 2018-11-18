@@ -10,12 +10,11 @@ class Router {
 	constructor() {
 		this.routesMap = {};
 		this.currentView = null;
-		document.addEventListener('keydown', (key) => {
+		window.addEventListener('keydown', (key) => {
 			if (key.key === 'Enter') {
 				this.currentView.mainEvent();
-			} else if (key.key === 'Escape' && this.currentView.getName() !== 'Main') {
-				this.currentView.showMainLabel();
-				this.go(URLS.MENU);
+			} else if (key.key === 'Escape') {
+				this.currentView.escapeEvent();
 			}
 		});
 	}
