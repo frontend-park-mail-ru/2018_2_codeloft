@@ -1,3 +1,5 @@
+import eventBus from '../../modules/EventBus/EventBus.js';
+
 export default class Timer {
 	constructor(duration) {
 		this._duration = duration;
@@ -11,6 +13,7 @@ export default class Timer {
 
 	tick() {
 		this._passed++;
+		eventBus.emit('timerTick', this._duration - this._passed);
 		this.check();
 	}
 
@@ -30,5 +33,6 @@ export default class Timer {
 
 	stop() {
 		clearInterval(this.tickLoop);
+		eventBus.emit('timerStop');
 	}
 }

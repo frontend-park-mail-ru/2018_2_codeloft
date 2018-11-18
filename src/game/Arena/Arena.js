@@ -93,8 +93,8 @@ export default class Arena {
 		coords.firstX = Math.floor(Math.random() * (this._xMax - 300 - this._xMin + 20) + this._xMin + 20);
 		coords.firstY = Math.floor(Math.random() * (this._yMax - 300 - this._yMin + 20) + this._yMin + 20);
 
-		coords.secondX = Math.floor(Math.random() * (coords.firstX + 150 - coords.firstX + 50)) + coords.firstX + 50;
-		coords.secondY = Math.floor(Math.random() * (coords.firstY + 150 - coords.firstY + 50)) + coords.firstY + 50;
+		coords.secondX = Math.floor(Math.random() * (coords.firstX + 100 - coords.firstX + 40)) + coords.firstX + 40;
+		coords.secondY = Math.floor(Math.random() * (coords.firstY + 100 - coords.firstY + 40)) + coords.firstY + 40;
 
 		if (!this._checkCollision(players, coords)) {
 			this._currentGoal = new Goal(coords.firstX, coords.firstY, coords.secondX, coords.secondY);

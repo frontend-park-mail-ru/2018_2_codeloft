@@ -1,10 +1,10 @@
 'use strict';
 
 import MainComponent from '../MainComponent/MainComponent.js';
-import template from './GameStat.hbs';
-import './GameStat.scss';
+import template from './GameInfo.hbs';
+import './GameInfo.scss';
 
-export default class GameStat extends MainComponent {
+export default class GameInfo extends MainComponent {
 	constructor() {
 		super();
 		this.template = template;

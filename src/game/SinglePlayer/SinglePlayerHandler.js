@@ -8,8 +8,8 @@ export default class SinglePlayerHandler extends BaseGameHandler {
 	constructor(players = []) {
 		super(players);
 		this._goalHandler = this.handleGoalCollision.bind(this);
-		eventBus.on('goalCollision', this._goalHandler);
 		this._gameTimer = new Timer(BASE_ROUND_TIME);
+		eventBus.on('goalCollision', this._goalHandler);
 	}
 
 	handleGoalCollision(details) {
@@ -22,6 +22,7 @@ export default class SinglePlayerHandler extends BaseGameHandler {
 	startGame() {
 		super.startGame();
 		this._arena.spawnGoal(this.players);
+		this._gameTimer.start();
 	}
 
 	gameLoop() {
@@ -40,6 +41,7 @@ export default class SinglePlayerHandler extends BaseGameHandler {
 
 	stopGame() {
 		super.stopGame();
+		this._gameTimer.stop();
 		eventBus.off('goalCollision', this._goalHandler);
 	}
 }

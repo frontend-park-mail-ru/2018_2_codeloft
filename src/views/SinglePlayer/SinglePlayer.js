@@ -4,6 +4,8 @@ import BaseView from '../BaseView/BaseView.js';
 import tagParser from '../../modules/TagParser/TagParser.js';
 import SinglePlayerHandler from '../../game/SinglePlayer/SinglePlayerHandler.js';
 import eventBus from '../../modules/EventBus/EventBus.js';
+import router from '../../modules/Router/Router.js';
+import URLS from '../../modules/Consts/Consts.js';
 import './SinglePlayer.scss';
 
 export default class SinglePlayer extends BaseView {
@@ -31,8 +33,14 @@ export default class SinglePlayer extends BaseView {
 
 	afterRender() {
 		return new Promise((resolve) => {
-			eventBus.on('scoreRedraw', this.redrawScore.bind(this));
+			this.scoreHandler = this.redrawScore.bind(this);
+			eventBus.on('scoreRedraw', this.scoreHandler);
+			this.timerHandler = this.redrawTimer.bind(this);
+			eventBus.on('timerTick', this.timerHandler);
+			this.endHandler = this.endGame.bind(this);
+			eventBus.on('timerStop', this.endHandler);
 			this.scoreLabel = document.getElementsByClassName('game-stat__score-block')[0];
+			this.timerLabel = document.getElementsByClassName('game-stat__timer-block')[0];
 			resolve();
 		});
 	}
@@ -41,18 +49,31 @@ export default class SinglePlayer extends BaseView {
 		this.scoreLabel.innerText = `Score: ${value}`;
 	}
 
+	endGame() {
+		router.go(URLS.MENU);
+		this._gameHandler.stopGame();
+	}
+
+	redrawTimer(value) {
+		this.timerLabel.innerText = `Seconds Left: ${value}`;
+	}
+
 	show() {
 		super.show().then(() => {
 			this.element.style.display = 'flex';
 			this.mainLogo.style.display = 'none';
 			this.scoreLabel.innerText = 'Score: 0';
+			this.timerLabel.innerText = 'Seconds Left: 60';
 			this._gameHandler = new SinglePlayerHandler();
 			this._gameHandler.startGame();
 		});
 	}
 
 	hide() {
-		this._gameHandler.stopGame();
 		super.hide();
+		eventBus.off('timerStop', this.endHandler);
+		eventBus.off('timerTick', this.timerHandler);
+		eventBus.off('scoreRedraw', this.scoreHandler);
+		this._gameHandler.stopGame();
 	}
 }

@@ -2,22 +2,27 @@
 
 .game-stat {
   opacity: 0.4;
+  position: absolute;
+  z-index: 999;
+  justify-content: flex-end;
+  margin-right: 10px;
+
   //background: $dark-neon-color;
-  margin-top: 5px;
-  padding-right: 20px;
+  //margin-top: 5px;
+  //padding-right: 20px;
   //border: $dark-neon-color 2px solid;
 }
 
-.game-stat__score-block {
-  //color: $yellow-color;
-  font-size: 24px;
+.game-stat__timer-block {
+  font-family: 'Bowlby One SC', cursive;
+  font-size: 3vw;
+  text-align: center;
+  color: white;
 }
 
 .game-stat__score-block {
   font-family: 'Bowlby One SC', cursive;
   font-size: 4vw;
-  width: 100vw;
-  margin-top: calc(50vh - 5vw);
   text-align: center;
   color: white;
   //background: linear-gradient(
