@@ -30,10 +30,7 @@ export default class BaseGameHandler {
 	}
 
 	keyControl(event) {
-		const action = this.keyCodeMap[event.keyCode];
-		if (action) {
-			this._protagonist.setDirection(action);
-		}
+
 	}
 
 	gameLoop() {
@@ -43,7 +40,7 @@ export default class BaseGameHandler {
 	startGame() {
 		window.addEventListener('keydown', this.keyHandler);
 		window.addEventListener('keypress', this.keyHandler);
-		this._gameLoops.push(setInterval(this.gameLoop.bind(this), 5));
+		this._gameLoops.push(setInterval(this.gameLoop.bind(this), 200));
 	}
 
 	stopGame() {

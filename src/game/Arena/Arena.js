@@ -3,16 +3,19 @@ import eventBus from '../../modules/EventBus/EventBus.js';
 
 const SCORE_RATE = 2;
 const GOAL_RADIUS = 10;
+const FIELD_WIDTH = 320;
+const FIELD_HEIGHT = 180;
 
 export default class Arena {
 	constructor() {
-		this._gameBlock = document.getElementsByClassName('game-field')[0];
+		this._gameBlock = document.getElementsByClassName('game-field')[0]; // баггггг
 		this._context = this._gameBlock.getContext('2d');
 		this._xMin = this._gameBlock.getBoundingClientRect().x;
 		this._yMin = this._gameBlock.getBoundingClientRect().y;
 		this._xMax = this._gameBlock.getBoundingClientRect().width - this._xMin;
 		this._yMax = this._gameBlock.getBoundingClientRect().height - this._yMin;
 
+		this.resized = false;
 		this._diagonal = Math.sqrt((this._xMax - this._xMin) * (this._xMax - this._xMin)
 			+ (this._yMax - this._yMin) * (this._yMax - this._yMin));
 		this._currentGoal = {};
@@ -22,8 +25,11 @@ export default class Arena {
 	}
 
 	resizeGameField() {
-		this._gameBlock.width = window.innerWidth;
-		this._gameBlock.height = window.innerHeight;
+		this._gameBlock.width = 1600;
+		this._gameBlock.height = 900;
+		this._scaleX = this._gameBlock.width / 160;
+		this._scaleY = this._gameBlock.height / 90;
+		this.resized = true;
 	}
 
 	canMove(player) {
@@ -126,6 +132,22 @@ export default class Arena {
 			this._context.stroke();
 			this._context.closePath();
 		}
+	}
+
+	drawPixel(x, y) {
+		this._context.beginPath();
+		this._context.arc(x * this._scaleX, y * this._scaleY, 6, 0, 2 * Math.PI);
+		this._context.fillStyle = '#FFE64D';
+		this._context.fill();
+		this._context.closePath();
+	}
+
+	clearPixel(x, y) {
+		this._context.beginPath();
+		this._context.arc(x * this._scaleX, y * this._scaleY, 7, 0, 2 * Math.PI);
+		this._context.fillStyle = '#0C141F';
+		this._context.fill();
+		this._context.closePath();
 	}
 
 	clearGoal() {

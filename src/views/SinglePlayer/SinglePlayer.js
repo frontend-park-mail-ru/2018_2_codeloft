@@ -26,6 +26,9 @@ export default class SinglePlayer extends BaseView {
 					div.appendChild(el.render());
 				});
 				this.element = div;
+				this.scoreHandler = this.redrawScore.bind(this);
+				this.timerHandler = this.redrawTimer.bind(this);
+				this.endHandler = this.endGame.bind(this);
 				resolve();
 			});
 		});
@@ -33,11 +36,8 @@ export default class SinglePlayer extends BaseView {
 
 	afterRender() {
 		return new Promise((resolve) => {
-			this.scoreHandler = this.redrawScore.bind(this);
 			eventBus.on('scoreRedraw', this.scoreHandler);
-			this.timerHandler = this.redrawTimer.bind(this);
 			eventBus.on('timerTick', this.timerHandler);
-			this.endHandler = this.endGame.bind(this);
 			eventBus.on('timerStop', this.endHandler);
 			this.scoreLabel = document.getElementsByClassName('game-stat__score-block')[0];
 			this.timerLabel = document.getElementsByClassName('game-stat__timer-block')[0];

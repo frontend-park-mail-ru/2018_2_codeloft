@@ -21,6 +21,13 @@ export default class SinglePlayerHandler extends BaseGameHandler {
 		this._arena.spawnGoal(this.players);
 	}
 
+	keyControl(event) {
+		const action = this.keyCodeMap[event.keyCode];
+		if (action) {
+			this._protagonist.setDirection(action);
+		}
+	}
+
 	startGame() {
 		super.startGame();
 		this._arena.spawnGoal(this.players);

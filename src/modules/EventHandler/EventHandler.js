@@ -61,6 +61,9 @@ eventHandler
 	.addHandler('goSinglePlayer', () => {
 		router.go(URLS.SINGLE_PLAYER);
 	})
+	.addHandler('goMultiPlayer', () => {
+		router.go(URLS.MULTI_PLAYER);
+	})
 	.addHandler('logOut', () => {
 		userService.logOut();
 	});

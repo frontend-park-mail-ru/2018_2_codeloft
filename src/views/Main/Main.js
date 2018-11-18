@@ -8,6 +8,7 @@ export default class menu extends BaseView {
 	build() {
 		return new Promise((resolve) => {
 			this.template = `<Button {{class=button}} {{text=Single Player}} {{click=goSinglePlayer}} {{needAuth=true}}>
+                         <Button {{class=button}} {{text=Multi Player}} {{click=goMultiPlayer}} {{needAuth=true}}>
                          <Button {{class=button}} {{text=Sign in}} {{click=goLogin}} {{forAuth=true}}>
                          <Button {{class=button}} {{text=Sign up}} {{click=goRegister}} {{forAuth=true}}>
                          <Button {{class=button}} {{text=Rules}} {{click=goAbout}}>
