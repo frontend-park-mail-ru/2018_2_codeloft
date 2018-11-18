@@ -36,17 +36,24 @@ export default class MultiPlayer extends BaseView {
 		this._gameHandler.stopGame();
 	}
 
+	spawn() {
+		this._gameHandler = new MultiPlayerHandler();
+		this._gameHandler.startGame();
+	}
+
 	show() {
 		super.show().then(() => {
 			this.element.style.display = 'block';
 			this.mainLogo.style.display = 'none';
-			this._gameHandler = new MultiPlayerHandler();
-			this._gameHandler.startGame();
+			this.deathHandler = this.spawn.bind(this);
+			eventBus.on('protagonistIsDead', this.deathHandler);
+			this.spawn();
 		});
 	}
 
 	hide() {
 		super.hide();
 		this._gameHandler.stopGame();
+		eventBus.off('protagonistIsDead', this.deathHandler);
 	}
 }

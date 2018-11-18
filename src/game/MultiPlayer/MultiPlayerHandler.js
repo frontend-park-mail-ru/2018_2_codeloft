@@ -9,6 +9,8 @@ export default class MultiPlayerHandler extends BaseGameHandler {
 		eventBus.on('connectedToRoom', this.arrayHandler);
 		this.fieldUpdater = this.updateField.bind(this);
 		eventBus.on('fieldUpdated', this.fieldUpdater);
+		this.deathHandler = this.stopGame.bind(this);
+		eventBus.on('protagonistIsDead', this.deathHandler);
 		this._playersArrayMap = {};
 	}
 

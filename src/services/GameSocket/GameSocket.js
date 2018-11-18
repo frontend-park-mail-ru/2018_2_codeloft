@@ -6,6 +6,7 @@ import eventBus from '../../modules/EventBus/EventBus.js';
 const CONNECTED_MESSAGE = 'connected';
 const PLAYER_MOVEMENT_MESSAGE = 'IN_GAME';
 const CHANGE_DIRECTION_MESSAGE = 'change_direction';
+const DEATH_MESSAGE = 'DEAD';
 
 export default class GameSocket {
 	constructor() {
@@ -20,6 +21,8 @@ export default class GameSocket {
 				eventBus.emit('connectedToRoom', receivedData.payload);
 			} else if (receivedData.type === PLAYER_MOVEMENT_MESSAGE) {
 				eventBus.emit('fieldUpdated', receivedData.payload);
+			} else if (receivedData.type === DEATH_MESSAGE) {
+				eventBus.emit('protagonistIsDead');
 			}
 		};
 	}
