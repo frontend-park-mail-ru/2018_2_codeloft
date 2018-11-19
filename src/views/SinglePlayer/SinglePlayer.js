@@ -8,6 +8,8 @@ import router from '../../modules/Router/Router.js';
 import URLS from '../../modules/Consts/Consts.js';
 import './SinglePlayer.scss';
 
+const SINGLE_PLAYER_GAME_FIELD = 'singleplayer-block__game-field';
+
 export default class SinglePlayer extends BaseView {
 	constructor() {
 		super();
@@ -16,12 +18,12 @@ export default class SinglePlayer extends BaseView {
 
 	build() {
 		return new Promise((resolve) => {
-			this.template = `<GameBlock>
+			this.template = `<GameBlock {{class=${SINGLE_PLAYER_GAME_FIELD}}}>
 							 <GameStat>`;
 			tagParser.toHTML(this.template).then((elementsArray) => {
 				this.elementsArray = elementsArray;
 				const div = document.createElement('div');
-				div.setAttribute('class', 'main-content__game-block');
+				div.setAttribute('class', 'main-content__singleplayer-block');
 				this.elementsArray.forEach((el) => {
 					div.appendChild(el.render());
 				});
@@ -64,7 +66,7 @@ export default class SinglePlayer extends BaseView {
 			this.mainLogo.style.display = 'none';
 			this.scoreLabel.innerText = 'Score: 0';
 			this.timerLabel.innerText = 'Seconds Left: 60';
-			this._gameHandler = new SinglePlayerHandler();
+			this._gameHandler = new SinglePlayerHandler([], SINGLE_PLAYER_GAME_FIELD);
 			this._gameHandler.startGame();
 		});
 	}

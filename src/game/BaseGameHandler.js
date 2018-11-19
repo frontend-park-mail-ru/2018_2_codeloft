@@ -2,7 +2,7 @@ import Arena from './Arena/Arena.js';
 import Player from './Player/Player.js';
 
 export default class BaseGameHandler {
-	constructor(players) {
+	constructor(players, arenaClassName) {
 		this.keyCodeMap = {
 			37: 'LEFT',
 			38: 'UP',
@@ -13,7 +13,7 @@ export default class BaseGameHandler {
 			68: 'RIGHT',
 			83: 'DOWN',
 		};
-		this._arena = new Arena();
+		this._arena = new Arena(arenaClassName);
 		players.forEach((player) => {
 			if (player.main()) {
 				this._protagonist = player;
@@ -40,7 +40,7 @@ export default class BaseGameHandler {
 	startGame() {
 		window.addEventListener('keydown', this.keyHandler);
 		window.addEventListener('keypress', this.keyHandler);
-		this._gameLoops.push(setInterval(this.gameLoop.bind(this), 200));
+		this._gameLoops.push(setInterval(this.gameLoop.bind(this), 5));
 	}
 
 	stopGame() {

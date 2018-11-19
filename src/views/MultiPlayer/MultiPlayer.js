@@ -8,14 +8,16 @@ import router from '../../modules/Router/Router.js';
 import URLS from '../../modules/Consts/Consts.js';
 import './Multiplayer.scss';
 
+const MULTI_PLAYER_GAME_FIELD = 'multiplayer-block__game-field';
+
 export default class MultiPlayer extends BaseView {
 	build() {
 		return new Promise((resolve) => {
-			this.template = '<GameBlock>';
+			this.template = `<GameBlock {{class=${MULTI_PLAYER_GAME_FIELD}}}>`;
 			tagParser.toHTML(this.template).then((elementsArray) => {
 				this.elementsArray = elementsArray;
 				const div = document.createElement('div');
-				div.setAttribute('class', 'main-content__game-block');
+				div.setAttribute('class', 'main-content__multiplayer-block');
 				this.elementsArray.forEach((el) => {
 					div.appendChild(el.render());
 				});
@@ -37,7 +39,7 @@ export default class MultiPlayer extends BaseView {
 	}
 
 	spawn() {
-		this._gameHandler = new MultiPlayerHandler();
+		this._gameHandler = new MultiPlayerHandler([], MULTI_PLAYER_GAME_FIELD);
 		this._gameHandler.startGame();
 	}
 

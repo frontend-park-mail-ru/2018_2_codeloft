@@ -7,8 +7,8 @@ const FIELD_WIDTH = 320;
 const FIELD_HEIGHT = 180;
 
 export default class Arena {
-	constructor() {
-		this._gameBlock = document.getElementsByClassName('game-field')[0]; // баггггг
+	constructor(arenaClassName) {
+		this._gameBlock = document.getElementsByClassName(arenaClassName)[0];
 		this._context = this._gameBlock.getContext('2d');
 		this._xMin = this._gameBlock.getBoundingClientRect().x;
 		this._yMin = this._gameBlock.getBoundingClientRect().y;
@@ -25,8 +25,8 @@ export default class Arena {
 	}
 
 	resizeGameField() {
-		this._gameBlock.width = 1600;
-		this._gameBlock.height = 900;
+		this._gameBlock.width = window.innerWidth;
+		this._gameBlock.height = window.innerHeight;
 		this._scaleX = this._gameBlock.width / 160;
 		this._scaleY = this._gameBlock.height / 90;
 		this.resized = true;

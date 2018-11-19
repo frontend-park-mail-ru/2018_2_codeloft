@@ -3,8 +3,8 @@ import eventBus from '../../modules/EventBus/EventBus.js';
 import GameSocket from '../../services/GameSocket/GameSocket.js';
 
 export default class MultiPlayerHandler extends BaseGameHandler {
-	constructor(players = []) {
-		super(players);
+	constructor(players = [], arenaClassName) {
+		super(players, arenaClassName);
 		this.arrayHandler = this.arrayInit.bind(this);
 		eventBus.on('connectedToRoom', this.arrayHandler);
 		this.fieldUpdater = this.updateField.bind(this);
