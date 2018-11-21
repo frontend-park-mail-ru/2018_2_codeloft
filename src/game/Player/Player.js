@@ -56,6 +56,11 @@ export default class Player {
 		};
 	}
 
+	resetScore() {
+		this._goalsPassed = 0;
+		this._score = 0;
+	}
+
 	addGoal() {
 		this._goalsPassed++;
 	}

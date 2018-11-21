@@ -2,7 +2,7 @@ import BaseGameHandler from '../BaseGameHandler.js';
 import eventBus from '../../modules/EventBus/EventBus';
 import Timer from '../Timer/Timer.js';
 
-const BASE_ROUND_TIME = 60;
+const BASE_ROUND_TIME = 10;
 
 export default class SinglePlayerHandler extends BaseGameHandler {
 	constructor(players = [], arenaClassName) {
@@ -31,6 +31,9 @@ export default class SinglePlayerHandler extends BaseGameHandler {
 
 	startGame() {
 		super.startGame();
+		this.players.forEach((player) => {
+			player.resetScore();
+		});
 		this._arena.spawnGoal(this.players);
 		this._gameTimer.start();
 	}
