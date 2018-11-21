@@ -3,8 +3,6 @@ import eventBus from '../../modules/EventBus/EventBus.js';
 
 const SCORE_RATE = 2;
 const GOAL_RADIUS = 10;
-const FIELD_WIDTH = 320;
-const FIELD_HEIGHT = 180;
 
 export default class Arena {
 	constructor(arenaClassName) {

@@ -13,6 +13,7 @@ export default class SinglePlayerHandler extends BaseGameHandler {
 	}
 
 	handleGoalCollision(details) {
+		details.player.addGoal();
 		details.player.addScore(details.scoreBonus);
 		eventBus.emit('scoreRedraw', details.player.getScore());
 		this._gameTimer.addDuration(Math.round(details.scoreBonus / 4));
@@ -46,6 +47,14 @@ export default class SinglePlayerHandler extends BaseGameHandler {
 			this._arena.drawPlayer(player);
 			this._arena.drawGoal();
 		});
+	}
+
+	getScore() {
+		return this._protagonist.getScore();
+	}
+
+	getGoalsPassed() {
+		return this._protagonist.getGoalsPassed();
 	}
 
 	stopGame() {
