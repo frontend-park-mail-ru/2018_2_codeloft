@@ -59,10 +59,10 @@ export default class HighScore extends BaseView {
 			return;
 		}
 		Transport.Get(`/user?page=${tempPage}&page_size=5`)
-			.then((usersJSON) => usersJSON.json())
-			.then((users) => {
+			.then((response) => response.json())
+			.then((leadersObject) => {
 				this.scoreTable.render().innerHTML = '';
-				users.forEach((user) => {
+				leadersObject.users.forEach((user) => {
 					this.scoreTable.render().innerHTML += `<p>${user.login} ${user.score}</p>`;
 				});
 				this.pagesArray[this.currentPage].setUsual();

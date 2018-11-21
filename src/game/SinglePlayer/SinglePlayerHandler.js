@@ -5,8 +5,8 @@ import Timer from '../Timer/Timer.js';
 const BASE_ROUND_TIME = 60;
 
 export default class SinglePlayerHandler extends BaseGameHandler {
-	constructor(players = []) {
-		super(players);
+	constructor(players = [], arenaClassName) {
+		super(players, arenaClassName);
 		this._goalHandler = this.handleGoalCollision.bind(this);
 		this._gameTimer = new Timer(BASE_ROUND_TIME);
 		eventBus.on('goalCollision', this._goalHandler);
@@ -19,6 +19,13 @@ export default class SinglePlayerHandler extends BaseGameHandler {
 		eventBus.emit('timerTick', this._gameTimer.getTimeLeft());
 		this._arena.clearGoal();
 		this._arena.spawnGoal(this.players);
+	}
+
+	keyControl(event) {
+		const action = this.keyCodeMap[event.keyCode];
+		if (action) {
+			this._protagonist.setDirection(action);
+		}
 	}
 
 	startGame() {
