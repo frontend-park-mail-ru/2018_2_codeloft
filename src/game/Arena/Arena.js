@@ -8,11 +8,10 @@ export default class Arena {
 	constructor(arenaClassName) {
 		this._gameBlock = document.getElementsByClassName(arenaClassName)[0];
 		this._context = this._gameBlock.getContext('2d');
-		this._xMin = this._gameBlock.getBoundingClientRect().x;
-		this._yMin = this._gameBlock.getBoundingClientRect().y;
-		this._xMax = this._gameBlock.getBoundingClientRect().width - this._xMin;
-		this._yMax = this._gameBlock.getBoundingClientRect().height - this._yMin;
-
+		this._xMin = this._gameBlock.getBoundingClientRect().x + 5;
+		this._yMin = this._gameBlock.getBoundingClientRect().y + 5;
+		this._xMax = this._gameBlock.getBoundingClientRect().width - this._xMin - 5;
+		this._yMax = this._gameBlock.getBoundingClientRect().height - this._yMin - 5;
 		this.resized = false;
 		this._diagonal = Math.sqrt((this._xMax - this._xMin) * (this._xMax - this._xMin)
 			+ (this._yMax - this._yMin) * (this._yMax - this._yMin));
