@@ -2,11 +2,12 @@
 
 .game-stat {
   opacity: 0.4;
-  position: absolute;
-  z-index: 999;
-  justify-content: flex-end;
-  margin-right: 10px;
-
+  //position: absolute;
+  //z-index: 999;
+  //justify-content: flex-end;
+  //margin-right: 10px;
+  grid-column: 3/4;
+  grid-row: 1/4;
   //background: $dark-neon-color;
   //margin-top: 5px;
   //padding-right: 20px;

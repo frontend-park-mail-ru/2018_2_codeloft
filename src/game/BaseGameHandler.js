@@ -40,7 +40,7 @@ export default class BaseGameHandler {
 	startGame() {
 		window.addEventListener('keydown', this.keyHandler);
 		window.addEventListener('keypress', this.keyHandler);
-		this._gameLoops.push(setInterval(this.gameLoop.bind(this), 5));
+		this._gameLoops.push(setInterval(this.gameLoop.bind(this), 10));
 	}
 
 	stopGame() {

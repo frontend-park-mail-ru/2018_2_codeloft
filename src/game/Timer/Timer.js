@@ -36,9 +36,11 @@ export default class Timer {
 	}
 
 	stop() {
-		clearInterval(this.tickLoop);
-		this._passed = 0;
-		this._duration = 0;
-		eventBus.emit('timerStop');
+		if (this._duration) {
+			clearInterval(this.tickLoop);
+			this._passed = 0;
+			this._duration = 0;
+			eventBus.emit('timerStop');
+		}
 	}
 }
