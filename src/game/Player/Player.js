@@ -10,6 +10,7 @@ export default class Player {
 		this._ySpeed = 0;
 		this._score = 0;
 		this._goalsPassed = 0;
+		this._bounced = false;
 		this.speedHandleMap = {
 			RIGHT: () => this._xSpeed = this._speed,
 			LEFT: () => this._xSpeed = -this._speed,
@@ -38,10 +39,26 @@ export default class Player {
 		return this._radius;
 	}
 
+	_unBounce() {
+		this._bounced = false;
+		// this._xSpeed = -this._xSpeed;
+		// this._ySpeed = -this._ySpeed;
+		console.log(1);
+	}
+
+	bounce() {
+		this._xSpeed = -this._xSpeed;
+		this._ySpeed = -this._ySpeed;
+		this._bounced = true;
+		setTimeout(this._unBounce.bind(this), 10);
+	}
+
 	setDirection(action) {
-		this._xSpeed = 0;
-		this._ySpeed = 0;
-		this.speedHandleMap[action]();
+		if (!this._bounced) {
+			this._xSpeed = 0;
+			this._ySpeed = 0;
+			this.speedHandleMap[action]();
+		}
 	}
 
 	resetDiretions() {

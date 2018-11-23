@@ -62,6 +62,7 @@ export default class SinglePlayer extends BaseView {
 	}
 
 	play() {
+		document.body.style.cursor = 'none';
 		eventBus.on('scoreRedraw', this.scoreHandler);
 		eventBus.on('timerTick', this.timerHandler);
 		eventBus.on('timerStop', this.resultsHandler);
@@ -79,6 +80,7 @@ export default class SinglePlayer extends BaseView {
 	}
 
 	endGame() {
+		document.body.style.cursor = 'default';
 		this._resultBlock.scoreLabel.innerHTML = `Your score is ${this._gameHandler.getScore()}`;
 		this._resultBlock.goalsLabel.innerHTML = `Goals passed: ${this._gameHandler.getGoalsPassed()}`;
 		this.gameStat.hide();

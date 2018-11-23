@@ -35,8 +35,12 @@ export default class Arena {
 			const deltaY1 = this._currentGoal.getCoords().y1 - (player.getY() + player.getDirection().y);
 			const deltaX2 = this._currentGoal.getCoords().x2 - (player.getX() + player.getDirection().x);
 			const deltaY2 = this._currentGoal.getCoords().y2 - (player.getY() + player.getDirection().y);
-			if (Math.sqrt(deltaX1 * deltaX1 + deltaY1 * deltaY1) < player.getRadius() + this._currentGoal.getRadius() - 1
-				|| Math.sqrt(deltaX2 * deltaX2 + deltaY2 * deltaY2) < player.getRadius() + this._currentGoal.getRadius() - 1) {
+			if (Math.sqrt(deltaX1 * deltaX1 + deltaY1 * deltaY1) < player.getRadius() + this._currentGoal.getRadius() - 1) {
+				player.bounce('x');
+				return false;
+			}
+			if (Math.sqrt(deltaX2 * deltaX2 + deltaY2 * deltaY2) < player.getRadius() + this._currentGoal.getRadius() - 1) {
+				player.bounce('y');
 				return false;
 			}
 			return true;
@@ -96,8 +100,8 @@ export default class Arena {
 		coords.firstX = Math.floor(Math.random() * (this._xMax - 300 - this._xMin + 20) + this._xMin + 20);
 		coords.firstY = Math.floor(Math.random() * (this._yMax - 300 - this._yMin + 20) + this._yMin + 20);
 
-		coords.secondX = Math.floor(Math.random() * (coords.firstX + 100 - coords.firstX + 40)) + coords.firstX + 40;
-		coords.secondY = Math.floor(Math.random() * (coords.firstY + 100 - coords.firstY + 40)) + coords.firstY + 40;
+		coords.secondX = Math.floor(Math.random() * (coords.firstX + 80 - coords.firstX + 50)) + coords.firstX + 50;
+		coords.secondY = Math.floor(Math.random() * (coords.firstY + 80 - coords.firstY + 50)) + coords.firstY + 50;
 
 		if (!this._checkCollision(players, coords)) {
 			this._currentGoal = new Goal(coords.firstX, coords.firstY, coords.secondX, coords.secondY);
@@ -178,8 +182,8 @@ export default class Arena {
 	}
 
 	checkGoalCollision(player) {
-		if (this._currentGoal && player.getY() <= this._currentGoal.calculateY(player.getX()) + 5
-			&& player.getY() >= this._currentGoal.calculateY(player.getX()) - 5
+		if (this._currentGoal && player.getY() <= this._currentGoal.calculateY(player.getX()) + 6
+			&& player.getY() >= this._currentGoal.calculateY(player.getX()) - 6
 			&& this._currentGoal.inInterval(player.getY())) {
 			eventBus.emit('goalCollision', {
 				player: player,
