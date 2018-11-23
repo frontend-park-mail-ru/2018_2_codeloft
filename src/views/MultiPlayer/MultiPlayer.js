@@ -55,7 +55,7 @@ export default class MultiPlayer extends BaseView {
 
 	hide() {
 		super.hide();
-		this._gameHandler.stopGame();
 		eventBus.off('protagonistIsDead', this.deathHandler);
+		this._gameHandler.stopGame();
 	}
 }

@@ -12,7 +12,6 @@ export default class GameSocket {
 	constructor() {
 		this._roomSocket = new WebSocket('wss://backend.codeloft.ru/gamews');
 		this._roomSocket.onopen = () => {
-			console.log('opened gamews');
 			this._roomSocket.send(JSON.stringify(userService.getUserInfo('login')));
 		};
 		this._roomSocket.onmessage = (msg) => {
@@ -23,6 +22,7 @@ export default class GameSocket {
 				eventBus.emit('fieldUpdated', receivedData.payload);
 			} else if (receivedData.type === DEATH_MESSAGE) {
 				eventBus.emit('protagonistIsDead');
+				// console.log(receivedData);
 			}
 		};
 	}
@@ -32,11 +32,11 @@ export default class GameSocket {
 			type: CHANGE_DIRECTION_MESSAGE,
 			payload: direction
 		};
-		// console.log(direction);
 		this._roomSocket.send(JSON.stringify(info));
 	}
 
 	endSession() {
+		console.log('stop');
 		this._roomSocket.close();
 	}
 }
