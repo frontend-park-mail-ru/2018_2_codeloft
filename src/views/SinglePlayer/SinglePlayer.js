@@ -33,7 +33,7 @@ export default class SinglePlayer extends BaseView {
 				this.gameStat = this.elementsArray[1];
 				this.scoreHandler = this.redrawScore.bind(this);
 				this.timerHandler = this.redrawTimer.bind(this);
-				this.endHandler = this.endGame.bind(this);
+				this.resultsHandler = this.showResults.bind(this);
 				resolve();
 			});
 		});
@@ -62,9 +62,10 @@ export default class SinglePlayer extends BaseView {
 	}
 
 	play() {
+		document.body.style.cursor = 'none';
 		eventBus.on('scoreRedraw', this.scoreHandler);
 		eventBus.on('timerTick', this.timerHandler);
-		eventBus.on('timerStop', this.endHandler);
+		eventBus.on('timerStop', this.resultsHandler);
 		this._resultBlock.hide();
 		this.gameStat.show();
 		this.scoreLabel.innerText = 'Score: 0';
@@ -73,13 +74,18 @@ export default class SinglePlayer extends BaseView {
 		this._gameHandler.startGame();
 	}
 
+	showResults() {
+		this._resultBlock.show();
+		this.endGame();
+	}
+
 	endGame() {
+		document.body.style.cursor = 'default';
 		this._resultBlock.scoreLabel.innerHTML = `Your score is ${this._gameHandler.getScore()}`;
 		this._resultBlock.goalsLabel.innerHTML = `Goals passed: ${this._gameHandler.getGoalsPassed()}`;
 		this.gameStat.hide();
 		this._gameHandler.stopGame();
-		this._resultBlock.show();
-		eventBus.off('timerStop', this.endHandler);
+		eventBus.off('timerStop', this.resultsHandler);
 		eventBus.off('timerTick', this.timerHandler);
 		eventBus.off('scoreRedraw', this.scoreHandler);
 		this._gameHandler.stopGame();
@@ -99,6 +105,7 @@ export default class SinglePlayer extends BaseView {
 
 	hide() {
 		super.hide();
+		this.endGame();
 		this._resultBlock.hide();
 	}
 }
