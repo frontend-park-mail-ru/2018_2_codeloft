@@ -7,6 +7,8 @@ import userService from '../../services/UserService/UserService';
 import router from '../../modules/Router/Router';
 import MessageIn from '../../components/MessageIn/MessageIn.js';
 import MessageOut from '../../components/MessageOut/MessageOut.js';
+import eventBus from '../../modules/EventBus/EventBus.js';
+import chatService from '../../services/ChatService/ChatService';
 
 export default class Chat extends BaseView {
 	constructor() {
@@ -32,10 +34,25 @@ export default class Chat extends BaseView {
 					div.appendChild(el.render());
 				});
 
+				eventBus.on('user_message', (data) => {
+					this.addInMessage(data.sender_login, data.message, data.date);
+				});
+
 				this.element = div;
-				this.userBlock = this.elementsArray[1];
 				this.logoText = 'Chat';
 				this._innerName = 'Chat';
+				resolve();
+			});
+		});
+	}
+
+	afterRender() {
+		return new Promise(resolve => {
+			this.messageInput = document.getElementsByClassName('main-content__chat-block-message-send-input')[0];
+
+			this.sendBtn = document.getElementsByClassName('main-content__chat-block-message-send-button')[0];
+			this.sendBtn.addEventListener('click', () => {
+				chatService.sendUserMessage(this.messageInput.innerHTML, ' ');
 				resolve();
 			});
 		});
