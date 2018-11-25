@@ -49,6 +49,7 @@ export default class MultiPlayerHandler extends BaseGameHandler {
 
 	updateField(payload) {
 		payload.players.forEach((playerInfo) => {
+			console.log(playerInfo.is_dead);
 			if (!playerInfo.is_dead) {
 				this.handlePlayerCoords(playerInfo.id, playerInfo.position.y, playerInfo.position.x);
 				this._fieldArray[playerInfo.position.y][playerInfo.position.x].id = playerInfo.id;
@@ -69,7 +70,7 @@ export default class MultiPlayerHandler extends BaseGameHandler {
 
 	stopGame() {
 		eventBus.off('connectedToRoom', this.arrayHandler);
-		this._gameSocket.endSession();
+		setTimeout(() => this._gameSocket.endSession(), 100);
 		super.stopGame();
 	}
 }
