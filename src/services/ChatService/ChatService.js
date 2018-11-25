@@ -7,6 +7,10 @@ class ChatService {
 		eventBus.on('user_message', this._inMsgHandler);
 	}
 
+	init(chatComponent) {
+		this._chatComponent = chatComponent;
+	}
+
 	_inMessage(msgData) {
 
 	}
