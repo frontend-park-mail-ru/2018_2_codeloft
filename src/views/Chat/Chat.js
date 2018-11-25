@@ -35,9 +35,18 @@ export default class Chat extends BaseView {
 				});
 
 				eventBus.on('user_message', (data) => {
-					this.addInMessage(data.sender_login, data.message, data.date);
+					if (data.sender_login !== userService.getUserInfo('login')) {
+						this.addInMessage(data.sender_login, data.message, data.date);
+					}
 				});
 
+				eventBus.on('outMsg', (data) => {
+					console.log(data.sender_login);
+					console.log(userService.getUserInfo('login'));
+					// if (data.sender_login !== userService.getUserInfo('login')) {
+					this.addOutMessage(data.message, data.date);
+					// }
+				});
 				this.element = div;
 				this.logoText = 'Chat';
 				this._innerName = 'Chat';
@@ -52,9 +61,10 @@ export default class Chat extends BaseView {
 
 			this.sendBtn = document.getElementsByClassName('main-content__chat-block-message-send-button')[0];
 			this.sendBtn.addEventListener('click', () => {
-				chatService.sendUserMessage(this.messageInput.innerHTML, ' ');
-				resolve();
+				chatService.sendUserMessage(this.messageInput.value, ' ');
+				// this.addOutMessage(this.messageInput.value, Date.now().toString());
 			});
+			resolve();
 		});
 	}
 
