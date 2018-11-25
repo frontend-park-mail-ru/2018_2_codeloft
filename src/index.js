@@ -9,6 +9,7 @@ import Profile from './views/Profile/Profile.js';
 import HighScore from './views/HighScore/HighScore.js';
 import SinglePlayer from './views/SinglePlayer/SinglePlayer.js';
 import MultiPlayer from './views/MultiPlayer/MultiPlayer.js';
+import Chat from './views/Chat/Chat.js';
 import URLS from './modules/Consts/Consts.js';
 import userService from './services/UserService/UserService.js';
 import serviceWorkerRegister from './services/ServiceWorker/ServiceWorker.js';
@@ -26,6 +27,7 @@ userService.checkAuth()
 			.add(URLS.PROFILE, new Profile())
 			.add(URLS.HIGH_SCORE, new HighScore())
 			.add(URLS.SINGLE_PLAYER, new SinglePlayer())
-			.add(URLS.MULTI_PLAYER, new MultiPlayer());
+			.add(URLS.MULTI_PLAYER, new MultiPlayer())
+			.add(URLS.CHAT, new Chat());
 		router.start();
 	});

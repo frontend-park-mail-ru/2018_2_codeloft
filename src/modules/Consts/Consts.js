@@ -6,7 +6,8 @@ const URLS = {
 	ABOUT: '/about',
 	HIGH_SCORE: '/score',
 	SINGLE_PLAYER: '/singleplayer',
-	MULTI_PLAYER: '/multiplayer'
+	MULTI_PLAYER: '/multiplayer',
+	CHAT: '/chat',
 };
 
 export default URLS;

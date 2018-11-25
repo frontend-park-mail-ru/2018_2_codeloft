@@ -64,6 +64,9 @@ eventHandler
 	.addHandler('goMultiPlayer', () => {
 		router.go(URLS.MULTI_PLAYER);
 	})
+	.addHandler('goChat', () => {
+		router.go(URLS.CHAT);
+	})
 	.addHandler('logOut', () => {
 		userService.logOut();
 	});

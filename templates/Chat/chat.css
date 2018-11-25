@@ -1,12 +1,14 @@
 .main-content__chat-block {
     /*padding: 2vh 5vh;*/
     background-color: #0c141f;
+    /*height: 100%;*/
+    /*width: 100%;*/
 }
 
 .main-content__chat-block-messaging {
     overflow: scroll;
     width: auto;
-    height: 50vh;
+    height: 95.5vh;
     padding: 2vh 2vh;
 }
 
