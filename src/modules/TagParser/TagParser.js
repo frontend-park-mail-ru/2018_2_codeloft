@@ -9,6 +9,7 @@ import Form from '../../components/Form/Form.js';
 import Img from '../../components/Img/Img.js';
 import GameInfo from '../../components/GameInfo/GameInfo.js';
 import MultiPlayerChoice from '../../components/MultiPlayerChoice/MultiPlayerChoice.js';
+import ControlPopUp from '../../components/ControlPopUp/ControlPopUp.js';
 
 /**
  * Класс, нужный для сборки документа по кастомному шаблону
@@ -44,6 +45,7 @@ class TagParser {
 			Img: () => new Img(),
 			GameStat: () => new GameInfo(),
 			MultiPlayerChoice: () => new MultiPlayerChoice(),
+			ControlPopUp: () => new ControlPopUp(),
 		};
 	}
 

@@ -64,7 +64,7 @@ export default class MultiPlayerHandler extends BaseGameHandler {
 	}
 
 	startGame() {
-		this._gameSocket = new GameSocket('wss://backend.codeloft.ru/gamews');
+		this._gameSocket = new GameSocket();
 		super.startGame();
 	}
 

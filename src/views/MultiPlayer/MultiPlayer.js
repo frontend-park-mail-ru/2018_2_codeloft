@@ -6,6 +6,7 @@ import MultiPlayerHandler from '../../game/MultiPlayer/MultiPlayerHandler.js';
 import eventBus from '../../modules/EventBus/EventBus.js';
 import router from '../../modules/Router/Router.js';
 import URLS from '../../modules/Consts/Consts.js';
+import chatService from '../../services/ChatService/ChatService.js';
 import './Multiplayer.scss';
 
 const MULTI_PLAYER_GAME_FIELD = 'multiplayer-block__game-field';
