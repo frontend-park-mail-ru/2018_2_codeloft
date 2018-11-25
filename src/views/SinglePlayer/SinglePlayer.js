@@ -20,7 +20,8 @@ export default class SinglePlayer extends BaseView {
 	build() {
 		return new Promise((resolve) => {
 			this.template = `<GameBlock {{class=${SINGLE_PLAYER_GAME_FIELD}}}>
-							 <GameStat>`;
+							 <GameStat>
+							 <ControlPopUp>`;
 			tagParser.toHTML(this.template).then((elementsArray) => {
 				this._resultBlock = new GameResults();
 				this.elementsArray = elementsArray;

@@ -10,7 +10,7 @@ const DEATH_MESSAGE = 'DEAD';
 
 export default class GameSocket {
 	constructor() {
-		this._roomSocket = new WebSocket('wss://backend.codeloft.ru/gamews');
+		this._roomSocket = new WebSocket('ws://backend.codeloft.ru:8080/gamews');
 		this._roomSocket.onopen = () => {
 			this._roomSocket.send(JSON.stringify(userService.getUserInfo('login')));
 		};
@@ -22,7 +22,8 @@ export default class GameSocket {
 				eventBus.emit('fieldUpdated', receivedData.payload);
 			} else if (receivedData.type === DEATH_MESSAGE) {
 				eventBus.emit('protagonistIsDead');
-				// console.log(receivedData);
+			} else if (receivedData.type === USER_MESSAGE) {
+				eventBus.emit('userMessage', receivedData);
 			}
 		};
 	}
@@ -36,10 +37,6 @@ export default class GameSocket {
 	}
 
 	endSession() {
-		console.log('stop');
 		this._roomSocket.close();
 	}
 }
-
-// const gameSocket = new GameSocket();
-// export default gameSocket;
