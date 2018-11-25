@@ -33,7 +33,6 @@ export default class Profile extends BaseView {
 	}
 
 	afterRender() {
-
 		return new Promise((resolve) => resolve(this.userBlock.afterRender()));
 	}
 
