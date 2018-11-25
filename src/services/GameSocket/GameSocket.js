@@ -7,6 +7,7 @@ const CONNECTED_MESSAGE = 'connected';
 const PLAYER_MOVEMENT_MESSAGE = 'IN_GAME';
 const CHANGE_DIRECTION_MESSAGE = 'change_direction';
 const DEATH_MESSAGE = 'DEAD';
+const USER_MESSAGE = 'user_message';
 
 export default class GameSocket {
 	constructor() {
@@ -22,7 +23,8 @@ export default class GameSocket {
 				eventBus.emit('fieldUpdated', receivedData.payload);
 			} else if (receivedData.type === DEATH_MESSAGE) {
 				eventBus.emit('protagonistIsDead');
-				// console.log(receivedData);
+			} else if (receivedData.type === USER_MESSAGE) {
+				eventBus.emit('userMessage', receivedData);
 			}
 		};
 	}
@@ -35,11 +37,18 @@ export default class GameSocket {
 		this._roomSocket.send(JSON.stringify(info));
 	}
 
+	sendUserMessage(message, reader) {
+		const msgObject = {
+			ChatId: 0,
+			SenderLogin: userService.getUserInfo('login'),
+			ReceiverLogin: reader,
+			Message: message,
+			Date: Date.now()
+		};
+		this._roomSocket.send(JSON.stringify(msgObject));
+	}
+
 	endSession() {
-		console.log('stop');
 		this._roomSocket.close();
 	}
 }
-
-// const gameSocket = new GameSocket();
-// export default gameSocket;
