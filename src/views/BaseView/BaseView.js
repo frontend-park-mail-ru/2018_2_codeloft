@@ -77,7 +77,7 @@ export default class BaseView {
 				if (!this.needAuth() || userService.isLogIn()) {
 					this.afterRender().then(() => {
 						this.mainLogo.innerHTML = this._logoText;
-						this.mainLogo.style.display = 'block';
+						this.mainLogo.style.display = this.disp || 'block';
 						this.element.style.display = 'block';
 					});
 				} else {

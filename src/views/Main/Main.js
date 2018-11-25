@@ -13,7 +13,8 @@ export default class menu extends BaseView {
                          <Button {{class=button}} {{text=Sign up}} {{click=goRegister}} {{forAuth=true}}>
                          <Button {{class=button}} {{text=Rules}} {{click=goAbout}}>
                          <Button {{class=button}} {{text=High score}} {{click=goScore}}>
-                         <Button {{class=button}} {{text=Profile}} {{click=goProfile}} {{needAuth=true}}>`;
+                         <Button {{class=button}} {{text=Profile}} {{click=goProfile}} {{needAuth=true}}>
+						<Button {{class=button}} {{text=Chat}} {{click=goChat}}>s`;
 			tagParser.toHTML(this.template).then((elementsArray) => {
 				this.elementsArray = elementsArray;
 				const div = document.createElement('div');

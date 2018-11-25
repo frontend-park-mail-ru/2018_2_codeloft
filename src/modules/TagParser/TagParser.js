@@ -8,6 +8,9 @@ import GameBlock from '../../components/GameBlock/GameBlock.js';
 import Form from '../../components/Form/Form.js';
 import Img from '../../components/Img/Img.js';
 import GameInfo from '../../components/GameInfo/GameInfo.js';
+import MessageIn from '../../components/MessageIn/MessageIn.js';
+import MessageOut from '../../components/MessageOut/MessageOut.js';
+import ChatSender from '../../components/ChatSender/ChatSender.js';
 
 /**
  * Класс, нужный для сборки документа по кастомному шаблону
@@ -42,6 +45,9 @@ class TagParser {
 			Form: () => new Form(),
 			Img: () => new Img(),
 			GameStat: () => new GameInfo(),
+			MessageIn: () => new MessageIn(),
+			MessageOut: () => new MessageOut(),
+			ChatSender: () => new ChatSender(),
 		};
 	}
 
