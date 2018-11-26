@@ -10,7 +10,6 @@
     "eslintFix": "./node_modules/.bin/eslint --fix ./src",
     "build:prod": "./node_modules/.bin/webpack --progress --colors --config webpack.config.js",
     "build:dev": "cross-env NODE_ENV=testing webpack-dev-server --http --devtool cheap-module-source-map --hot --inline --colors --config ./webpack.dev.config.js",
-    "build:testing": "rm -rf dist/ && ./node_modules/.bin/webpack --progress --colors --config webpack.common.config.js",
     "test": "mocha"
   },
   "repository": {
@@ -45,6 +44,7 @@
     "postcss-reporter": "^6.0.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
+    "uglifyjs-webpack-plugin": "^2.0.1",
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.10",
     "webpack-merge": "^4.1.4"

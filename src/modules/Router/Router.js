@@ -10,11 +10,11 @@ class Router {
 	constructor() {
 		this.routesMap = {};
 		this.currentView = null;
-		document.addEventListener('keydown', (key) => {
+		window.addEventListener('keydown', (key) => {
 			if (key.key === 'Enter') {
 				this.currentView.mainEvent();
-			} else if (key.key === 'Escape' && this.currentView.getName() !== 'Main') {
-				this.go(URLS.MENU);
+			} else if (key.key === 'Escape') {
+				this.currentView.escapeEvent();
 			}
 		});
 	}
@@ -37,6 +37,10 @@ class Router {
 	 * @private
 	 */
 	_onRoute(pathname) {
+		if (this.currentView) {
+			this.currentView.hide();
+		}
+
 		const view = this.routesMap[pathname];
 
 		if (!view) {
@@ -44,9 +48,6 @@ class Router {
 			return;
 		}
 
-		if (this.currentView) {
-			this.currentView.hide();
-		}
 		this.currentView = view;
 		this.currentView.show();
 	}

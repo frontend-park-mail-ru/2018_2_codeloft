@@ -23,13 +23,11 @@ module.exports = Merge(common, {
 		],
 	},
 	devServer: {
-		contentBase: sourcePath,
-		disableHostCheck: true,
-		hot: true,
+		watchContentBase: true,
 		historyApiFallback: true,
-		progress: true,
-		open: true,
-		port: 1000,
+		contentBase: sourcePath,
+		hot: true,
+		port: 3000,
 		stats: {
 			warnings: false,
 		},
@@ -44,8 +42,5 @@ module.exports = Merge(common, {
 				},
 			},
 		],
-	},
-	plugins: [
-		new OpenBrowserPlugin({ url: 'http://localhost:1000' }),
-	],
+	}
 });

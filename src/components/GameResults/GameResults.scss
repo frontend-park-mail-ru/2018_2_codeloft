@@ -1,0 +1,72 @@
+.results-block {
+  color: white;
+  grid-column: 2/3;
+  grid-row: 2/3;
+  border: #3EC8AC 6px solid;
+  text-align: center;
+  opacity: 0.9;
+  font-family: 'Bowlby One SC', cursive;
+}
+
+.results-block__score {
+  font-size: 3vw;
+  background: linear-gradient(
+                  60deg,
+                  hsl(0, 75%, 50%) 10%,
+                  hsl(20, 75%, 50%) 10%,
+                  hsl(20, 75%, 50%) 25%,
+                  hsl(50, 75%, 50%) 25%,
+                  hsl(50, 75%, 50%) 40%,
+                  hsl(130, 75%, 50%) 40%,
+                  hsl(130, 75%, 50%) 55%,
+                  hsl(200, 75%, 50%) 55%,
+                  hsl(200, 75%, 50%) 70%,
+                  hsl(260, 75%, 50%) 70%,
+                  hsl(260, 75%, 50%) 85%,
+                  hsl(0, 75%, 50%) 85%
+  );
+  color: white;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: 10s BeProud linear infinite,
+  3s Always ease alternate infinite;
+}
+
+.results-block__goals {
+  font-size: 2vw;
+  //color: gray;
+}
+
+@keyframes BeProud {
+  100% { background-position: 100vw 0; }
+}
+
+@keyframes Always {
+  100% { transform: scale(1.1);}
+}
+
+.results-block__buttons {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.game-button {
+  width: 20vh;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1vw;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  cursor: pointer;
+  background-color: #0C141F;
+  color: white;
+  border: 3px solid #3EC8AC;
+  margin: 1vw;
+}
+
+.game-button:hover {
+  background-color: #3EC8AC;
+  color: white;
+}

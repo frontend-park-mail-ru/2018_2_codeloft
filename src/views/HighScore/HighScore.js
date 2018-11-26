@@ -11,8 +11,8 @@ export default class HighScore extends BaseView {
 	build() {
 		return new Promise((resolve) => {
 			this.template = `<ScoreTable>
-                         <Block {{class=leaders-page__pagination-block}}>
-                         <Button {{text=Back}} {{class=button}} {{click=goMenu}}>`;
+							 <Block {{class=leaders-page__pagination-block}}>
+							 <Button {{text=Back}} {{class=button}} {{click=goMenu}}>`;
 			tagParser.toHTML(this.template).then((elementsArray) => {
 				this.elementsArray = elementsArray;
 				this.scoreTable = this.elementsArray[0];
@@ -26,6 +26,11 @@ export default class HighScore extends BaseView {
 				this.logoText = 'Leaders';
 				this._innerName = 'Score';
 				this.currentPage = 1;
+				this.minPage = 1;
+				this.pageMap = {
+					'-1': this.currentPage - 1,
+					'+1': this.currentPage + 1,
+				};
 				this.paginate(this.currentPage);
 				eventBus.on('getPage', this.paginate.bind(this));
 				resolve();
@@ -33,41 +38,42 @@ export default class HighScore extends BaseView {
 		});
 	}
 
-	initPaginator() {
-		this.pagesArray = [];
-		this.pagesArray.push(new PagePointer('<<'));
-		for (let i = 0; i < 5; i++) {
-			this.pagesArray.push(new PagePointer(i + 1));
-		}
-		this.pagesArray.push(new PagePointer('>>'));
-		this.pagesArray[1].render().setAttribute('class', 'active');
-		this.pagesArray.forEach((pagePointer) => {
-			this.paginator.render().appendChild(pagePointer.render());
-		});
+	preRender() {
+		return Transport.Get('/user').then((responseJSON) => responseJSON.json())
+			.then((response) => {
+				this.pageAmount = response.pagesCount;
+			});
 	}
 
 	paginate(action) {
-		if (!this.pagesArray) {
-			this.initPaginator();
+		this.paginator.render().innerHTML = '';
+		this.pagesMap = {};
+		const backPointer = new PagePointer('«');
+		this.paginator.render().appendChild(backPointer.render());
+
+		this.currentPage = this.pageMap[action] || action;
+		if (this.currentPage - this.minPage > 2) {
+			this.minPage += this.currentPage - this.minPage - 2;
 		}
-		this.pageMap = {
-			'-1': this.currentPage - 1,
-			'+1': this.currentPage + 1,
-		};
-		const tempPage = this.pageMap[action] || action;
-		if (tempPage > 5 || tempPage < 1) {
-			return;
+		if (this.currentPage - this.minPage < 2 && this.minPage > 1) {
+			this.minPage -= (2 - (this.currentPage - this.minPage));
 		}
-		Transport.Get(`/user?page=${tempPage}&page_size=5`)
-			.then((usersJSON) => usersJSON.json())
-			.then((users) => {
+		for (let i = Math.max(1, this.minPage); i <= Math.min(this.minPage + 4, this.pageAmount); i++) {
+			const tempPointer = new PagePointer(i);
+			this.pagesMap[i] = tempPointer;
+			this.paginator.render().appendChild(tempPointer.render());
+		}
+
+		const forwardPointer = new PagePointer('»');
+		this.paginator.render().appendChild(forwardPointer.render());
+		this.pagesMap[this.currentPage].setActive();
+		Transport.Get(`/user?page=${this.currentPage}&page_size=5`)
+			.then((responseJSON) => responseJSON.json())
+			.then((response) => {
 				this.scoreTable.render().innerHTML = '';
-				users.forEach((user) => {
+				response.users.forEach((user) => {
 					this.scoreTable.render().innerHTML += `<p>${user.login} ${user.score}</p>`;
 				});
-				this.pagesArray[this.currentPage].setUsual();
-				this.pagesArray[tempPage].setActive();
-				this.currentPage = tempPage;
 			});
 	}
 

@@ -53,11 +53,11 @@ class UserService {
 	 * @return {*}
 	 */
 	logOut(login, password) {
-		const requestBody = {
+		const request = {
 			login: login,
 			password: password,
 		};
-		return Transport.Delete('/session', requestBody)
+		return Transport.Delete('/session', request)
 			.then(() => {
 				this._clearUserData();
 				eventBus.emit('loggedOut');
