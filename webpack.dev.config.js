@@ -23,6 +23,8 @@ module.exports = Merge(common, {
 		],
 	},
 	devServer: {
+		watchContentBase: true,
+		historyApiFallback: true,
 		contentBase: sourcePath,
 		hot: true,
 		port: 3000,
