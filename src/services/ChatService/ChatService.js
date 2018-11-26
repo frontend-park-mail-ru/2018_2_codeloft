@@ -5,7 +5,7 @@ const USER_MESSAGE = 'user_message';
 
 class ChatService {
 	constructor() {
-		this._chatSocket = new WebSocket('ws://backend.codeloft.ru:3000/chatws');
+		this._chatSocket = new WebSocket('wss://backend.codeloft.ru/chatws');
 		this._chatComponent = {};
 		this._inMsgHandler = this._inMessage.bind(this);
 		eventBus.on('user_message', this._inMsgHandler);

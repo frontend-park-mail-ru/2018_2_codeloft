@@ -10,7 +10,7 @@ const DEATH_MESSAGE = 'DEAD';
 
 export default class GameSocket {
 	constructor() {
-		this._roomSocket = new WebSocket('ws://backend.codeloft.ru:8080/gamews');
+		this._roomSocket = new WebSocket('wss://backend.codeloft.ru/gamews');
 		this._roomSocket.onopen = () => {
 			this._roomSocket.send(JSON.stringify(userService.getUserInfo('login')));
 		};
