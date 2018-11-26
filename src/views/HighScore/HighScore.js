@@ -27,10 +27,6 @@ export default class HighScore extends BaseView {
 				this._innerName = 'Score';
 				this.currentPage = 1;
 				this.minPage = 1;
-				this.pageMap = {
-					'-1': this.currentPage - 1,
-					'+1': this.currentPage + 1,
-				};
 				this.paginate(this.currentPage);
 				eventBus.on('getPage', this.paginate.bind(this));
 				resolve();
@@ -46,12 +42,21 @@ export default class HighScore extends BaseView {
 	}
 
 	paginate(action) {
+		this.pageMap = {
+			'-1': this.currentPage - 1,
+			'+1': this.currentPage + 1,
+		};
 		this.paginator.render().innerHTML = '';
 		this.pagesMap = {};
-		const backPointer = new PagePointer('«');
+		const backPointer = new PagePointer('<<');
 		this.paginator.render().appendChild(backPointer.render());
-
 		this.currentPage = this.pageMap[action] || action;
+
+		if (this.currentPage < 1) {
+			this.currentPage = 1;
+		} else if (this.currentPage > this.pageAmount) {
+			this.currentPage = this.pageAmount;
+		}
 		if (this.currentPage - this.minPage > 2) {
 			this.minPage += this.currentPage - this.minPage - 2;
 		}
@@ -64,7 +69,7 @@ export default class HighScore extends BaseView {
 			this.paginator.render().appendChild(tempPointer.render());
 		}
 
-		const forwardPointer = new PagePointer('»');
+		const forwardPointer = new PagePointer('>>');
 		this.paginator.render().appendChild(forwardPointer.render());
 		this.pagesMap[this.currentPage].setActive();
 		Transport.Get(`/user?page=${this.currentPage}&page_size=5`)
