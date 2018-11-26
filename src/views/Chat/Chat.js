@@ -83,8 +83,6 @@ export default class Chat extends BaseView {
 						this.mainLogo.style.display = 'block';
 						this.element.style.display = 'block';
 						this.hideMainLabel();
-						this.addInMessage('James', 'Hello', '17:30');
-						this.addOutMessage('Hi..', '17:31');
 					});
 				} else {
 					router.go(URLS.SIGN_IN);

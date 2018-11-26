@@ -1,5 +1,3 @@
-'use strict';
-
 import MainComponent from '../MainComponent/MainComponent.js';
 import template from './ChatSender.hbs';
 

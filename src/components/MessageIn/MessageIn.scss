@@ -1,8 +1,5 @@
 .main-content__chat-block {
-  /*padding: 2vh 5vh;*/
   background-color: #0c141f;
-  /*height: 100%;*/
-  /*width: 100%;*/
 }
 
 .main-content__chat-block-messaging {
@@ -17,7 +14,6 @@
   display: flex;
   flex-wrap: nowrap;
   font-size: 2vh;
-  /*align-items: center;*/
 }
 
 .main-content__chat-block-message__text {
@@ -64,8 +60,6 @@
   font-size: 1.3vh;
   color: #aaaaaa;
   margin-left: auto;
-  /*width: 100%;*/
-  /*margin: 0 0 5vh 5vh;*/
 }
 
 .main-content__chat-block-message-name {
