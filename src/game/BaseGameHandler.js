@@ -44,6 +44,7 @@ export default class BaseGameHandler {
 	}
 
 	stopGame() {
+		this._arena.clearField();
 		window.removeEventListener('keydown', this.keyHandler);
 		window.removeEventListener('keypress', this.keyHandler);
 		this._gameLoops.forEach((loop) => clearInterval(loop));

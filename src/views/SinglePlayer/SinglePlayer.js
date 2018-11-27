@@ -14,24 +14,32 @@ const SINGLE_PLAYER_GAME_FIELD = 'singleplayer-block__game-field';
 export default class SinglePlayer extends BaseView {
 	constructor() {
 		super();
-		this._needAuth = true;
+		this._needAuth = false;
 	}
 
 	build() {
 		return new Promise((resolve) => {
 			this.template = `<GameBlock {{class=${SINGLE_PLAYER_GAME_FIELD}}}>
 							 <GameStat>
-							 <ControlPopUp>`;
+							 <ControlPopUp>
+							 <PreSinglePlayer>`;
 			tagParser.toHTML(this.template).then((elementsArray) => {
 				this._resultBlock = new GameResults();
 				this.elementsArray = elementsArray;
 				const div = document.createElement('div');
 				div.setAttribute('class', 'main-content__singleplayer-block');
 				this.elementsArray.forEach((el) => {
+					el.hide();
 					div.appendChild(el.render());
 				});
 				this.element = div;
+				this.gameBlock = this.elementsArray[0];
 				this.gameStat = this.elementsArray[1];
+				this.controlPopUp = this.elementsArray[2];
+				this.preGameBlock = this.elementsArray[3];
+				this.preGameBlock.playButton.addEventListener('click', () => {
+					this.play();
+				});
 				this.scoreHandler = this.redrawScore.bind(this);
 				this.timerHandler = this.redrawTimer.bind(this);
 				this.resultsHandler = this.showResults.bind(this);
@@ -68,7 +76,9 @@ export default class SinglePlayer extends BaseView {
 		eventBus.on('timerTick', this.timerHandler);
 		eventBus.on('timerStop', this.resultsHandler);
 		this._resultBlock.hide();
+		this.preGameBlock.hide();
 		this.gameStat.show();
+		this.controlPopUp.show();
 		this.scoreLabel.innerText = 'Score: 0';
 		this.timerLabel.innerText = 'Seconds Left: 60';
 		this._gameHandler = new SinglePlayerHandler([], SINGLE_PLAYER_GAME_FIELD);
@@ -100,7 +110,8 @@ export default class SinglePlayer extends BaseView {
 		super.show().then(() => {
 			this.element.style.display = 'grid';
 			this.mainLogo.style.display = 'none';
-			this.play();
+			this.gameBlock.show();
+			this.preGameBlock.show();
 		});
 	}
 

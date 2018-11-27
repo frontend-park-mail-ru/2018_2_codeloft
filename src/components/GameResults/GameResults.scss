@@ -9,6 +9,7 @@
 }
 
 .results-block__score {
+  margin-top: 1vmin;
   font-size: 3vw;
   background: linear-gradient(
                   60deg,
@@ -46,8 +47,8 @@
 }
 
 .results-block__buttons {
-  display: flex;
-  justify-content: space-evenly;
+  //display: flex;
+  //justify-content: space-evenly;
 }
 
 .game-button {
@@ -56,7 +57,7 @@
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 1vw;
+  font-size: 1.5vw;
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
   cursor: pointer;

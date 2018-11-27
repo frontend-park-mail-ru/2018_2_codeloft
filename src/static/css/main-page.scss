@@ -1,14 +1,13 @@
 @import url('https://fonts.googleapis.com/css?family=Press+Start+2P|Open+Sans');
 @import './reset.scss';
 
-body {
+html, body, .main-content {
   background-color: #0C141F;
   font-family: 'Press Start 2P', cursive;
   width: 100%;
   height: 100%;
   margin: 0;
   overflow: hidden;
-  display: grid;
 }
 
 @keyframes neon-text-light {
