@@ -69,7 +69,7 @@ class UserService {
 		const requestBody = {};
 		if (this.isLogIn()) {
 			requestBody.login = this.userInfo.login;
-			requestBody. = this.userInfo.login;
+			// requestBody. = this.userInfo.login;
 			return Transport.Put('/user', requestBody);
 		}
 		return new Promise((resolve) => resolve());
