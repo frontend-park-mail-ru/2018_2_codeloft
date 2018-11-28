@@ -17,6 +17,7 @@
   text-align: center;
   font-size: 5vmin;
   font-family: 'Bowlby One SC', cursive;
+  margin-top: 1vmin;
   color: #FFE64D;
 }
 
@@ -29,4 +30,27 @@
 
 .game-button {
   font-size: 30px;
+}
+
+.before-game-block__images-block {
+  grid-column: 1/4;
+  grid-row: 2/3;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+  text-align: center;
+}
+
+.before-game-block__images-block::-webkit-scrollbar { width: 0; }
+
+.images-block__image {
+  width: 80%;
+  height: 90%;
+  border: #FFE64D 2px solid;
+}
+
+.images-block__rules-text {
+  color: white;
+  font-size: 3vmin;
+  margin-top: 1vmin;
+  margin-bottom: 1vmin;
 }

@@ -45,7 +45,7 @@ export default class SignIn extends BaseView {
 			});
 			userService.logIn(requestBody)
 				.then((ans) => {
-					this.errorLabels.login.render().innerText = this.errorMessages[ans] || 'Internal error';
+					this.errorLabels.login.render().innerText = ans.What || 'Internal error';
 					this.errorLabels.login.show();
 					setTimeout(() => this.errorLabels.login.hide(), 3000);
 				});

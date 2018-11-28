@@ -5,7 +5,6 @@ import tagParser from '../../modules/TagParser/TagParser.js';
 import SinglePlayerHandler from '../../game/SinglePlayer/SinglePlayerHandler.js';
 import eventBus from '../../modules/EventBus/EventBus.js';
 import router from '../../modules/Router/Router.js';
-import URLS from '../../modules/Consts/Consts.js';
 import GameResults from '../../components/GameResults/GameResults.js';
 import './SinglePlayer.scss';
 
@@ -99,7 +98,6 @@ export default class SinglePlayer extends BaseView {
 		eventBus.off('timerStop', this.resultsHandler);
 		eventBus.off('timerTick', this.timerHandler);
 		eventBus.off('scoreRedraw', this.scoreHandler);
-		this._gameHandler.stopGame();
 	}
 
 	redrawTimer(value) {
@@ -117,7 +115,9 @@ export default class SinglePlayer extends BaseView {
 
 	hide() {
 		super.hide();
-		this.endGame();
+		if (this._gameHandler) {
+			this.endGame();
+		}
 		this._resultBlock.hide();
 	}
 }
