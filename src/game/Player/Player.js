@@ -41,9 +41,6 @@ export default class Player {
 
 	_unBounce() {
 		this._bounced = false;
-		// this._xSpeed = -this._xSpeed;
-		// this._ySpeed = -this._ySpeed;
-		console.log(1);
 	}
 
 	bounce() {

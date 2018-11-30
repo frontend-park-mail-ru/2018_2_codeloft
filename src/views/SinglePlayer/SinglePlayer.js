@@ -74,6 +74,8 @@ export default class SinglePlayer extends BaseView {
 		eventBus.on('scoreRedraw', this.scoreHandler);
 		eventBus.on('timerTick', this.timerHandler);
 		eventBus.on('timerStop', this.resultsHandler);
+		this.timerLabel.style.color = '';
+		this.timerLabel.style.animation = '';
 		this._resultBlock.hide();
 		this.preGameBlock.hide();
 		this.gameStat.show();
@@ -101,6 +103,10 @@ export default class SinglePlayer extends BaseView {
 	}
 
 	redrawTimer(value) {
+		if (value < 10) {
+			this.timerLabel.style.color = 'red';
+			this.timerLabel.style.animation = '1s Always ease alternate infinite';
+		}
 		this.timerLabel.innerText = `Seconds Left: ${value}`;
 	}
 
