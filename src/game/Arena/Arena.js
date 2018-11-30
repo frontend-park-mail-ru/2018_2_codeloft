@@ -98,15 +98,19 @@ export default class Arena {
 
 	spawnGoal(players) {
 		this._goalArray = [];
-		const coords = {};
-		coords.firstX = Math.floor(Math.random() * (this._xMax - 300 - this._xMin + 20) + this._xMin + 20);
-		coords.firstY = Math.floor(Math.random() * (this._yMax - 300 - this._yMin + 20) + this._yMin + 20);
+		const coords1 = this._generateGoal();
+		let coords2 = this._generateGoal();
 
-		coords.secondX = Math.floor(Math.random() * (coords.firstX + 80 - coords.firstX + 50)) + coords.firstX + 50;
-		coords.secondY = Math.floor(Math.random() * (coords.firstY + 80 - coords.firstY + 50)) + coords.firstY + 50;
+		while (Math.sqrt((coords1.firstX - coords2.firstX) * (coords1.firstX - coords2.firstX)) < this._xMax / 8
+			|| Math.sqrt((coords1.secondX - coords2.secondX) * (coords1.secondX - coords2.secondX)) < this._yMax / 8
+			|| Math.sqrt((coords1.firstY - coords2.firstY) * (coords1.firstY - coords2.firstY)) < this._xMax / 8
+			|| Math.sqrt((coords1.secondY - coords2.secondY) * (coords1.secondY - coords2.secondY)) < this._yMax / 8) {
+			coords2 = this._generateGoal();
+		}
 
-		if (!this._checkCollision(players, coords)) {
-			this._goalArray.push(new Goal(coords.firstX, coords.firstY, coords.secondX, coords.secondY));
+		if (!this._checkCollision(players, coords1) && !this._checkCollision(players, coords2)) {
+			this._goalArray.push(new Goal(coords1.firstX, coords1.firstY, coords1.secondX, coords1.secondY));
+			this._goalArray.push(new Goal(coords2.firstX, coords2.firstY, coords2.secondX, coords2.secondY));
 			this.drawGoal();
 		} else {
 			this.spawnGoal(players);
@@ -115,11 +119,14 @@ export default class Arena {
 
 	_generateGoal() {
 		const coords = {};
+
 		coords.firstX = Math.floor(Math.random() * (this._xMax - 300 - this._xMin + 20) + this._xMin + 20);
 		coords.firstY = Math.floor(Math.random() * (this._yMax - 300 - this._yMin + 20) + this._yMin + 20);
 
 		coords.secondX = Math.floor(Math.random() * (coords.firstX + 80 - coords.firstX + 50)) + coords.firstX + 50;
 		coords.secondY = Math.floor(Math.random() * (coords.firstY + 80 - coords.firstY + 50)) + coords.firstY + 50;
+
+		return coords;
 	}
 
 	drawGoal() {

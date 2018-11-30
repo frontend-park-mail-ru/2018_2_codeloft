@@ -6,10 +6,12 @@
   text-align: center;
   opacity: 0.9;
   font-family: 'Palatino', cursive;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
 }
 
 .results-block__score {
-  margin-top: 1vmin;
+  margin-top: 2vmin;
   font-size: 3vw;
   background: linear-gradient(
                   60deg,
@@ -35,7 +37,6 @@
 
 .results-block__goals {
   font-size: 2vw;
-  //color: gray;
 }
 
 @keyframes BeProud {
@@ -49,6 +50,8 @@
 .results-block__buttons {
   //display: flex;
   //justify-content: space-evenly;
+  position: relative;
+  bottom: 0;
 }
 
 .game-button {
