@@ -81,7 +81,7 @@ export default class SinglePlayer extends BaseView {
 		this.gameStat.show();
 		this.controlPopUp.show();
 		this.scoreLabel.innerText = 'Score: 0';
-		this.timerLabel.innerText = 'Seconds Left: 60';
+		this.timerLabel.innerText = 'Seconds Left: 30';
 		this._gameHandler = new SinglePlayerHandler([], SINGLE_PLAYER_GAME_FIELD);
 		this._gameHandler.startGame();
 	}
@@ -106,6 +106,9 @@ export default class SinglePlayer extends BaseView {
 		if (value < 10) {
 			this.timerLabel.style.color = 'red';
 			this.timerLabel.style.animation = '1s Always ease alternate infinite';
+		} else {
+			this.timerLabel.style.color = 'white';
+			this.timerLabel.style.animation = '';
 		}
 		this.timerLabel.innerText = `Seconds Left: ${value}`;
 	}

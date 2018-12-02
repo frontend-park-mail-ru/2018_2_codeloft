@@ -3,7 +3,6 @@ import eventBus from '../../modules/EventBus/EventBus.js';
 
 const SCORE_RATE = 2;
 const GOAL_RADIUS = 10;
-const GOALS_AMOUNT = 2;
 
 export default class Arena {
 	constructor(arenaClassName) {
@@ -117,11 +116,17 @@ export default class Arena {
 		}
 	}
 
+	addGoalsAge() {
+		this._goalArray.forEach((goal) => {
+			goal.ageIncr();
+		});
+	}
+
 	_generateGoal() {
 		const coords = {};
 
-		coords.firstX = Math.floor(Math.random() * (this._xMax - 300 - this._xMin + 20) + this._xMin + 20);
-		coords.firstY = Math.floor(Math.random() * (this._yMax - 300 - this._yMin + 20) + this._yMin + 20);
+		coords.firstX = Math.floor(Math.random() * (this._xMax - 250 - this._xMin + 20) + this._xMin + 20);
+		coords.firstY = Math.floor(Math.random() * (this._yMax - 250 - this._yMin + 20) + this._yMin + 20);
 
 		coords.secondX = Math.floor(Math.random() * (coords.firstX + 80 - coords.firstX + 50)) + coords.firstX + 50;
 		coords.secondY = Math.floor(Math.random() * (coords.firstY + 80 - coords.firstY + 50)) + coords.firstY + 50;
@@ -130,6 +135,12 @@ export default class Arena {
 	}
 
 	drawGoal() {
+		if (this._goalArray.length) {
+			if (this._goalArray[0].getAge() >= 5) {
+				eventBus.emit('spawnGoal');
+				return;
+			}
+		}
 		this._goalArray.forEach((goal) => {
 			this._context.globalCompositeOperation = 'source-over';
 			this._context.beginPath();
@@ -150,6 +161,12 @@ export default class Arena {
 			this._context.lineWidth = 5;
 			this._context.stroke();
 			this._context.closePath();
+
+			this._context.fillStyle = '#3EC8AC';
+			this._context.font = '4vmin serif';
+			this._context.fillText(`${5 - goal.getAge()}`,
+				Math.max(goal.getCoords().x1, goal.getCoords().x2) + goal.getRadius() + this._diagonal / 150,
+				Math.max(goal.getCoords().y1, goal.getCoords().y2) + goal.getRadius() + this._diagonal / 150);
 		});
 	}
 
