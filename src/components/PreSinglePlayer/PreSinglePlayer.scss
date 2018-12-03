@@ -1,14 +1,19 @@
 .singleplayer-block__before-game-block {
   grid-column: 1/4;
-  grid-row: 1/5;
+  height: 100%;
+  //grid-row: 1/5;
   //border: #3EC8AC 6px solid;
   //border-radius: 10px;
   //display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: 0.1fr 1fr 0.1fr;
   font-family: 'Palatino', cursive;
-  position: relative;
+  //position: relative;
   z-index: 999;
+  outline: 5px solid #3EC8AC;
+  outline-offset: -5px;
+  position: fixed;
+  top: 0;
 }
 
 .before-game-block__logo-label {

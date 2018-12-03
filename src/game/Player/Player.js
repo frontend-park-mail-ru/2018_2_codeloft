@@ -104,10 +104,29 @@ export default class Player {
 		this._yCoord = y;
 	}
 
+	_calcSpeed() {
+		if (this._xSpeed > 0) {
+			this._xSpeed = this._speed;
+		} else if (this._xSpeed < 0){
+			this._xSpeed = -this._speed;
+		} else {
+			this._xSpeed = 0;
+		}
+		if (this._ySpeed > 0) {
+			this._ySpeed = this._speed;
+		} else if (this._ySpeed < 0) {
+			this._ySpeed = -this._speed;
+		} else {
+			this._ySpeed = 0;
+		}
+	}
+
 	speedBonus() {
 		this._speed *= 1.5;
-		// this._xSpeed *= 1.5;
-		// this._ySpeed *= 1.5;
-		setTimeout(() => this._speed = 4, 5000);
+		this._calcSpeed();
+		setTimeout(() => {
+			this._speed /= 1.5;
+			this._calcSpeed();
+		}, 5000);
 	}
 }

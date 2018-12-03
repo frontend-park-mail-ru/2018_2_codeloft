@@ -70,6 +70,7 @@ export default class SinglePlayer extends BaseView {
 	}
 
 	play() {
+		this.gameBlock.show();
 		document.body.style.cursor = 'none';
 		eventBus.on('scoreRedraw', this.scoreHandler);
 		eventBus.on('timerTick', this.timerHandler);
@@ -117,7 +118,7 @@ export default class SinglePlayer extends BaseView {
 		super.show().then(() => {
 			this.element.style.display = 'grid';
 			this.mainLogo.style.display = 'none';
-			this.gameBlock.show();
+			this.gameBlock.hide();
 			this.preGameBlock.show();
 		});
 	}

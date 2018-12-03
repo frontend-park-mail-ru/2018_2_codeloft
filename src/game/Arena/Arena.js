@@ -96,7 +96,27 @@ export default class Arena {
 		return collision;
 	}
 
-	spawnGoal(players) {
+	spawnOneGoal(players) {
+		let coords = this._generateGoal();
+
+		if (this._goalArray.length) {
+			while (Math.sqrt((coords.firstX - this._goalArray[0].getCoords().x1) * (coords.firstX - this._goalArray[0].getCoords().x1)) < this._xMax / 8
+			|| Math.sqrt((coords.secondX - this._goalArray[0].getCoords().x2) * (coords.secondX - this._goalArray[0].getCoords().x2)) < this._yMax / 8
+			|| Math.sqrt((coords.firstY - this._goalArray[0].getCoords().y1) * (coords.firstY - this._goalArray[0].getCoords().y1)) < this._xMax / 8
+			|| Math.sqrt((coords.secondY - this._goalArray[0].getCoords().y2) * (coords.secondY - this._goalArray[0].getCoords().y2)) < this._yMax / 8) {
+				coords = this._generateGoal();
+			}
+		}
+
+		if (!this._checkCollision(players, coords)) {
+			this._goalArray.push(new Goal(coords.firstX, coords.firstY, coords.secondX, coords.secondY));
+			this.drawGoal();
+		} else {
+			this.spawnOneGoal(players);
+		}
+	}
+
+	spawnGoals(players) {
 		this._goalArray = [];
 		const coords1 = this._generateGoal();
 		let coords2 = this._generateGoal();
@@ -113,7 +133,7 @@ export default class Arena {
 			this._goalArray.push(new Goal(coords2.firstX, coords2.firstY, coords2.secondX, coords2.secondY));
 			this.drawGoal();
 		} else {
-			this.spawnGoal(players);
+			this.spawnGoals(players);
 		}
 	}
 
@@ -136,12 +156,12 @@ export default class Arena {
 	}
 
 	drawGoal() {
-		if (this._goalArray.length) {
-			if (this._goalArray[0].getAge() >= 5) {
-				eventBus.emit('spawnGoal');
-				return;
+		this._goalArray.forEach((goal, index) => {
+			if (goal.getAge() >= 10) {
+				eventBus.emit('spawnGoals', index);
 			}
-		}
+		});
+
 		this._goalArray.forEach((goal) => {
 			this._context.globalCompositeOperation = 'source-over';
 			this._context.beginPath();
@@ -165,7 +185,7 @@ export default class Arena {
 
 			this._context.fillStyle = '#3EC8AC';
 			this._context.font = '4vmin serif';
-			this._context.fillText(`${5 - goal.getAge()}`,
+			this._context.fillText(`${10 - goal.getAge()}`,
 				Math.max(goal.getCoords().x1, goal.getCoords().x2) + goal.getRadius() + this._diagonal / 150,
 				Math.max(goal.getCoords().y1, goal.getCoords().y2) + goal.getRadius() + this._diagonal / 150);
 		});
@@ -226,26 +246,28 @@ export default class Arena {
 		this._context.closePath();
 	}
 
-	clearGoal() {
-		this._goalArray.forEach((goal) => {
-			this._context.globalCompositeOperation = 'destination-out';
-			this._context.beginPath();
-			this._context.arc(goal.getCoords().x1, goal.getCoords().y1,
-				goal.getRadius() + 2, 0, 2 * Math.PI);
-			this._context.arc(goal.getCoords().x2, goal.getCoords().y2,
-				goal.getRadius() + 2, 0, 2 * Math.PI);
-			this._context.fillStyle = '#0C141F';
-			this._context.fill();
-			this._context.closePath();
+	clearGoal(index) {
+		const i = index === 1 ? 0 : 1;
+		const goal = this._goalArray[i];
+		this._context.globalCompositeOperation = 'destination-out';
+		this._context.beginPath();
+		this._context.arc(goal.getCoords().x1, goal.getCoords().y1,
+			goal.getRadius() + 2, 0, 2 * Math.PI);
+		this._context.arc(goal.getCoords().x2, goal.getCoords().y2,
+			goal.getRadius() + 2, 0, 2 * Math.PI);
+		this._context.fillStyle = '#0C141F';
+		this._context.fill();
+		this._context.closePath();
 
-			this._context.beginPath();
-			this._context.moveTo(goal.getCoords().x1, goal.getCoords().y1);
-			this._context.lineTo(goal.getCoords().x2, goal.getCoords().y2);
-			this._context.strokeStyle = '#FFE64D';
-			this._context.lineWidth = 7;
-			this._context.stroke();
-			this._context.closePath();
-		});
+		this._context.beginPath();
+		this._context.moveTo(goal.getCoords().x1, goal.getCoords().y1);
+		this._context.lineTo(goal.getCoords().x2, goal.getCoords().y2);
+		this._context.strokeStyle = '#FFE64D';
+		this._context.lineWidth = 7;
+		this._context.stroke();
+		this._context.closePath();
+
+		this._goalArray = this._goalArray.slice(i, i + 1);
 	}
 
 	goalAnimate(x, y) {
@@ -257,13 +279,14 @@ export default class Arena {
 	}
 
 	checkGoalCollision(player) {
-		this._goalArray.forEach((goal) => {
+		this._goalArray.forEach((goal, index) => {
 			if (player.getY() <= goal.calculateY(player.getX()) + 6
 				&& player.getY() >= goal.calculateY(player.getX()) - 6
 				&& goal.inInterval(player.getY())) {
 				eventBus.emit('goalCollision', {
 					player: player,
-					scoreBonus: Math.round(this._diagonal / (SCORE_RATE * goal.getLength()))
+					scoreBonus: Math.round(this._diagonal / (SCORE_RATE * goal.getLength())),
+					index: index
 				});
 			}
 		});

@@ -14,13 +14,16 @@ export default class SinglePlayerHandler extends BaseGameHandler {
 				eventBus.emit('scoreRedraw', player.getScore());
 			},
 			2: () => {
-				this._gameTimer.addDuration(5);
+				this._gameTimer.addDuration(10);
 				eventBus.emit('timerTick', this._gameTimer.getTimeLeft());
 			}
 		};
 		this._goalHandler = this.handleGoalCollision.bind(this);
 		this._bonusHandler = this.handleBonusCollision.bind(this);
-		this._goalSpawner = () => this._arena.spawnGoal(this.players);
+		this._goalSpawner = (index) => {
+			this._arena.clearGoal(index);
+			this._arena.spawnOneGoal(this.players);
+		};
 		this._goalSpawner = this._goalSpawner.bind(this);
 		this._ageHandler = () => this._arena.handleObjectsAge();
 		this._ageHandler = this._ageHandler.bind(this);
@@ -28,7 +31,7 @@ export default class SinglePlayerHandler extends BaseGameHandler {
 		this._gameTimer = new Timer(BASE_ROUND_TIME);
 		eventBus.on('goalCollision', this._goalHandler);
 		eventBus.on('bonusCollision', this._bonusHandler);
-		eventBus.on('spawnGoal', this._goalSpawner);
+		eventBus.on('spawnGoals', this._goalSpawner);
 		eventBus.on('timerTick', this._ageHandler);
 	}
 
@@ -36,10 +39,10 @@ export default class SinglePlayerHandler extends BaseGameHandler {
 		details.player.addGoal();
 		details.player.addScore(details.scoreBonus);
 		eventBus.emit('scoreRedraw', details.player.getScore());
-		this._gameTimer.addDuration(Math.floor(details.scoreBonus / 4));
+		this._gameTimer.addDuration(Math.round(details.scoreBonus / 5));
 		eventBus.emit('timerTick', this._gameTimer.getTimeLeft());
-		this._arena.clearGoal();
-		this._arena.spawnGoal(this.players);
+		this._arena.clearGoal(details.index);
+		this._arena.spawnOneGoal(this.players);
 	}
 
 	handleBonusCollision(details) {
@@ -55,12 +58,12 @@ export default class SinglePlayerHandler extends BaseGameHandler {
 	}
 
 	startGame() {
-		this._gameLoops.push(setInterval(this._bonusSpawner, 8000));
+		this._gameLoops.push(setInterval(this._bonusSpawner, 10000));
 		super.startGame();
 		this.players.forEach((player) => {
 			player.resetScore();
 		});
-		this._arena.spawnGoal(this.players);
+		this._arena.spawnGoals(this.players);
 		this._arena.spawnBonus();
 		this._gameTimer.start();
 	}
@@ -94,7 +97,7 @@ export default class SinglePlayerHandler extends BaseGameHandler {
 		this._arena.clearField();
 		this._gameTimer.stop();
 		eventBus.off('goalCollision', this._goalHandler);
-		eventBus.off('spawnGoal', this._goalSpawner);
+		eventBus.off('spawnGoals', this._goalSpawner);
 		eventBus.off('timerTick', this._ageHandler);
 	}
 }
