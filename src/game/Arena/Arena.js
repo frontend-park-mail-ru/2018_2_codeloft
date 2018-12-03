@@ -1,5 +1,6 @@
 import Goal from '../Goal/Goal.js';
 import eventBus from '../../modules/EventBus/EventBus.js';
+import Bonus from '../Bonus/Bonus.js';
 
 const SCORE_RATE = 2;
 const GOAL_RADIUS = 10;
@@ -116,7 +117,7 @@ export default class Arena {
 		}
 	}
 
-	addGoalsAge() {
+	handleObjectsAge() {
 		this._goalArray.forEach((goal) => {
 			goal.ageIncr();
 		});
@@ -168,6 +169,45 @@ export default class Arena {
 				Math.max(goal.getCoords().x1, goal.getCoords().x2) + goal.getRadius() + this._diagonal / 150,
 				Math.max(goal.getCoords().y1, goal.getCoords().y2) + goal.getRadius() + this._diagonal / 150);
 		});
+	}
+
+	_goalDist(x, y) {
+		let max = this._yMax;
+		this._goalArray.forEach((goal) => {
+			const diff1 = Math.sqrt((x - goal.getCoords().x1) * (x - goal.getCoords().x1)
+				+ (y - goal.getCoords().y1) * (y - goal.getCoords().y1));
+			const diff2 = Math.sqrt((x - goal.getCoords().x2) * (x - goal.getCoords().x2)
+				+ (y - goal.getCoords().y2) * (y - goal.getCoords().y2));
+			max = Math.max(diff1, diff2, max);
+		});
+		return max;
+	}
+
+	spawnBonus() {
+		let coords = this._generateBonus();
+		while (this._goalDist(coords.x, coords.y) < this._diagonal / 100) {
+			coords = this._generateBonus();
+		}
+		this._currentBonus = new Bonus(coords.x, coords.y);
+	}
+
+	_generateBonus() {
+		const coords = {};
+		coords.x = Math.floor(Math.random() * (this._xMax - 200 - this._xMin + 20) + this._xMin + 20);
+		coords.y = Math.floor(Math.random() * (this._yMax - 200 - this._yMin + 20) + this._yMin + 20);
+		return coords;
+	}
+
+	drawBonus() {
+		if (this._currentBonus) {
+			this._context.globalCompositeOperation = 'source-over';
+			this._context.beginPath();
+			this._context.arc(this._currentBonus.getX(), this._currentBonus.getY(),
+				10 + 2, 0, 2 * Math.PI);
+			this._context.fillStyle = '#FFE64D';
+			this._context.fill();
+			this._context.closePath();
+		}
 	}
 
 	drawPixel(x, y) {
@@ -242,5 +282,21 @@ export default class Arena {
 		if (player.getY() > this._yMax) {
 			player.setY(this._yMin);
 		}
+	}
+
+	checkBonusCollision(player) {
+		if (player && this._currentBonus) {
+			if (Math.sqrt((player.getX() - this._currentBonus.getX()) * (player.getX() - this._currentBonus.getX())
+				+ (player.getY() - this._currentBonus.getY()) * (player.getY() - this._currentBonus.getY())) < this._diagonal / 50) {
+				eventBus.emit('bonusCollision', {
+					player: player,
+					effect: this._currentBonus.getEffect()
+				});
+			}
+		}
+	}
+
+	resetBonus() {
+		this._currentBonus = undefined;
 	}
 }

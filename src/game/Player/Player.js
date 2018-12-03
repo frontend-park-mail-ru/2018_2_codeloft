@@ -103,4 +103,11 @@ export default class Player {
 	setY(y) {
 		this._yCoord = y;
 	}
+
+	speedBonus() {
+		this._speed *= 1.5;
+		// this._xSpeed *= 1.5;
+		// this._ySpeed *= 1.5;
+		setTimeout(() => this._speed = 4, 5000);
+	}
 }
