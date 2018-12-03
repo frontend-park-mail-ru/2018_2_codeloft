@@ -107,7 +107,7 @@ export default class Player {
 	_calcSpeed() {
 		if (this._xSpeed > 0) {
 			this._xSpeed = this._speed;
-		} else if (this._xSpeed < 0){
+		} else if (this._xSpeed < 0) {
 			this._xSpeed = -this._speed;
 		} else {
 			this._xSpeed = 0;
