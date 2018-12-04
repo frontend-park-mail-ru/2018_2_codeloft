@@ -1,0 +1,82 @@
+.singleplayer-block__before-game-block {
+  grid-column: 1/4;
+  height: 100%;
+  //grid-row: 1/5;
+  //border: #3EC8AC 6px solid;
+  //border-radius: 10px;
+  //display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 0.1fr 1fr 0.1fr;
+  font-family: 'Palatino', cursive;
+  //position: relative;
+  z-index: 999;
+  outline: 5px solid #3EC8AC;
+  outline-offset: -5px;
+  position: fixed;
+  top: 0;
+}
+
+.before-game-block__logo-label {
+  grid-row: 1/2;
+  grid-column: 1/4;
+  text-align: center;
+  font-size: 5vmin;
+  margin-top: 1vmin;
+  color: #FFE64D;
+}
+
+.before-game-block__buttons-block {
+  grid-row: 3/4;
+  grid-column: 1/4;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.game-button {
+  font-size: 30px;
+}
+
+.before-game-block__control-tip {
+  grid-column: 2/3;
+  grid-row: 2/3;
+  text-align: center;
+  margin-top: 5vmin;
+}
+
+.before-game-block__score-tip {
+  grid-column: 1/2;
+  grid-row: 2/3;
+  text-align: center;
+  margin-top: 5vmin;
+}
+
+.before-game-block__goal-tip {
+  grid-column: 3/4;
+  grid-row: 2/3;
+  text-align: center;
+  margin-top: 5vmin;
+}
+
+.images-block__image {
+  border: #FFE64D 2px solid;
+  grid-column: 1/2;
+  grid-row: 1/2;
+  max-width: 80%;
+  height: auto;
+}
+
+.images-block__rules-text {
+  color: white;
+  font-size: 3vmin;
+  margin-top: 1vmin;
+  //margin-bottom: 1vmin;
+  grid-column: 1/2;
+  grid-row: 2/3;
+}
+
+//.before-game-block__pagination-block {
+//  grid-column: 2/3;
+//  grid-row: 3/4;
+//  display: flex;
+//  justify-content: space-around;
+//}

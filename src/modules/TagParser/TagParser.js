@@ -13,6 +13,7 @@ import MessageOut from '../../components/MessageOut/MessageOut.js';
 import ChatSender from '../../components/ChatSender/ChatSender.js';
 import MultiPlayerChoice from '../../components/MultiPlayerChoice/MultiPlayerChoice.js';
 import ControlPopUp from '../../components/ControlPopUp/ControlPopUp.js';
+import PreSinglePlayer from '../../components/PreSinglePlayer/PreSinglePlayer.js';
 
 /**
  * Класс, нужный для сборки документа по кастомному шаблону
@@ -52,6 +53,7 @@ class TagParser {
 			ChatSender: () => new ChatSender(),
 			MultiPlayerChoice: () => new MultiPlayerChoice(),
 			ControlPopUp: () => new ControlPopUp(),
+			PreSinglePlayer: () => new PreSinglePlayer(),
 		};
 	}
 

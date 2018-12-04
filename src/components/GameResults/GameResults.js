@@ -20,4 +20,10 @@ export default class GameResults extends MainComponent {
 		this.goalsLabel = this.element.querySelector(`.${GOALS_LABEL}`);
 		return super.afterRender();
 	}
+
+	show() {
+		if (this.element) {
+			this.element.style.display = 'grid';
+		}
+	}
 }

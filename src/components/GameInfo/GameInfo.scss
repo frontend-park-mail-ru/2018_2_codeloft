@@ -5,27 +5,19 @@
   margin-top: 5px;
   grid-column: 3/4;
   grid-row: 1/4;
+  display: flex;
 }
 
 .game-stat__timer-block {
-  font-family: 'Bowlby One SC', cursive;
+  font-family: 'Palatino', cursive;
   font-size: 3vw;
   text-align: center;
   color: white;
 }
 
 .game-stat__score-block {
-  font-family: 'Bowlby One SC', cursive;
+  font-family: 'Palatino', cursive;
   font-size: 4vw;
   text-align: center;
   color: white;
 }
-
-@keyframes BeProud {
-  100% { background-position: 100vw 0; }
-}
-
-@keyframes Always {
-  100% { transform: scale(1.1);}
-}
-

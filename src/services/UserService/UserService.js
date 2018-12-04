@@ -65,6 +65,16 @@ class UserService {
 			});
 	}
 
+	updateUser(score, password, email) {
+		const requestBody = {};
+		if (this.isLogIn()) {
+			requestBody.login = this.userInfo.login;
+			// requestBody. = this.userInfo.login;
+			return Transport.Put('/user', requestBody);
+		}
+		return new Promise((resolve) => resolve());
+	}
+
 	logIn(requestBody) {
 		return this._handleAuthResponse(Transport.Post('/session', requestBody));
 	}
@@ -79,14 +89,14 @@ class UserService {
 				if (response.status === 200) {
 					return response.json();
 				}
-				throw response.status;
+				throw response.json();
 			})
 			.then((userInfo) => {
 				this.userInfo = userInfo;
 				eventBus.emit('loggedIn');
 				return 'ok';
 			})
-			.catch((status) => status);
+			.catch((err) => err);
 	}
 
 	_clearUserData() {

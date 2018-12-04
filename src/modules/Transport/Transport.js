@@ -24,6 +24,10 @@ export default class Transport {
 		return Transport.FSend(urlBack + adr, 'POST', body);
 	}
 
+	static Put(adr, body) {
+		return Transport.FSend(urlBack + adr, 'PUT', body);
+	}
+
 	static Delete(adr, body) {
 		return Transport.FSend(urlBack + adr, 'DELETE', body);
 	}

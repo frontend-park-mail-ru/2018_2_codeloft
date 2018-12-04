@@ -41,9 +41,6 @@ export default class Player {
 
 	_unBounce() {
 		this._bounced = false;
-		// this._xSpeed = -this._xSpeed;
-		// this._ySpeed = -this._ySpeed;
-		console.log(1);
 	}
 
 	bounce() {
@@ -105,5 +102,31 @@ export default class Player {
 
 	setY(y) {
 		this._yCoord = y;
+	}
+
+	_calcSpeed() {
+		if (this._xSpeed > 0) {
+			this._xSpeed = this._speed;
+		} else if (this._xSpeed < 0) {
+			this._xSpeed = -this._speed;
+		} else {
+			this._xSpeed = 0;
+		}
+		if (this._ySpeed > 0) {
+			this._ySpeed = this._speed;
+		} else if (this._ySpeed < 0) {
+			this._ySpeed = -this._speed;
+		} else {
+			this._ySpeed = 0;
+		}
+	}
+
+	speedBonus() {
+		this._speed *= 1.5;
+		this._calcSpeed();
+		setTimeout(() => {
+			this._speed /= 1.5;
+			this._calcSpeed();
+		}, 5000);
 	}
 }
