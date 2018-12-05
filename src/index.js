@@ -28,6 +28,6 @@ userService.checkAuth()
 			.add(URLS.HIGH_SCORE, new HighScore())
 			.add(URLS.SINGLE_PLAYER, new SinglePlayer())
 			.add(URLS.MULTI_PLAYER, new MultiPlayer())
-			.add(URLS.CHAT, new Chat());
-		router.start();
+			.add(URLS.CHAT, new Chat())
+			.start();
 	});
