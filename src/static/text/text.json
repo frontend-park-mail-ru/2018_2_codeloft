@@ -1,0 +1,58 @@
+{
+  "main.signIn": {
+    "en": "SignIn",
+    "ru": "Войти"
+  },
+  "main.signUp": {
+    "en": "SignUp",
+    "ru": "Зарегестрироваться"
+  },
+  "main.rules": {
+    "en": "Rules",
+    "ru": "Правила"
+  },
+  "main.score": {
+    "en": "High score",
+    "ru": "Таблица лидеров"
+  },
+  "main.singleplayer": {
+    "en": "Single Player",
+    "ru": "Одиночная игра"
+  },
+  "main.multiplayer": {
+    "en": "Multi Player",
+    "ru": "Многопользовательская игра"
+  },
+  "main.profile": {
+    "en": "Profile",
+    "ru": "Профиль"
+  },
+  "rules.text": {
+    "en": "In our game you will play for a motorcyclist, which leaves a bright trace. Other players or bots will also draw a line for themselves, and your task is to avoid contact with this line, regardless of whether it's yours or not. Also, in order to win, you must draw a line so that opponents can not avoid your trace. On the playing field will be spawned various bonuses that will help you win. So do not yawn!",
+    "ru": "В нашей игре вы будете играть за мотоциклиста, который оставляет яркий след. Другие игроки или боты также оставляют линию после себя. Ваша задача - избегать контакта с этой линией, независимо от того, ваша она или нет. Кроме того, для того, чтобы выиграть, вы должны нарисовать линию, так чтобы противники не смогли избежать ее. На игровом поле будут появляться различные бонусы, которые помогут вам победить. Так что не зевайте!"
+  },
+  "buttonBack": {
+    "en": "Back",
+    "ru": "Назад"
+  },
+  "profile.userName": {
+    "en": "User: ",
+    "ru": "Пользователь: "
+  },
+  "profile.score": {
+    "en": "Score: ",
+    "ru": "Счет: "
+  },
+  "profile.logOut": {
+    "en": "LogOut",
+    "ru": "Выйти"
+  },
+  "game.score": {
+    "en": "Score: ",
+    "ru": "Счет: "
+  },
+  "game.time": {
+    "en": "Seconds Left: ",
+    "ru": "Осталось секуед: "
+  }
+}
