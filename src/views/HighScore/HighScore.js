@@ -5,14 +5,15 @@ import tagParser from '../../modules/TagParser/TagParser.js';
 import PagePointer from '../../components/PagePointer/PagePointer.js';
 import eventBus from '../../modules/EventBus/EventBus.js';
 import Transport from '../../modules/Transport/Transport.js';
+import langService from '../../services/LangService/LangService.js';
 import '../../static/css/leaderboard-page.scss';
 
 export default class HighScore extends BaseView {
 	build() {
 		return new Promise((resolve) => {
 			this.template = `<ScoreTable>
-							 <Block {{class=leaders-page__pagination-block}}>
-							 <Button {{text=Back}} {{class=button}} {{click=goMenu}}>`;
+							 <Block {{class=leaders-block__pagination-block}}>
+							 <Button {{text=${langService.getWord('buttonBack')}}} {{class=leaders-block__back-button}} {{click=goMenu}}>`;
 			tagParser.toHTML(this.template).then((elementsArray) => {
 				this.elementsArray = elementsArray;
 				this.scoreTable = this.elementsArray[0];

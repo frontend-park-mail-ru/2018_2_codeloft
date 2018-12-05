@@ -20,10 +20,6 @@ class LangService {
 		}
 		return 'Error';
 	}
-
-	getLang() {
-		return this._lang;
-	}
 }
 
 const langService = new LangService();
