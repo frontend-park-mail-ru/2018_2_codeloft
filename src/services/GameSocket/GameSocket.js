@@ -21,9 +21,7 @@ export default class GameSocket {
 			} else if (receivedData.type === PLAYER_MOVEMENT_MESSAGE) {
 				eventBus.emit('fieldUpdated', receivedData.payload);
 			} else if (receivedData.type === DEATH_MESSAGE) {
-				eventBus.emit('protagonistIsDead');
-			} else if (receivedData.type === USER_MESSAGE) {
-				eventBus.emit('userMessage', receivedData);
+				eventBus.emit('protagonistIsDead', receivedData.payload);
 			}
 		};
 	}

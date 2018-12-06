@@ -9,25 +9,33 @@ export default class MultiPlayerHandler extends BaseGameHandler {
 		eventBus.on('connectedToRoom', this.arrayHandler);
 		this.fieldUpdater = this.updateField.bind(this);
 		eventBus.on('fieldUpdated', this.fieldUpdater);
-		this.deathHandler = this.stopGame.bind(this);
+		this.deathHandler = this.handleDeath.bind(this);
 		eventBus.on('protagonistIsDead', this.deathHandler);
 		this._playersArrayMap = {};
 	}
 
-	arrayInit(array) {
-		this._fieldArray = array;
-		let i = 0;
-		let j = 0;
-		this._fieldArray.forEach((arr) => {
-			j = 0;
-			arr.forEach((pixel) => {
-				if (pixel.id !== 0 && this._arena.resized) {
-					this._arena.drawPixel(j, i);
-				}
-				this.handlePlayerCoords(pixel.id, i, j);
-				j++;
-			});
-			i++;
+	arrayInit(payload) {
+		this._arena.scaleGameField(payload.size.x, payload.size.y);
+		// this._fieldArray = payload;
+		// let i = 0;
+		// let j = 0;
+		// this._fieldArray.forEach((arr) => {
+		// 	j = 0;
+		// 	arr.forEach((pixel) => {
+		// 		if (pixel.id !== 0) {
+		// 			this._arena.drawPixel(j, i);
+		// 		}
+		// 		this.handlePlayerCoords(pixel.id, i, j);
+		// 		j++;
+		// 	});
+		// 	i++;
+		// });
+	}
+
+	handleDeath(payload) {
+		payload.diff.forEach((cellObject) => {
+			console.log(cellObject.pos);
+			this._arena.clearPixel(cellObject.pos.x, cellObject.pos.y);
 		});
 	}
 
@@ -48,19 +56,22 @@ export default class MultiPlayerHandler extends BaseGameHandler {
 	}
 
 	updateField(payload) {
-		payload.players.forEach((playerInfo) => {
-			console.log(playerInfo.is_dead);
-			if (!playerInfo.is_dead) {
-				this.handlePlayerCoords(playerInfo.id, playerInfo.position.y, playerInfo.position.x);
-				this._fieldArray[playerInfo.position.y][playerInfo.position.x].id = playerInfo.id;
-				this._arena.drawPixel(playerInfo.position.x, playerInfo.position.y);
-			} else if (this._playersArrayMap[playerInfo.id]) {
-				this._playersArrayMap[playerInfo.id].forEach((coordObject) => {
-					this._arena.clearPixel(coordObject.x, coordObject.y);
-				});
-				this._playersArrayMap[playerInfo.id] = undefined;
-			}
+		payload.diff.forEach((cellObject) => {
+			this._arena.drawPixel(cellObject.pos.x, cellObject.pos.y, cellObject.color);
 		});
+		// payload.players.forEach((playerInfo) => {
+		// 	console.log(playerInfo.is_dead);
+		// 	if (!playerInfo.is_dead) {
+		// 		this.handlePlayerCoords(playerInfo.id, playerInfo.position.y, playerInfo.position.x);
+		// 		this._fieldArray[playerInfo.position.y][playerInfo.position.x].id = playerInfo.id;
+		// 		this._arena.drawPixel(playerInfo.position.x, playerInfo.position.y);
+		// 	} else if (this._playersArrayMap[playerInfo.id]) {
+		// 		this._playersArrayMap[playerInfo.id].forEach((coordObject) => {
+		// 			this._arena.clearPixel(coordObject.x, coordObject.y);
+		// 		});
+		// 		this._playersArrayMap[playerInfo.id] = undefined;
+		// 	}
+		// });
 	}
 
 	startGame() {

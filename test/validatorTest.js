@@ -1,5 +1,3 @@
-'use strict';
-
 const assert = require('assert');
 
 const validator = require('../src/modules/Validator/Validator.js');

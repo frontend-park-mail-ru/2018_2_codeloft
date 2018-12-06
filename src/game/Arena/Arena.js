@@ -9,13 +9,6 @@ export default class Arena {
 	constructor(arenaClassName) {
 		this._gameBlock = document.getElementsByClassName(arenaClassName)[0];
 		this._context = this._gameBlock.getContext('2d');
-		this._xMin = this._gameBlock.getBoundingClientRect().x + 5;
-		this._yMin = this._gameBlock.getBoundingClientRect().y + 5;
-		this._xMax = this._gameBlock.getBoundingClientRect().width - this._xMin - 5;
-		this._yMax = this._gameBlock.getBoundingClientRect().height - this._yMin - 5;
-		this.resized = false;
-		this._diagonal = Math.sqrt((this._xMax - this._xMin) * (this._xMax - this._xMin)
-			+ (this._yMax - this._yMin) * (this._yMax - this._yMin));
 		this._goalArray = [];
 		window.addEventListener('resize', this.resizeGameField.bind(this));
 		this.resizeGameField();
@@ -25,9 +18,17 @@ export default class Arena {
 	resizeGameField() {
 		this._gameBlock.width = window.innerWidth;
 		this._gameBlock.height = window.innerHeight;
-		this._scaleX = this._gameBlock.width / 160;
-		this._scaleY = this._gameBlock.height / 90;
-		this.resized = true;
+		this._xMin = this._gameBlock.getBoundingClientRect().x + 5;
+		this._yMin = this._gameBlock.getBoundingClientRect().y + 5;
+		this._xMax = this._gameBlock.getBoundingClientRect().width - this._xMin - 5;
+		this._yMax = this._gameBlock.getBoundingClientRect().height - this._yMin - 5;
+		this._diagonal = Math.sqrt((this._xMax - this._xMin) * (this._xMax - this._xMin)
+			+ (this._yMax - this._yMin) * (this._yMax - this._yMin));
+	}
+
+	scaleGameField(xVal, yVal) {
+		this._scaleX = this._gameBlock.width / xVal;
+		this._scaleY = this._gameBlock.height / yVal;
 	}
 
 	canMove(player) {
@@ -230,10 +231,10 @@ export default class Arena {
 		}
 	}
 
-	drawPixel(x, y) {
+	drawPixel(x, y, color) {
 		this._context.beginPath();
 		this._context.arc(x * this._scaleX, y * this._scaleY, 6, 0, 2 * Math.PI);
-		this._context.fillStyle = '#FFE64D';
+		this._context.fillStyle = color;
 		this._context.fill();
 		this._context.closePath();
 	}
