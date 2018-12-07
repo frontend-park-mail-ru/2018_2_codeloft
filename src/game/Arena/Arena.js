@@ -16,6 +16,7 @@ export default class Arena {
 	}
 
 	resizeGameField() {
+		eventBus.emit('gameFieldResized');
 		this._gameBlock.width = window.innerWidth;
 		this._gameBlock.height = window.innerHeight;
 		this._xMin = this._gameBlock.getBoundingClientRect().x + 5;
@@ -232,10 +233,17 @@ export default class Arena {
 	}
 
 	drawPixel(x, y, color) {
+		let _color = color;
+		let radius = 6;
+		if (color === '#000000') {
+			_color = '#0c141F';
+			radius += 2;
+		}
 		this._context.beginPath();
-		this._context.arc(x * this._scaleX, y * this._scaleY, 6, 0, 2 * Math.PI);
-		this._context.fillStyle = color;
-		this._context.fill();
+		// this._context.arc(x * this._scaleX, y * this._scaleY, radius, 0, 2 * Math.PI);
+		this._context.fillStyle = _color;
+		this._context.fillRect(x * this._scaleX - this._scaleX / 2,
+			y * this._scaleY - this._scaleY / 2, this._scaleX, this._scaleY);
 		this._context.closePath();
 	}
 
