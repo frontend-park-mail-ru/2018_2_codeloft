@@ -4,8 +4,11 @@
   justify-content: center;
   height: 100%;
   width: 100%;
-  outline: 5px solid #3EC8AC;
-  outline-offset: -5px;
   position: fixed;
   top: 0;
+}
+
+.border {
+  outline: 5px solid #3EC8AC;
+  outline-offset: -5px;
 }
