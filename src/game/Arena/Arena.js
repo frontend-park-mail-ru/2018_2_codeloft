@@ -5,6 +5,7 @@ import Bonus from '../Bonus/Bonus.js';
 const SCORE_RATE = 2;
 const GOAL_RADIUS = 10;
 
+
 export default class Arena {
 	constructor(arenaClassName) {
 		this._gameBlock = document.getElementsByClassName(arenaClassName)[0];
@@ -232,6 +233,48 @@ export default class Arena {
 		}
 	}
 
+	loadTextures() {
+		return new Promise((resolve) => {
+			this._image = new Image();
+			this._image.src = '../../../static/Archive/solaris/solaris_yellow.png';
+			this._image.onload = () => resolve();
+		});
+	}
+
+	clearPlayerHead(x, y, direction) {
+		this._context.beginPath();
+		this._context.save();
+		this._context.translate(x * this._scaleX, y * this._scaleY);
+		if (direction === 'RIGHT') {
+			this._context.rotate(Math.PI / 2);
+		} else if (direction === 'LEFT') {
+			this._context.rotate(3 * Math.PI / 2);
+		} else if (direction === 'DOWN') {
+			this._context.rotate(Math.PI);
+		}
+		this._context.clearRect(-15, -30, 30, 60);
+		this._context.restore();
+		this._context.closePath();
+	}
+
+	drawPlayerHead(x, y, direction) {
+		this._context.beginPath();
+		this._context.save();
+		this._context.translate(x * this._scaleX, y * this._scaleY);
+		if (direction === 'RIGHT') {
+			this._context.rotate(Math.PI / 2);
+		} else if (direction === 'LEFT') {
+			this._context.rotate(3 * Math.PI / 2);
+		} else if (direction === 'DOWN') {
+			this._context.rotate(Math.PI);
+		}
+		this._context.drawImage(this._image, -15, -30, 30, 60);
+		this._context.restore();
+		// this._context.translate(-x * this._scaleX - 10, -y * this._scaleY - 20);
+		// this._context.rotate(-Math.PI / 2);
+		this._context.closePath();
+	}
+
 	drawPixel(x, y, color) {
 		let _color = color;
 		let radius = 6;
@@ -241,6 +284,7 @@ export default class Arena {
 		}
 		this._context.beginPath();
 		// this._context.arc(x * this._scaleX, y * this._scaleY, radius, 0, 2 * Math.PI);
+		// this._context.drawImage(this._image, x * this._scaleX, y * this._scaleY);
 		this._context.fillStyle = _color;
 		this._context.fillRect(x * this._scaleX - this._scaleX / 2,
 			y * this._scaleY - this._scaleY / 2, this._scaleX, this._scaleY);

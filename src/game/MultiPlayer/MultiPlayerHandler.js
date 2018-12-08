@@ -12,6 +12,7 @@ export default class MultiPlayerHandler extends BaseGameHandler {
 		eventBus.on('fieldUpdated', this.fieldUpdater);
 		this.deathHandler = this.handleDeath.bind(this);
 		// eventBus.on('protagonistIsDead', this.deathHandler);
+		this._prevPlayerHeads = [];
 		this._cachedField = {};
 	}
 
@@ -40,15 +41,24 @@ export default class MultiPlayerHandler extends BaseGameHandler {
 	}
 
 	updateField(data) {
+		this._prevPlayerHeads.forEach((player) => {
+			this._arena.clearPlayerHead(player.position.x, player.position.y, player.move_direction);
+		});
+		this._prevPlayerHeads = data.payload.players;
 		data.payload.diff.forEach((cellObject) => {
 			this._cachedField[cellObject.pos.y][cellObject.pos.x] = cellObject.color;
 			this._arena.drawPixel(cellObject.pos.x, cellObject.pos.y, cellObject.color);
 		});
+		data.payload.players.forEach((player) => {
+			this._arena.drawPlayerHead(player.position.x, player.position.y, player.move_direction);
+		});
 	}
 
 	startGame() {
-		this._gameSocket = new GameSocket();
-		super.startGame();
+		this._arena.loadTextures().then(() => {
+			this._gameSocket = new GameSocket();
+			super.startGame();
+		});
 	}
 
 	stopGame() {
