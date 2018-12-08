@@ -52,8 +52,10 @@ export default class MultiPlayerHandler extends BaseGameHandler {
 	}
 
 	stopGame() {
+		eventBus.off('gameFieldResized', this.arrayHandler);
 		eventBus.off('connectedToRoom', this.arrayHandler);
-		setTimeout(() => this._gameSocket.endSession(), 100);
+		eventBus.off('fieldUpdated', this.fieldUpdater);
+		this._gameSocket.endSession();
 		super.stopGame();
 	}
 }
