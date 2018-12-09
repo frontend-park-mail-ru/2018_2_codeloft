@@ -59,24 +59,43 @@ export default class Arena {
 		this._context.closePath();
 	}
 
-	clearPlayer(player) {
+	clearPlayer(player, direction) {
 		if (player) {
-			this._context.globalCompositeOperation = 'destination-out';
+			// this._context.globalCompositeOperation = 'destination-out';
 			this._context.beginPath();
-			this._context.arc(player.getX(), player.getY(), player.getRadius() + 2, 0, 2 * Math.PI);
+			this._context.save();
+			this._context.translate(player.getX(), player.getY());
+			if (direction === 'RIGHT') {
+				this._context.rotate(Math.PI / 2);
+			} else if (direction === 'LEFT') {
+				this._context.rotate(3 * Math.PI / 2);
+			} else if (direction === 'DOWN') {
+				this._context.rotate(Math.PI);
+			}
+			// this._context.arc(player.getX(), player.getY(), player.getRadius() + 2, 0, 2 * Math.PI);
 			this._context.fillStyle = '#0C141F';
+			this._context.fillRect(-42, -82, 42, 82);
 			this._context.fill();
+			this._context.restore();
 			this._context.closePath();
 		}
 	}
 
-	drawPlayer(player) {
+	drawPlayer(player, direction) {
 		if (player) {
 			this._context.globalCompositeOperation = 'source-over';
 			this._context.beginPath();
-			this._context.arc(player.getX(), player.getY(), player.getRadius(), 0, 2 * Math.PI);
-			this._context.fillStyle = player.getColor();
-			this._context.fill();
+			this._context.save();
+			this._context.translate(player.getX(), player.getY());
+			if (direction === 'RIGHT') {
+				this._context.rotate(Math.PI / 2);
+			} else if (direction === 'LEFT') {
+				this._context.rotate(3 * Math.PI / 2);
+			} else if (direction === 'DOWN') {
+				this._context.rotate(Math.PI);
+			}
+			this._context.drawImage(this._image, -40, -80, 40, 80);
+			this._context.restore();
 			this._context.closePath();
 		}
 	}
@@ -123,10 +142,10 @@ export default class Arena {
 		const coords1 = this._generateGoal();
 		let coords2 = this._generateGoal();
 
-		while (Math.sqrt((coords1.firstX - coords2.firstX) * (coords1.firstX - coords2.firstX)) < this._xMax / 8
-			|| Math.sqrt((coords1.secondX - coords2.secondX) * (coords1.secondX - coords2.secondX)) < this._yMax / 8
-			|| Math.sqrt((coords1.firstY - coords2.firstY) * (coords1.firstY - coords2.firstY)) < this._xMax / 8
-			|| Math.sqrt((coords1.secondY - coords2.secondY) * (coords1.secondY - coords2.secondY)) < this._yMax / 8) {
+		while (Math.sqrt((coords1.firstX - coords2.firstX) * (coords1.firstX - coords2.firstX)) < this._xMax / 9
+			|| Math.sqrt((coords1.secondX - coords2.secondX) * (coords1.secondX - coords2.secondX)) < this._yMax / 9
+			|| Math.sqrt((coords1.firstY - coords2.firstY) * (coords1.firstY - coords2.firstY)) < this._xMax / 9
+			|| Math.sqrt((coords1.secondY - coords2.secondY) * (coords1.secondY - coords2.secondY)) < this._yMax / 9) {
 			coords2 = this._generateGoal();
 		}
 
@@ -167,10 +186,10 @@ export default class Arena {
 		this._goalArray.forEach((goal) => {
 			this._context.globalCompositeOperation = 'source-over';
 			this._context.beginPath();
-			this._context.arc(goal.getCoords().x1, goal.getCoords().y1,
-				goal.getRadius() + 2, 0, 2 * Math.PI);
-			this._context.arc(goal.getCoords().x2, goal.getCoords().y2,
-				goal.getRadius() + 2, 0, 2 * Math.PI);
+			// this._context.arc(goal.getCoords().x1, goal.getCoords().y1,
+			// 	12, 0, 2 * Math.PI);
+			// this._context.arc(goal.getCoords().x2, goal.getCoords().y2,
+			// 	12, 0, 2 * Math.PI);
 			this._context.fillStyle = '#FFE64D';
 			this._context.fill();
 			this._context.closePath();
@@ -184,6 +203,8 @@ export default class Arena {
 			this._context.lineWidth = 5;
 			this._context.stroke();
 			this._context.closePath();
+			this._context.drawImage(this._goalImage, goal.getCoords().x1 - 15, goal.getCoords().y1 - 15);
+			this._context.drawImage(this._goalImage, goal.getCoords().x2 - 15, goal.getCoords().y2 - 15);
 
 			this._context.fillStyle = '#3EC8AC';
 			this._context.font = '4vmin serif';
@@ -191,6 +212,30 @@ export default class Arena {
 				Math.max(goal.getCoords().x1, goal.getCoords().x2) + goal.getRadius() + this._diagonal / 150,
 				Math.max(goal.getCoords().y1, goal.getCoords().y2) + goal.getRadius() + this._diagonal / 150);
 		});
+	}
+
+	clearGoal(index) {
+		const i = index === 1 ? 0 : 1;
+		const goal = this._goalArray[i];
+		this._context.globalCompositeOperation = 'destination-out';
+		this._context.beginPath();
+		this._context.arc(goal.getCoords().x1, goal.getCoords().y1,
+			14, 0, 2 * Math.PI);
+		this._context.arc(goal.getCoords().x2, goal.getCoords().y2,
+			14, 0, 2 * Math.PI);
+		this._context.fillStyle = '#0C141F';
+		this._context.fill();
+		this._context.closePath();
+
+		this._context.beginPath();
+		this._context.moveTo(goal.getCoords().x1, goal.getCoords().y1);
+		this._context.lineTo(goal.getCoords().x2, goal.getCoords().y2);
+		this._context.strokeStyle = '#FFE64D';
+		this._context.lineWidth = 7;
+		this._context.stroke();
+		this._context.closePath();
+
+		this._goalArray = this._goalArray.slice(i, i + 1);
 	}
 
 	_goalDist(x, y) {
@@ -222,12 +267,13 @@ export default class Arena {
 
 	drawBonus() {
 		if (this._currentBonus) {
-			this._context.globalCompositeOperation = 'source-over';
+			// this._context.globalCompositeOperation = 'source-over';
 			this._context.beginPath();
-			this._context.arc(this._currentBonus.getX(), this._currentBonus.getY(),
-				10 + 2, 0, 2 * Math.PI);
-			this._context.fillStyle = '#FFE64D';
-			this._context.fill();
+			// this._context.arc(this._currentBonus.getX(), this._currentBonus.getY(),
+			// 	10 + 2, 0, 2 * Math.PI);
+			// this._context.fillStyle = '#FFE64D';
+			// this._context.fill();
+			this._context.drawImage(this._bonusImage, this._currentBonus.getX() - 40, this._currentBonus.getY() - 40, 80, 80);
 			this._context.closePath();
 		}
 	}
@@ -235,8 +281,12 @@ export default class Arena {
 	loadTextures() {
 		return new Promise((resolve) => {
 			this._image = new Image();
-			this._image.src = '../../../static/Archive/solaris/solaris_yellow.png';
+			this._image.src = '../../../static/Archive/camry/camry_yellow.png';
 			this._image.onload = () => resolve();
+			this._goalImage = new Image();
+			this._goalImage.src = '../../../static/Archive/index.png';
+			this._bonusImage = new Image();
+			this._bonusImage.src = '../../../static/Archive/bonus.svg';
 		});
 	}
 
@@ -252,7 +302,7 @@ export default class Arena {
 			this._context.rotate(Math.PI);
 		}
 		this._context.fillStyle = '#0c141F';
-		this._context.fillRect(-15, -30, 30, 60);
+		this._context.fillRect(-17, -32, 34, 64);
 		this._context.restore();
 		this._context.closePath();
 		this.drawPixel(x, y, color);
@@ -299,30 +349,6 @@ export default class Arena {
 		this._context.fillStyle = '#0C141F';
 		this._context.fill();
 		this._context.closePath();
-	}
-
-	clearGoal(index) {
-		const i = index === 1 ? 0 : 1;
-		const goal = this._goalArray[i];
-		this._context.globalCompositeOperation = 'destination-out';
-		this._context.beginPath();
-		this._context.arc(goal.getCoords().x1, goal.getCoords().y1,
-			goal.getRadius() + 2, 0, 2 * Math.PI);
-		this._context.arc(goal.getCoords().x2, goal.getCoords().y2,
-			goal.getRadius() + 2, 0, 2 * Math.PI);
-		this._context.fillStyle = '#0C141F';
-		this._context.fill();
-		this._context.closePath();
-
-		this._context.beginPath();
-		this._context.moveTo(goal.getCoords().x1, goal.getCoords().y1);
-		this._context.lineTo(goal.getCoords().x2, goal.getCoords().y2);
-		this._context.strokeStyle = '#FFE64D';
-		this._context.lineWidth = 7;
-		this._context.stroke();
-		this._context.closePath();
-
-		this._goalArray = this._goalArray.slice(i, i + 1);
 	}
 
 	goalAnimate(x, y) {
