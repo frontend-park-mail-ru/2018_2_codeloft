@@ -51,6 +51,9 @@ module.exports = {
 		"strict": [
 			"off"
 		],
+		"no-param-reassign": [
+			"off"
+		],
 		"import/extensions": [
 			"off"
 		],
