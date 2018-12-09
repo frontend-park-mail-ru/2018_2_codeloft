@@ -2,7 +2,7 @@ import BaseGameHandler from '../BaseGameHandler.js';
 import eventBus from '../../modules/EventBus/EventBus';
 import Timer from '../Timer/Timer.js';
 
-const BASE_ROUND_TIME = 30;
+const BASE_ROUND_TIME = 5;
 
 export default class SinglePlayerHandler extends BaseGameHandler {
 	constructor(players = [], arenaClassName) {
@@ -96,11 +96,12 @@ export default class SinglePlayerHandler extends BaseGameHandler {
 	}
 
 	stopGame() {
-		super.stopGame();
 		this._arena.clearField();
-		this._gameTimer.stop();
+		super.stopGame();
 		eventBus.off('goalCollision', this._goalHandler);
 		eventBus.off('spawnGoals', this._goalSpawner);
 		eventBus.off('timerTick', this._ageHandler);
+		eventBus.off('bonusCollision', this._bonusHandler);
+		this._gameTimer.stop();
 	}
 }

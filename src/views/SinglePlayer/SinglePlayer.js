@@ -102,10 +102,10 @@ export default class SinglePlayer extends BaseView {
 		this._resultBlock.scoreLabel.innerHTML = `${langService.getWord('gameResults.score')} ${this._gameHandler.getScore()}`;
 		this._resultBlock.goalsLabel.innerHTML = `${langService.getWord('gameResults.goals')} ${this._gameHandler.getGoalsPassed()}`;
 		this.gameStat.hide();
-		this._gameHandler.stopGame();
 		eventBus.off('timerStop', this.resultsHandler);
 		eventBus.off('timerTick', this.timerHandler);
 		eventBus.off('scoreRedraw', this.scoreHandler);
+		this._gameHandler.stopGame();
 	}
 
 	redrawTimer(value) {
