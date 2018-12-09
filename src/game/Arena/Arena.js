@@ -11,13 +11,12 @@ export default class Arena {
 		this._gameBlock = document.getElementsByClassName(arenaClassName)[0];
 		this._context = this._gameBlock.getContext('2d');
 		this._goalArray = [];
-		window.addEventListener('resize', this.resizeGameField.bind(this));
 		this.resizeGameField();
+		window.addEventListener('resize', this.resizeGameField.bind(this));
 		this.clearField();
 	}
 
 	resizeGameField() {
-		eventBus.emit('gameFieldResized');
 		this._gameBlock.width = window.innerWidth;
 		this._gameBlock.height = window.innerHeight;
 		this._xMin = this._gameBlock.getBoundingClientRect().x + 5;
@@ -26,6 +25,7 @@ export default class Arena {
 		this._yMax = this._gameBlock.getBoundingClientRect().height - this._yMin - 5;
 		this._diagonal = Math.sqrt((this._xMax - this._xMin) * (this._xMax - this._xMin)
 			+ (this._yMax - this._yMin) * (this._yMax - this._yMin));
+		eventBus.emit('gameFieldResized');
 	}
 
 	scaleGameField(xVal, yVal) {
@@ -55,9 +55,8 @@ export default class Arena {
 	clearField() {
 		this._context.beginPath();
 		this._context.fillStyle = '#0C141F';
-		this._context.fillRect(this._xMin, this._yMin, this._xMax, this._yMax);
+		this._context.fillRect(0, 0, this._gameBlock.width, this._gameBlock.height);
 		this._context.closePath();
-		this._context.beginPath();
 	}
 
 	clearPlayer(player) {
@@ -241,7 +240,7 @@ export default class Arena {
 		});
 	}
 
-	clearPlayerHead(x, y, direction) {
+	clearPlayerHead(x, y, direction, color) {
 		this._context.beginPath();
 		this._context.save();
 		this._context.translate(x * this._scaleX, y * this._scaleY);
@@ -252,9 +251,11 @@ export default class Arena {
 		} else if (direction === 'DOWN') {
 			this._context.rotate(Math.PI);
 		}
-		this._context.clearRect(-15, -30, 30, 60);
+		this._context.fillStyle = '#0c141F';
+		this._context.fillRect(-15, -30, 30, 60);
 		this._context.restore();
 		this._context.closePath();
+		this.drawPixel(x, y, color);
 	}
 
 	drawPlayerHead(x, y, direction) {
@@ -270,24 +271,25 @@ export default class Arena {
 		}
 		this._context.drawImage(this._image, -15, -30, 30, 60);
 		this._context.restore();
-		// this._context.translate(-x * this._scaleX - 10, -y * this._scaleY - 20);
-		// this._context.rotate(-Math.PI / 2);
 		this._context.closePath();
 	}
 
 	drawPixel(x, y, color) {
 		let _color = color;
-		let radius = 6;
+		let width = this._scaleX;
+		let height = this._scaleY;
+		let beginX = x * this._scaleX - this._scaleX / 2;
+		let beginY = y * this._scaleY - this._scaleY / 2;
 		if (color === '#000000') {
 			_color = '#0c141F';
-			radius += 2;
+			width += 4;
+			height += 4;
+			beginX -= 2;
+			beginY -= 2;
 		}
 		this._context.beginPath();
-		// this._context.arc(x * this._scaleX, y * this._scaleY, radius, 0, 2 * Math.PI);
-		// this._context.drawImage(this._image, x * this._scaleX, y * this._scaleY);
 		this._context.fillStyle = _color;
-		this._context.fillRect(x * this._scaleX - this._scaleX / 2,
-			y * this._scaleY - this._scaleY / 2, this._scaleX, this._scaleY);
+		this._context.fillRect(beginX, beginY, width, height);
 		this._context.closePath();
 	}
 

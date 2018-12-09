@@ -13,18 +13,27 @@ export default class MultiPlayerHandler extends BaseGameHandler {
 		this.deathHandler = this.handleDeath.bind(this);
 		// eventBus.on('protagonistIsDead', this.deathHandler);
 		this._prevPlayerHeads = [];
-		this._cachedField = {};
+		this._prevPixels = [];
+		this._cachedField = [];
+		this._playersAmount = 0;
 	}
 
 	arrayInit(payload) {
-		if (payload.size) {
+		this._arena.clearField();
+		if (payload) {
 			this._arena.scaleGameField(payload.size.x, payload.size.y);
+			payload.field.forEach((array, i) => {
+				this._cachedField.push([]);
+				array.forEach((cell, j) => {
+					this._cachedField[i].push(payload.field[i][j].color);
+				});
+			});
 		}
-		payload.field.forEach((array, i) => {
-			this._cachedField[i] = {};
+		this._cachedField.forEach((array, i) => {
 			array.forEach((cell, j) => {
-				this._arena.drawPixel(j, i, payload.field[i][j].color);
-				this._cachedField[i][j] = payload.field[i][j].color;
+				if (cell !== '#000000') {
+					this._arena.drawPixel(j, i, cell);
+				}
 			});
 		});
 	}
@@ -41,23 +50,44 @@ export default class MultiPlayerHandler extends BaseGameHandler {
 	}
 
 	updateField(data) {
+		const diff = data.payload.diff;
 		this._prevPlayerHeads.forEach((player) => {
-			this._arena.clearPlayerHead(player.position.x, player.position.y, player.move_direction);
+			this._arena.clearPlayerHead(player.position.x, player.position.y, player.move_direction, player.color);
+		});
+		diff.forEach((pixel) => {
+			this._arena.drawPixel(pixel.pos.x, pixel.pos.y, pixel.color);
+
+			if (this._cachedField[pixel.pos.y][pixel.pos.x] === '#000000') {
+				this._arena.drawPixel(pixel.pos.x, pixel.pos.y, pixel.color);
+				this._cachedField[pixel.pos.y][pixel.pos.x] = pixel.color;
+			} else if (this._cachedField[pixel.pos.y][pixel.pos.x] !== '#000000' && pixel.color === '#000000') {
+				this._arena.drawPixel([pixel.pos.x, pixel.pos.y, pixel.color]);
+				this._cachedField[pixel.pos.y][pixel.pos.x] = pixel.color;
+			} else if (this._cachedField[pixel.pos.y][pixel.pos.x] !== '#000000' && pixel.color !== '#000000') {
+				this._arena.drawPixel(pixel.pos.x, pixel.pos.y, this._cachedField[pixel.pos.y][pixel.pos.x]);
+				pixel.color = this._cachedField[pixel.pos.y][pixel.pos.x];
+			}
+		});
+		this._cachedField.forEach((array, i) => {
+			array.forEach((cell, j) => {
+				if (cell !== '#000000') {
+					this._arena.drawPixel(j, i, cell);
+				}
+			});
+		});
+
+		data.payload.players.forEach((player) => {
+			if (!player.is_dead) {
+				this._arena.drawPlayerHead(player.position.x, player.position.y, player.move_direction);
+			}
 		});
 		this._prevPlayerHeads = data.payload.players;
-		data.payload.diff.forEach((cellObject) => {
-			this._cachedField[cellObject.pos.y][cellObject.pos.x] = cellObject.color;
-			this._arena.drawPixel(cellObject.pos.x, cellObject.pos.y, cellObject.color);
-		});
-		data.payload.players.forEach((player) => {
-			this._arena.drawPlayerHead(player.position.x, player.position.y, player.move_direction);
-		});
 	}
 
 	startGame() {
 		this._arena.loadTextures().then(() => {
-			this._gameSocket = new GameSocket();
 			super.startGame();
+			this._gameSocket = new GameSocket();
 		});
 	}
 
