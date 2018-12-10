@@ -2,7 +2,7 @@ import BaseGameHandler from '../BaseGameHandler.js';
 import eventBus from '../../modules/EventBus/EventBus';
 import Timer from '../Timer/Timer.js';
 
-const BASE_ROUND_TIME = 3;
+const BASE_ROUND_TIME = 30;
 
 export default class SinglePlayerHandler extends BaseGameHandler {
 	constructor(players = [], arenaClassName) {
