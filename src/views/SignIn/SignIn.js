@@ -5,10 +5,7 @@ import tagParser from '../../modules/TagParser/TagParser.js';
 import eventHandler from '../../modules/EventHandler/EventHandler.js';
 import userService from '../../services/UserService/UserService.js';
 import langService from '../../services/LangService/LangService.js';
-
-const validator = require('../../modules/Validator/Validator.js');
-
-const Validator = validator.Validator;
+import Validator from '../../modules/Validator/Validator.js';
 
 export default class SignIn extends BaseView {
 	build() {

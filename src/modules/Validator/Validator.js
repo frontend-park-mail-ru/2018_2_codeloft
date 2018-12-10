@@ -1,6 +1,6 @@
-'use strict';
+import langService from '../../services/LangService/LangService.js';
 
-class Validator {
+export default class Validator {
 	constructor(inputs = {}, labels = {}) {
 		this.inputs = inputs;
 		this.labels = labels;
@@ -42,5 +42,3 @@ class Validator {
 		return this.checkConfig[check](value);
 	}
 }
-
-module.exports.Validator = Validator;
