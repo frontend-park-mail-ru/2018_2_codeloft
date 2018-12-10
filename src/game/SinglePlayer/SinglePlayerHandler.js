@@ -2,7 +2,7 @@ import BaseGameHandler from '../BaseGameHandler.js';
 import eventBus from '../../modules/EventBus/EventBus';
 import Timer from '../Timer/Timer.js';
 
-const BASE_ROUND_TIME = 30;
+const BASE_ROUND_TIME = 3;
 
 export default class SinglePlayerHandler extends BaseGameHandler {
 	constructor(players = [], arenaClassName) {
@@ -51,8 +51,9 @@ export default class SinglePlayerHandler extends BaseGameHandler {
 	}
 
 	keyControl(event) {
-		this._direction = this.keyCodeMap[event.keyCode];
-		if (this._direction) {
+		const action = this.keyCodeMap[event.keyCode];
+		if (action) {
+			this._direction = action;
 			this._protagonist.setDirection(this._direction);
 		}
 	}
@@ -72,13 +73,13 @@ export default class SinglePlayerHandler extends BaseGameHandler {
 	}
 
 	gameLoop() {
-		this._arena.clearField();
+		this._arena.clearSingleField();
 		this.players.forEach((player) => {
 			this._arena.clearPlayer(player, this._direction);
 			this._arena.checkBorderCollision(player);
 			this._arena.checkGoalCollision(player);
 			this._arena.checkBonusCollision(player);
-			if (this._arena.canMove(player)) {
+			if (this._arena.canMove(player, this._direction)) {
 				player.move();
 			}
 			this._arena.drawPlayer(player, this._direction);
@@ -96,12 +97,12 @@ export default class SinglePlayerHandler extends BaseGameHandler {
 	}
 
 	stopGame() {
-		this._arena.clearField();
+		this._arena.clearSingleField();
 		super.stopGame();
+		this._gameTimer.stop();
 		eventBus.off('goalCollision', this._goalHandler);
 		eventBus.off('spawnGoals', this._goalSpawner);
 		eventBus.off('timerTick', this._ageHandler);
 		eventBus.off('bonusCollision', this._bonusHandler);
-		this._gameTimer.stop();
 	}
 }

@@ -47,6 +47,16 @@ export default class SinglePlayer extends BaseView {
 				this.scoreHandler = this.redrawScore.bind(this);
 				this.timerHandler = this.redrawTimer.bind(this);
 				this.resultsHandler = this.showResults.bind(this);
+				this._resultBlock.build({}).then(() => {
+					this._resultBlock.backButton.addEventListener('click', () => {
+						router.goMenu();
+					});
+					this._resultBlock.againButton.addEventListener('click', () => {
+						this.play();
+					});
+					this._resultBlock.hide();
+					this.element.appendChild(this._resultBlock.render());
+				});
 				resolve();
 			});
 		});
@@ -56,16 +66,6 @@ export default class SinglePlayer extends BaseView {
 		return new Promise((resolve) => {
 			this.scoreLabel = document.getElementsByClassName('game-stat__score-block')[0];
 			this.timerLabel = document.getElementsByClassName('game-stat__timer-block')[0];
-			this._resultBlock.build({}).then(() => {
-				this._resultBlock.backButton.addEventListener('click', () => {
-					router.goMenu();
-				});
-				this._resultBlock.againButton.addEventListener('click', () => {
-					this.play();
-				});
-				this._resultBlock.hide();
-				this.element.appendChild(this._resultBlock.render());
-			});
 			resolve();
 		});
 	}
@@ -93,6 +93,7 @@ export default class SinglePlayer extends BaseView {
 	}
 
 	showResults() {
+		this.gameBlock.hide();
 		this._resultBlock.show();
 		this.endGame();
 	}
@@ -130,9 +131,9 @@ export default class SinglePlayer extends BaseView {
 
 	hide() {
 		super.hide();
+		this._resultBlock.hide();
 		if (this._gameHandler) {
 			this.endGame();
 		}
-		this._resultBlock.render().remove();
 	}
 }

@@ -19,7 +19,7 @@ export default class MultiPlayerHandler extends BaseGameHandler {
 	}
 
 	arrayInit(payload) {
-		this._arena.clearField();
+		this._arena.clearMultiField();
 		if (payload) {
 			this._arena.scaleGameField(payload.size.x, payload.size.y);
 			payload.field.forEach((array, i) => {

@@ -13,7 +13,7 @@ export default class Arena {
 		this._goalArray = [];
 		this.resizeGameField();
 		window.addEventListener('resize', this.resizeGameField.bind(this));
-		this.clearField();
+		this.clearSingleField();
 	}
 
 	resizeGameField() {
@@ -33,17 +33,20 @@ export default class Arena {
 		this._scaleY = this._gameBlock.height / yVal;
 	}
 
-	canMove(player) {
+	canMove(player, direction) {
 		if (player) {
 			this._goalArray.forEach((goal) => {
-				const deltaX1 = goal.getCoords().x1 - (player.getX() + player.getDirection().x);
-				const deltaY1 = goal.getCoords().y1 - (player.getY() + player.getDirection().y);
-				const deltaX2 = goal.getCoords().x2 - (player.getX() + player.getDirection().x);
-				const deltaY2 = goal.getCoords().y2 - (player.getY() + player.getDirection().y);
-				if (Math.sqrt(deltaX1 * deltaX1 + deltaY1 * deltaY1) < player.getRadius() + goal.getRadius() - 1) {
-					player.bounce('x');
-				}
-				if (Math.sqrt(deltaX2 * deltaX2 + deltaY2 * deltaY2) < player.getRadius() + goal.getRadius() - 1) {
+				const deltaX1 = Math.abs(goal.getCoords().x1 - (player.getX() + player.getDirection().x));// + player.getDirection().x);
+				const deltaY1 = Math.abs(goal.getCoords().y1 - (player.getY() + player.getDirection().y));// + player.getDirection().y);
+				const deltaX2 = Math.abs(goal.getCoords().x2 - (player.getX() + player.getDirection().x));// + player.getDirection().x);
+				const deltaY2 = Math.abs(goal.getCoords().y2 - (player.getY() + player.getDirection().y));// + player.getDirection().y);
+				if (direction === 'RIGHT' || direction === 'LEFT') {
+					if ((deltaX1 <= 40 + 5 && deltaY1 <= 20 + 5)
+						|| (deltaX2 <= 40 + 5 && deltaY2 <= 20 + 5)) {
+						player.bounce('x');
+					}
+				} else if ((deltaX1 <= 20 + 5 && deltaY1 <= 40 + 5)
+					|| (deltaX2 <= 20 + 5 && deltaY2 <= 40 + 5)) {
 					player.bounce('y');
 				}
 			});
@@ -52,10 +55,17 @@ export default class Arena {
 		return false;
 	}
 
-	clearField() {
+	clearSingleField() {
 		this._context.beginPath();
 		this._context.fillStyle = '#0C141F';
-		this._context.fillRect(0, 0, this._gameBlock.width, this._gameBlock.height);
+		this._context.fillRect(this._xMin, this._yMin, this._xMax, this._yMax);
+		this._context.closePath();
+	}
+
+	clearMultiField() {
+		this._context.beginPath();
+		this._context.fillStyle = '#0C141F';
+		this._context.fillRect(0, 0, window.innerHeight, window.innerWidth);
 		this._context.closePath();
 	}
 
@@ -74,7 +84,7 @@ export default class Arena {
 			}
 			// this._context.arc(player.getX(), player.getY(), player.getRadius() + 2, 0, 2 * Math.PI);
 			this._context.fillStyle = '#0C141F';
-			this._context.fillRect(-42, -82, 42, 82);
+			this._context.fillRect(-22, -42, 42, 82);
 			this._context.fill();
 			this._context.restore();
 			this._context.closePath();
@@ -94,7 +104,7 @@ export default class Arena {
 			} else if (direction === 'DOWN') {
 				this._context.rotate(Math.PI);
 			}
-			this._context.drawImage(this._image, -40, -80, 40, 80);
+			this._context.drawImage(this._image, -20, -40, 40, 80);
 			this._context.restore();
 			this._context.closePath();
 		}
@@ -121,10 +131,10 @@ export default class Arena {
 		let coords = this._generateGoal();
 
 		if (this._goalArray.length) {
-			while (Math.sqrt((coords.firstX - this._goalArray[0].getCoords().x1) * (coords.firstX - this._goalArray[0].getCoords().x1)) < this._xMax / 8
-			|| Math.sqrt((coords.secondX - this._goalArray[0].getCoords().x2) * (coords.secondX - this._goalArray[0].getCoords().x2)) < this._yMax / 8
-			|| Math.sqrt((coords.firstY - this._goalArray[0].getCoords().y1) * (coords.firstY - this._goalArray[0].getCoords().y1)) < this._xMax / 8
-			|| Math.sqrt((coords.secondY - this._goalArray[0].getCoords().y2) * (coords.secondY - this._goalArray[0].getCoords().y2)) < this._yMax / 8) {
+			while (Math.sqrt((coords.firstX - this._goalArray[0].getCoords().x1) * (coords.firstX - this._goalArray[0].getCoords().x1)) < this._xMax / 5
+			|| Math.sqrt((coords.secondX - this._goalArray[0].getCoords().x2) * (coords.secondX - this._goalArray[0].getCoords().x2)) < this._yMax / 5
+			|| Math.sqrt((coords.firstY - this._goalArray[0].getCoords().y1) * (coords.firstY - this._goalArray[0].getCoords().y1)) < this._xMax / 5
+			|| Math.sqrt((coords.secondY - this._goalArray[0].getCoords().y2) * (coords.secondY - this._goalArray[0].getCoords().y2)) < this._yMax / 5) {
 				coords = this._generateGoal();
 			}
 		}
@@ -142,10 +152,10 @@ export default class Arena {
 		const coords1 = this._generateGoal();
 		let coords2 = this._generateGoal();
 
-		while (Math.sqrt((coords1.firstX - coords2.firstX) * (coords1.firstX - coords2.firstX)) < this._xMax / 9
-			|| Math.sqrt((coords1.secondX - coords2.secondX) * (coords1.secondX - coords2.secondX)) < this._yMax / 9
-			|| Math.sqrt((coords1.firstY - coords2.firstY) * (coords1.firstY - coords2.firstY)) < this._xMax / 9
-			|| Math.sqrt((coords1.secondY - coords2.secondY) * (coords1.secondY - coords2.secondY)) < this._yMax / 9) {
+		while (Math.sqrt((coords1.firstX - coords2.firstX) * (coords1.firstX - coords2.firstX)) < this._xMax / 5
+			|| Math.sqrt((coords1.secondX - coords2.secondX) * (coords1.secondX - coords2.secondX)) < this._yMax / 5
+			|| Math.sqrt((coords1.firstY - coords2.firstY) * (coords1.firstY - coords2.firstY)) < this._xMax / 5
+			|| Math.sqrt((coords1.secondY - coords2.secondY) * (coords1.secondY - coords2.secondY)) < this._yMax / 5) {
 			coords2 = this._generateGoal();
 		}
 
@@ -170,8 +180,8 @@ export default class Arena {
 		coords.firstX = Math.floor(Math.random() * (this._xMax - 250 - this._xMin + 20) + this._xMin + 20);
 		coords.firstY = Math.floor(Math.random() * (this._yMax - 250 - this._yMin + 20) + this._yMin + 20);
 
-		coords.secondX = Math.floor(Math.random() * (coords.firstX + 80 - coords.firstX + 50)) + coords.firstX + 50;
-		coords.secondY = Math.floor(Math.random() * (coords.firstY + 80 - coords.firstY + 50)) + coords.firstY + 50;
+		coords.secondX = Math.floor(Math.random() * (coords.firstX + 90 - coords.firstX + 70)) + coords.firstX + 70;
+		coords.secondY = Math.floor(Math.random() * (coords.firstY + 90 - coords.firstY + 70)) + coords.firstY + 70;
 
 		return coords;
 	}
@@ -203,8 +213,8 @@ export default class Arena {
 			this._context.lineWidth = 5;
 			this._context.stroke();
 			this._context.closePath();
-			this._context.drawImage(this._goalImage, goal.getCoords().x1 - 15, goal.getCoords().y1 - 15);
-			this._context.drawImage(this._goalImage, goal.getCoords().x2 - 15, goal.getCoords().y2 - 15);
+			this._context.drawImage(this._goalImage, goal.getCoords().x1 - 10, goal.getCoords().y1 - 10);
+			this._context.drawImage(this._goalImage, goal.getCoords().x2 - 10, goal.getCoords().y2 - 10);
 
 			this._context.fillStyle = '#3EC8AC';
 			this._context.font = '4vmin serif';
