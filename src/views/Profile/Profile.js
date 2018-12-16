@@ -2,6 +2,7 @@
 
 import BaseView from '../BaseView/BaseView.js';
 import tagParser from '../../modules/TagParser/TagParser.js';
+import langService from '../../services/LangService/LangService.js';
 import '../../static/css/user-page.scss';
 
 export default class Profile extends BaseView {
@@ -13,8 +14,8 @@ export default class Profile extends BaseView {
 	build() {
 		this.template = `<Img {{src=./static/img/user-default.jpg}} {{class=profile-block__avatar}}>
                          <UserInfo>
-                         <Button {{text=Back}} {{class=button}} {{click=goMenu}}>
-                         <Button {{text=LogOut}} {{class=button}} {{click=logOut}}>`;
+                         <Button {{text=${langService.getWord('buttonBack')}}} {{class=profile-block__back-button}} {{click=goMenu}}>
+                         <Button {{text=${langService.getWord('profile.logOut')}}} {{class=profile-block__logOut-button}} {{click=logOut}}>`;
 		return new Promise((resolve) => {
 			tagParser.toHTML(this.template).then((elementsArray) => {
 				this.elementsArray = elementsArray;

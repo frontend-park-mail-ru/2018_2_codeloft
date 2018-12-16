@@ -57,7 +57,6 @@ export default class MultiPlayer extends BaseView {
 		super.show().then(() => {
 			this.element.style.display = 'block';
 			this.mainLogo.style.display = 'none';
-			eventBus.on('protagonistIsDead', this.deathHandler);
 			this.play();
 		});
 	}
@@ -65,7 +64,6 @@ export default class MultiPlayer extends BaseView {
 	hide() {
 		document.body.style.cursor = 'default';
 		super.hide();
-		eventBus.off('protagonistIsDead', this.deathHandler);
 		this._gameHandler.stopGame();
 	}
 }

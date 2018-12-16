@@ -2,10 +2,10 @@ export default class Player {
 	constructor(isProtagonist = false, x = 50, y = 50, color = '#FFE64D') {
 		this._xCoord = x;
 		this._yCoord = y;
-		this._radius = 20;
+		this._radius = 15;
 		this._color = color;
 		this._isProtagonist = isProtagonist;
-		this._speed = 4;
+		this._speed = 5;
 		this._xSpeed = this._speed;
 		this._ySpeed = 0;
 		this._score = 0;
@@ -122,10 +122,10 @@ export default class Player {
 	}
 
 	speedBonus() {
-		this._speed *= 1.5;
+		this._speed *= 1.4;
 		this._calcSpeed();
 		setTimeout(() => {
-			this._speed /= 1.5;
+			this._speed /= 1.4;
 			this._calcSpeed();
 		}, 5000);
 	}

@@ -6,6 +6,7 @@ import SinglePlayerHandler from '../../game/SinglePlayer/SinglePlayerHandler.js'
 import eventBus from '../../modules/EventBus/EventBus.js';
 import router from '../../modules/Router/Router.js';
 import GameResults from '../../components/GameResults/GameResults.js';
+import langService from '../../services/LangService/LangService.js';
 import './SinglePlayer.scss';
 
 const SINGLE_PLAYER_GAME_FIELD = 'singleplayer-block__game-field';
@@ -18,10 +19,14 @@ export default class SinglePlayer extends BaseView {
 
 	build() {
 		return new Promise((resolve) => {
-			this.template = `<GameBlock {{class=${SINGLE_PLAYER_GAME_FIELD}}}>
+			this.template = `<GameBlock {{class=${SINGLE_PLAYER_GAME_FIELD} border}}>
 							 <GameStat>
 							 <ControlPopUp>
-							 <PreSinglePlayer>`;
+							 <PreSinglePlayer {{label=${langService.getWord('preSingle.label')}}} 
+							 {{scoreTip=${langService.getWord('preSingle.scoreTip')}}}
+							 {{goalTip=${langService.getWord('preSingle.goalTip')}}}
+							 {{controlTip=${langService.getWord('preSingle.controlTip')}}}
+							 {{playText=${langService.getWord('preSingle.play')}}}>`;
 			tagParser.toHTML(this.template).then((elementsArray) => {
 				this._resultBlock = new GameResults();
 				this.elementsArray = elementsArray;
@@ -42,6 +47,16 @@ export default class SinglePlayer extends BaseView {
 				this.scoreHandler = this.redrawScore.bind(this);
 				this.timerHandler = this.redrawTimer.bind(this);
 				this.resultsHandler = this.showResults.bind(this);
+				this._resultBlock.build({}).then(() => {
+					this._resultBlock.backButton.addEventListener('click', () => {
+						router.goMenu();
+					});
+					this._resultBlock.againButton.addEventListener('click', () => {
+						this.play();
+					});
+					this._resultBlock.hide();
+					this.element.appendChild(this._resultBlock.render());
+				});
 				resolve();
 			});
 		});
@@ -51,16 +66,6 @@ export default class SinglePlayer extends BaseView {
 		return new Promise((resolve) => {
 			this.scoreLabel = document.getElementsByClassName('game-stat__score-block')[0];
 			this.timerLabel = document.getElementsByClassName('game-stat__timer-block')[0];
-			this._resultBlock.build({}).then(() => {
-				this._resultBlock.backButton.addEventListener('click', () => {
-					router.goMenu();
-				});
-				this._resultBlock.againButton.addEventListener('click', () => {
-					this.play();
-				});
-				this._resultBlock.hide();
-				this.element.appendChild(this._resultBlock.render());
-			});
 			resolve();
 		});
 	}
@@ -81,26 +86,27 @@ export default class SinglePlayer extends BaseView {
 		this.preGameBlock.hide();
 		this.gameStat.show();
 		this.controlPopUp.show();
-		this.scoreLabel.innerText = 'Score: 0';
-		this.timerLabel.innerText = 'Seconds Left: 30';
+		this.scoreLabel.innerText = `${langService.getWord('game.score')} 0`;
+		this.timerLabel.innerText = `${langService.getWord('game.time')} 30`;
 		this._gameHandler = new SinglePlayerHandler([], SINGLE_PLAYER_GAME_FIELD);
 		this._gameHandler.startGame();
 	}
 
 	showResults() {
+		this.gameBlock.hide();
 		this._resultBlock.show();
 		this.endGame();
 	}
 
 	endGame() {
 		document.body.style.cursor = 'default';
-		this._resultBlock.scoreLabel.innerHTML = `Your score is ${this._gameHandler.getScore()}`;
-		this._resultBlock.goalsLabel.innerHTML = `Goals passed: ${this._gameHandler.getGoalsPassed()}`;
+		this._resultBlock.scoreLabel.innerHTML = `${langService.getWord('gameResults.score')} ${this._gameHandler.getScore()}`;
+		this._resultBlock.goalsLabel.innerHTML = `${langService.getWord('gameResults.goals')} ${this._gameHandler.getGoalsPassed()}`;
 		this.gameStat.hide();
-		this._gameHandler.stopGame();
 		eventBus.off('timerStop', this.resultsHandler);
 		eventBus.off('timerTick', this.timerHandler);
 		eventBus.off('scoreRedraw', this.scoreHandler);
+		this._gameHandler.stopGame();
 	}
 
 	redrawTimer(value) {
@@ -111,7 +117,7 @@ export default class SinglePlayer extends BaseView {
 			this.timerLabel.style.color = 'white';
 			this.timerLabel.style.animation = '';
 		}
-		this.timerLabel.innerText = `Seconds Left: ${value}`;
+		this.timerLabel.innerText = `${langService.getWord('game.time')} ${value}`;
 	}
 
 	show() {
@@ -125,9 +131,9 @@ export default class SinglePlayer extends BaseView {
 
 	hide() {
 		super.hide();
+		this._resultBlock.hide();
 		if (this._gameHandler) {
 			this.endGame();
 		}
-		this._resultBlock.hide();
 	}
 }

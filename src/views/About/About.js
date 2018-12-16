@@ -2,20 +2,14 @@
 
 import BaseView from '../BaseView/BaseView.js';
 import tagParser from '../../modules/TagParser/TagParser.js';
+import langService from '../../services/LangService/LangService.js';
 import '../../static/css/about-page.scss';
-
-const RULESTEXT = `In our game you will play for a motorcyclist, 
-	    which leaves a bright trace. Other players or bots will also
-	     draw a line for themselves, and your task is to avoid contact with this line,
-	      regardless of whether it\'s yours or not. Also, in order to win, you must draw a 
-	    line so that opponents can not avoid your trace. On the playing field will be spawned
-	     various bonuses that will help you win. So do not yawn!`;
 
 export default class About extends BaseView {
 	build() {
 		return new Promise((resolve) => {
-			this.template = `<Label {{class=about-block__rules-text}} {{text=${RULESTEXT}}}>
-                         <Button {{class=button}} {{text=Back}} {{click=goMenu}}>`;
+			this.template = `<Label {{class=about-block__rules-text}} {{text=${langService.getWord('rules.text')}}}>
+                         <Button {{class=about-block__back-button}} {{text=${langService.getWord('buttonBack')}}} {{click=goMenu}}>`;
 			tagParser.toHTML(this.template).then((elementsArray) => {
 				this.elementsArray = elementsArray;
 				const div = document.createElement('div');

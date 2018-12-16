@@ -4,7 +4,7 @@ export default class Goal {
 		this._yCoord1 = y1;
 		this._xCoord2 = x2;
 		this._yCoord2 = y2;
-		this._radius = 10;
+		this._radius = 15;
 		this._age = 0;
 		this.c1 = this.getCoords().y2 - this.getCoords().y1;
 		this.c2 = this.getCoords().x2 * this.getCoords().y1

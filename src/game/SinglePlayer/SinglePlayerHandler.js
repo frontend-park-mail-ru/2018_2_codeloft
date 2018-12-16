@@ -53,32 +53,36 @@ export default class SinglePlayerHandler extends BaseGameHandler {
 	keyControl(event) {
 		const action = this.keyCodeMap[event.keyCode];
 		if (action) {
-			this._protagonist.setDirection(action);
+			this._direction = action;
+			this._protagonist.setDirection(this._direction);
 		}
 	}
 
 	startGame() {
-		this._gameLoops.push(setInterval(this._bonusSpawner, 10000));
-		super.startGame();
-		this.players.forEach((player) => {
-			player.resetScore();
+		this._arena.loadTextures().then(() => {
+			this._direction = 'RIGHT';
+			this._gameLoops.push(setInterval(this._bonusSpawner, 10000));
+			super.startGame();
+			this.players.forEach((player) => {
+				player.resetScore();
+			});
+			this._arena.spawnGoals(this.players);
+			this._arena.spawnBonus();
+			this._gameTimer.start();
 		});
-		this._arena.spawnGoals(this.players);
-		this._arena.spawnBonus();
-		this._gameTimer.start();
 	}
 
 	gameLoop() {
-		this._arena.clearField();
+		this._arena.clearSingleField();
 		this.players.forEach((player) => {
-			this._arena.clearPlayer(player);
+			this._arena.clearPlayer(player, this._direction);
 			this._arena.checkBorderCollision(player);
 			this._arena.checkGoalCollision(player);
 			this._arena.checkBonusCollision(player);
-			if (this._arena.canMove(player)) {
+			if (this._arena.canMove(player, this._direction)) {
 				player.move();
 			}
-			this._arena.drawPlayer(player);
+			this._arena.drawPlayer(player, this._direction);
 			this._arena.drawGoal();
 			this._arena.drawBonus();
 		});
@@ -93,11 +97,12 @@ export default class SinglePlayerHandler extends BaseGameHandler {
 	}
 
 	stopGame() {
+		this._arena.clearSingleField();
 		super.stopGame();
-		this._arena.clearField();
 		this._gameTimer.stop();
 		eventBus.off('goalCollision', this._goalHandler);
 		eventBus.off('spawnGoals', this._goalSpawner);
 		eventBus.off('timerTick', this._ageHandler);
+		eventBus.off('bonusCollision', this._bonusHandler);
 	}
 }
