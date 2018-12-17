@@ -1,7 +1,6 @@
 'use strict';
 
 import eventHandler from '../../modules/EventHandler/EventHandler.js';
-import Transport from '../../modules/Transport/Transport.js';
 import userService from '../../services/UserService/UserService.js';
 
 export default class MainComponent {
@@ -45,16 +44,6 @@ export default class MainComponent {
 			this.addEvents(context);
 			resolve(this);
 		});
-		// return Transport.GetHTML(this.template, context)
-		// 	.then((resJSON) => resJSON.json())
-		// 	.then(compiled => {
-		// 		const parent = document.createElement('div');
-		// 		parent.innerHTML = compiled.html;
-		// 		this.element = parent.lastChild;
-		// 		this.addEvents(context);
-		// 		return this;
-		// 	})
-		// 	.catch(error => error);
 	}
 
 	preRender() {

@@ -1,0 +1,138 @@
+{
+  "main.signIn": {
+    "en": "Sign In",
+    "ru": "Войти"
+  },
+  "main.signUp": {
+    "en": "Sign Up",
+    "ru": "Зарегистрироваться"
+  },
+  "main.rules": {
+    "en": "Rules",
+    "ru": "Правила"
+  },
+  "main.score": {
+    "en": "High score",
+    "ru": "Таблица лидеров"
+  },
+  "main.singleplayer": {
+    "en": "Single Player",
+    "ru": "Одиночная игра"
+  },
+  "main.multiplayer": {
+    "en": "Multi Player",
+    "ru": "Многопользовательская игра"
+  },
+  "main.profile": {
+    "en": "Profile",
+    "ru": "Профиль"
+  },
+  "main.chat": {
+    "en": "Chat",
+    "ru": "Чат"
+  },
+  "rules.text": {
+    "en": "In our game you will play for a motorcyclist, which leaves a bright trace. Other players or bots will also draw a line for themselves, and your task is to avoid contact with this line, regardless of whether it's yours or not. Also, in order to win, you must draw a line so that opponents can not avoid your trace. On the playing field will be spawned various bonuses that will help you win. So do not yawn!",
+    "ru": "В нашей игре вы будете играть за мотоциклиста, который оставляет яркий след. Другие игроки или боты также оставляют линию после себя. Ваша задача - избегать контакта с этой линией, независимо от того, ваша она или нет. Кроме того, для того, чтобы выиграть, вы должны нарисовать линию, так чтобы противники не смогли избежать ее. На игровом поле будут появляться различные бонусы, которые помогут вам победить. Так что не зевайте!"
+  },
+  "buttonBack": {
+    "en": "Back",
+    "ru": "Назад"
+  },
+  "profile.userName": {
+    "en": "User:",
+    "ru": "Пользователь:"
+  },
+  "profile.score": {
+    "en": "Score:",
+    "ru": "Счет:"
+  },
+  "profile.logOut": {
+    "en": "LogOut",
+    "ru": "Выйти"
+  },
+  "game.score": {
+    "en": "Score: ",
+    "ru": "Счет: "
+  },
+  "game.time": {
+    "en": "Seconds Left: ",
+    "ru": "Осталось секунд: "
+  },
+  "signIn.password": {
+    "en": "Password",
+    "ru": "Пароль"
+  },
+  "signIn.login": {
+    "en": "Login",
+    "ru": "Логин"
+  },
+  "signUp.email": {
+    "en": "Email",
+    "ru": "Почта"
+  },
+  "signUp.repeatPassword": {
+    "en": "Password repeat",
+    "ru": "Пароль второй раз"
+  },
+  "gameResults.score": {
+    "en": "Your score is",
+    "ru": "Очков набрано:"
+  },
+  "gameResults.goals": {
+    "en": "Goals passed:",
+    "ru": "Пройдено ворот:"
+  },
+  "chat.write": {
+    "en": "Write a message...",
+    "ru": "Ваше сообщение"
+  },
+  "preSingle.label": {
+    "en": "How to play?",
+    "ru": "Как играть?"
+  },
+  "preSingle.scoreTip": {
+    "en": "Your target is to score as many points as possible. Remember that the time of the round is limited to 30 seconds.",
+    "ru": "Ваша задача - набрать как можно больше очков. Помните, что время раунда ограничено 30 секундами"
+  },
+  "preSingle.controlTip": {
+    "en": "You can change your direction to one of four by pressing W, A, S, D or arrows.",
+    "ru": "Вы можете менять направление нажатием на W,A,S,D или стрелочки."
+  },
+  "preSingle.goalTip": {
+    "en": "Points are being gained as you pass through the goal. The smaller the gate, the more points you will get and the more seconds will be added to the total time.",
+    "ru": "Вы получаете очки при прохождении ворот. Чем меньше ворота, тем больше очков Вы получите и тем больше секунд прибавится к основному времени."
+  },
+  "preSingle.play": {
+    "en": "Play",
+    "ru": "Играть"
+  },
+  "validator.loginMin": {
+    "en": "Login must be at least 3 symbols long",
+    "ru": "Логин не должен быть короче 3 символов"
+  },
+  "validator.loginMax": {
+    "en": "Login must be at most 20 symbols long",
+    "ru": "Логин не должен быть длиннее 20 символов"
+  },
+  "validator.passwordMin": {
+    "en": "Password must be at least 8 symbols long",
+    "ru": "Пароль не должен быть короче 8 символов"
+  },
+  "validator.passwordMax": {
+    "en": "Password must be at most 20 symbols long",
+    "ru": "Пароль не должен быть длиннее 20 символов"
+  },
+  "validator.email": {
+    "en": "Wrong email format",
+    "ru": "Неверный формат почты"
+  },
+  "validator.russian": {
+    "en": "Please use only latin characters",
+    "ru": "Используйте, пожалуйста, только латинницу"
+  },
+  "validator.passwordsEquality": {
+    "en": "Passwords don't match",
+    "ru": "Пароли не совпадают"
+  }
+}

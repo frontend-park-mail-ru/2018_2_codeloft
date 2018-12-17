@@ -18,12 +18,8 @@ export default class GameSocket {
 			const receivedData = JSON.parse(msg.data);
 			if (receivedData.type === CONNECTED_MESSAGE) {
 				eventBus.emit('connectedToRoom', receivedData.payload);
-			} else if (receivedData.type === PLAYER_MOVEMENT_MESSAGE) {
-				eventBus.emit('fieldUpdated', receivedData.payload);
-			} else if (receivedData.type === DEATH_MESSAGE) {
-				eventBus.emit('protagonistIsDead');
-			} else if (receivedData.type === USER_MESSAGE) {
-				eventBus.emit('userMessage', receivedData);
+			} else if (receivedData.type === PLAYER_MOVEMENT_MESSAGE || receivedData.type === DEATH_MESSAGE) {
+				eventBus.emit('fieldUpdated', receivedData);
 			}
 		};
 	}

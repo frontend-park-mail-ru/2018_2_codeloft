@@ -5,10 +5,13 @@
   border: #3EC8AC 6px solid;
   text-align: center;
   opacity: 0.9;
-  font-family: 'Bowlby One SC', cursive;
+  font-family: 'Palatino', cursive;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
 }
 
 .results-block__score {
+  margin-top: 2vmin;
   font-size: 3vw;
   background: linear-gradient(
                   60deg,
@@ -29,12 +32,11 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: 10s BeProud linear infinite,
-  3s Always ease alternate infinite;
+  2s Always ease alternate infinite;
 }
 
 .results-block__goals {
   font-size: 2vw;
-  //color: gray;
 }
 
 @keyframes BeProud {
@@ -46,8 +48,10 @@
 }
 
 .results-block__buttons {
-  display: flex;
-  justify-content: space-evenly;
+  //display: flex;
+  //justify-content: space-evenly;
+  position: relative;
+  bottom: 0;
 }
 
 .game-button {
@@ -56,7 +60,7 @@
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 1vw;
+  font-size: 1.5vw;
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
   cursor: pointer;

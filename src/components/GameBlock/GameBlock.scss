@@ -1,10 +1,15 @@
 @import '../../static/css/reset.scss';
 
 .game-field {
-  position: absolute;
   justify-content: center;
   height: 100%;
   width: 100%;
-  outline: 5px solid #3EC8AC;
-  outline-offset: -5px;
+  //width: 100%;
+  position: fixed;
+  top: 0;
+}
+
+.border {
+  //outline: 5px solid #3EC8AC;
+  //outline-offset: -5px;
 }

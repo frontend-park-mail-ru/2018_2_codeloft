@@ -4,25 +4,23 @@ import BaseView from '../BaseView/BaseView.js';
 import tagParser from '../../modules/TagParser/TagParser.js';
 import eventHandler from '../../modules/EventHandler/EventHandler.js';
 import userService from '../../services/UserService/UserService.js';
-
-const validator = require('../../modules/Validator/Validator.js');
-
-const Validator = validator.Validator;
+import langService from '../../services/LangService/LangService.js';
+import Validator from '../../modules/Validator/Validator.js';
 
 export default class SignIn extends BaseView {
 	build() {
 		eventHandler.addHandler('btnSignInSubmit', () => this.submit());
 		return new Promise((resolve) => {
 			this.template = `<Label {{name=login}} {{class=error-label}}>
-						<Input {{name=login}} {{class=input}} {{placeholder=Enter your login}} {{check=loginMin loginMax russian}}>
+						<Input {{name=login}} {{class=input}} {{placeholder=${langService.getWord('signIn.login')}}} {{check=loginMin loginMax russian}}>
 						<Label {{name=password}} {{class=error-label}}>
-                        <Input {{name=password}} {{class=input}} {{placeholder=Enter your password}} {{type=password}} {{check=passwordMin passwordMax russian}}>
-                        <Button {{class=main-button form__submit-button}} {{text=Sign in}} {{click=btnSignInSubmit}}>
-                        <Button {{class=button}} {{text=Back}} {{click=goMenu}}>`;
+                        <Input {{name=password}} {{class=input}} {{placeholder=${langService.getWord('signIn.password')}}} {{type=password}} {{check=passwordMin passwordMax russian}}>
+                        <Button {{class=main-button signIn-form__submit-button}} {{text=${langService.getWord('main.signIn')}}} {{click=btnSignInSubmit}}>
+                        <Button {{class=signIn-block__back-button}} {{text=${langService.getWord('buttonBack')}}} {{click=goMenu}}>`;
 			tagParser.toHTML(this.template).then((elementsArray) => {
 				this.elementsArray = elementsArray.slice(0, 5);
 				const form = document.createElement('form');
-				form.setAttribute('class', 'sinIn-block__form');
+				form.setAttribute('class', 'sinIn-block__signIn-form');
 				this.elementsArray.forEach((el) => {
 					form.appendChild(el.render());
 				});
@@ -45,7 +43,7 @@ export default class SignIn extends BaseView {
 			});
 			userService.logIn(requestBody)
 				.then((ans) => {
-					this.errorLabels.login.render().innerText = this.errorMessages[ans] || 'Internal error';
+					this.errorLabels.login.render().innerText = ans.What || 'Internal error';
 					this.errorLabels.login.show();
 					setTimeout(() => this.errorLabels.login.hide(), 3000);
 				});
@@ -72,9 +70,6 @@ export default class SignIn extends BaseView {
 					this.validator.checkInput(input);
 				});
 			});
-			this.errorMessages = {
-				400: 'Incorrect login or password',
-			};
 			resolve();
 		});
 	}

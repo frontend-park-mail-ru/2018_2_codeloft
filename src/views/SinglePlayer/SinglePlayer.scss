@@ -1,9 +1,8 @@
 @import '../../static/css/reset.scss';
 
 .main-content__singleplayer-block {
+  height: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(4, 1fr);
-  //display: flex;
-  //justify-content: flex-end;
+  grid-template-rows: 0.5fr 1.5fr 1fr 1fr;
 }

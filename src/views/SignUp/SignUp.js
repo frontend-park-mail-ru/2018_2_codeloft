@@ -4,25 +4,24 @@ import BaseView from '../BaseView/BaseView.js';
 import tagParser from '../../modules/TagParser/TagParser.js';
 import eventHandler from '../../modules/EventHandler/EventHandler.js';
 import userService from '../../services/UserService/UserService.js';
+import langService from '../../services/LangService/LangService.js';
+import Validator from '../../modules/Validator/Validator.js';
 
-const validator = require('../../modules/Validator/Validator.js');
-
-const Validator = validator.Validator;
 
 export default class SignUp extends BaseView {
 	build() {
 		eventHandler.addHandler('btnSignUpSubmit', () => this.submit());
 		return new Promise((resolve) => {
 			this.template = `<Label {{name=login}} {{class=error-label}}>
-						<Input {{name=login}} {{class=input}} {{placeholder=Enter your login}} {{check=loginMin loginMax russian}}>
+						<Input {{name=login}} {{class=input}} {{placeholder=${langService.getWord('signIn.login')}}} {{check=loginMin loginMax russian}}>
 						<Label {{name=email}} {{class=error-label}}>
-					    <Input {{name=email}} {{class=input}} {{placeholder=Enter your email}} {{check=email russian}}>
+					    <Input {{name=email}} {{class=input}} {{placeholder=${langService.getWord('signUp.email')}}} {{check=email russian}}>
 					    <Label {{name=password}} {{class=error-label}}>
-                        <Input {{name=password}} {{class=input}} {{placeholder=Enter your password}} {{type=password}} {{check=passwordMin passwordMax russian}}>
+                        <Input {{name=password}} {{class=input}} {{placeholder=${langService.getWord('signIn.password')}}} {{type=password}} {{check=passwordMin passwordMax russian}}>
                         <Label {{name=passwordConfirm}} {{class=error-label}}>
-                        <Input {{name=passwordConfirm}} {{class=input}} {{placeholder=Repeat your password}} {{type=password}} {{check=passwordsEquality russian}}>
-                        <Button {{class=main-button form__submit-button}} {{text=Sign up}} {{click=btnSignUpSubmit}}>
-                        <Button {{class=button}} {{text=Back}} {{click=goMenu}}>`;
+                        <Input {{name=passwordConfirm}} {{class=input}} {{placeholder=${langService.getWord('signUp.repeatPassword')}}} {{type=password}} {{check=passwordsEquality russian}}>
+                        <Button {{class=main-button form__submit-button}} {{text=${langService.getWord('main.signUp')}}} {{click=btnSignUpSubmit}}>
+                        <Button {{class=signUp-block__back-button}} {{text=${langService.getWord('buttonBack')}}} {{click=goMenu}}>`;
 			tagParser.toHTML(this.template).then((elementsArray) => {
 				this.elementsArray = elementsArray.slice(0, 9);
 				const form = document.createElement('form');
@@ -49,7 +48,7 @@ export default class SignUp extends BaseView {
 			});
 			userService.register(requestBody)
 				.then((ans) => {
-					this.errorLabels.login.render().innerText = this.errorMessages[ans] || 'Internal error';
+					this.errorLabels.login.render().innerText = ans.What || 'Internal error';
 					this.errorLabels.login.show();
 					setTimeout(() => this.errorLabels.login.hide(), 3000);
 				});
@@ -80,9 +79,6 @@ export default class SignUp extends BaseView {
 					this.validator.checkInput(input);
 				});
 			});
-			this.errorMessages = {
-				400: 'User with a such login already exists',
-			};
 			resolve();
 		});
 	}
