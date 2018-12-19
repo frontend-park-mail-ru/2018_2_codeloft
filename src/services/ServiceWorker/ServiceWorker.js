@@ -1,5 +1,4 @@
 export default function serviceWorkerRegister() {
-	console.log(1);
 	if ('serviceWorker' in navigator) {
 		console.log('SW not found. Trying to install...');
 		navigator.serviceWorker.register('/worker.js', { scope: '/' })
