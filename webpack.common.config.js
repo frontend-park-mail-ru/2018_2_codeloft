@@ -60,6 +60,7 @@ module.exports = {
 		}),
 		new CopyWebpackPlugin(([
 			{ from: Path.join(__dirname, 'src/worker.js'), to: Path.join(outPath, 'worker.js') },
+			{ from: Path.join(__dirname, 'src/cache.json'), to: Path.join(outPath, 'cache.json') },
 			{ from: Path.join(__dirname, 'src/static/img'), to: Path.join(outPath, 'static/img') },
 			{ from: Path.join(__dirname, 'src/static/Archive'), to: Path.join(outPath, 'static/Archive') },
 		]))

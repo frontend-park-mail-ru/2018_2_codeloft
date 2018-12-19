@@ -1,5 +1,3 @@
-const cacheArray = require('./cache.json');
-
 const URLS = [
 	'/',
 	'/login',
@@ -12,11 +10,17 @@ const URLS = [
 ];
 
 this.addEventListener('install', (event) => {
-	URLS.push(...cacheArray);
 	console.log('SW installed');
 	event.waitUntil(
 		caches.open('codeloft_cache')
-			.then((cache) => cache.addAll(URLS))
+			.then((cache) => {
+				return fetch('cache.json').then((response) => response.json())
+					.then((files) => {
+						URLS.push(...files);
+						console.log(URLS);
+						return cache.addAll(URLS);
+					})
+			})
 			.catch((error) => console.log(error))
 	);
 });
