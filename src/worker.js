@@ -1,3 +1,5 @@
+const cacheArray = require('./cache.json');
+
 const URLS = [
 	'/',
 	'/login',
@@ -6,12 +8,11 @@ const URLS = [
 	'/about',
 	'/score',
 	'/singleplayer',
-	'/bundle.js',
-	'/static/img/user-default.jpg',
 	'/api/user?page=1&page_size=5'
 ];
 
 this.addEventListener('install', (event) => {
+	URLS.push(...cacheArray);
 	console.log('SW installed');
 	event.waitUntil(
 		caches.open('codeloft_cache')
