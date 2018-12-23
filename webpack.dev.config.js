@@ -1,46 +1,42 @@
-const Merge = require('webpack-merge');
-const Path = require('path');
+const merge = require('webpack-merge');
+const common = require('./webpack/webpack.common.config.js');
 
-const common = require('./webpack.common.config.js');
-const OpenBrowserPlugin = require('open-browser-webpack-plugin');
-
-const sourcePath = Path.join(__dirname, 'src');
-
-module.exports = Merge(common, {
-	mode: 'development',
+module.exports = merge(common, {
 	watch: true,
 	devtool: 'source-map',
 	module: {
-		rules: [
+		loaders: [
 			{
 				test: /.spec\.js$/,
 				loader: 'babel-loader',
 				query: {
-					presets: ['env', 'es2015'],
-					cacheDirectory: true,
-				},
+					presets: ['env', 'es2015', 'react'],
+					cacheDirectory: true
+				}
 			},
-		],
+		]
 	},
 	devServer: {
-		watchContentBase: true,
+		port: 3002,
+		contentBase: common.context,
+		disableHostCheck: true,
 		historyApiFallback: true,
-		contentBase: sourcePath,
-		hot: true,
-		port: 3000,
+		openPage: '/',
+
 		stats: {
-			warnings: false,
+			warnings: false
 		},
+
 		proxy: [
 			{
 				context: ['/api/**'],
-				target: 'https://backend.codeloft.ru',
-				pathRewrite: { '^/api': '/' },
+				target: 'https://backend.codeloft.ru/',
+				pathRewrite: {'^/api': '/'},
 				secure: false,
-				onProxyReq: (proxyReq, req, res) => {
+				onProxyReq: (proxyReq) => {
 					proxyReq.setHeader('Host', 'backend.codeloft.ru');
-				},
-			},
-		],
+				}
+			}
+		]
 	}
 });

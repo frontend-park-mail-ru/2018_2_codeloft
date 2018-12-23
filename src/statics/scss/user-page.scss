@@ -1,0 +1,58 @@
+@import './reset.scss';
+
+.profile-block__avatar {
+  cursor: default;
+  border-radius: 10vmin;
+  height: 15vmin;
+  width: auto;
+  display: block;
+  margin: 6vmin auto 3vmin;
+  user-select: none;
+  border-color: $yellow-color;
+  animation: neon-dark 13s steps(1, start) infinite reverse;
+}
+
+.profile-block__input {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 4vmin;
+  min-height: 4vmin;
+  min-width: 45vmin;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding-left: 20px;
+  font-size: 2vmin;
+  outline: none;
+  background-color: $yellow-color;
+  //font-family: 'Press Start 2P', cursive;
+
+  &:focus {
+    border-color: $yellow-color;
+    animation: neon-light 13s steps(1, start) infinite reverse;
+  }
+}
+
+@keyframes neon-light {
+  0% {
+    box-shadow: 0 0 10px 2px #6FC3DF;
+  }
+  50% {
+    box-shadow: 0 0 15px 4px #6FC3DF;
+  }
+  100% {
+    box-shadow: 0 0 20px 6px #6FC3DF;
+  }
+}
+
+@keyframes neon-dark {
+  0% {
+    box-shadow: 0 0 10px 2px #DF740C;
+  }
+  50% {
+    box-shadow: 0 0 15px 4px #DF740C;
+  }
+  100% {
+    box-shadow: 0 0 20px 6px #DF740C;
+  }
+}

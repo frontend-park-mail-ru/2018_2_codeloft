@@ -1,7 +1,8 @@
-@import "../../static/css/reset.scss";
+@import "../../statics/scss/reset.scss";
 
 %base-button {
-  margin-top: 3vmin;
+  margin-top: 7vmin;
+  //margin-bottom: 3vmin;
   text-align: center;
   font-size: 6vmin;
   user-select: none;

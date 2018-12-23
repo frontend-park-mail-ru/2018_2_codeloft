@@ -1,0 +1,17 @@
+@import 'fonts';
+@import 'common';
+@import 'reset';
+@import 'background';
+@import 'flicker-animation';
+@import url('~react-table/react-table.css');
+@import url('~react-day-picker/lib/style.css');
+
+.main-content__logo {
+  margin-top: 7vmin;
+  margin-bottom: 6vmin;
+  font-size: 10vmin;
+  text-align: center;
+  user-select: none;
+  color: $yellow-color;
+  animation: neon-text-dark 13s steps(1, start) infinite reverse;
+}

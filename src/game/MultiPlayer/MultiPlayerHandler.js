@@ -1,6 +1,6 @@
-import BaseGameHandler from '../BaseGameHandler.js';
-import eventBus from '../../modules/EventBus/EventBus.js';
-import GameSocket from '../../services/GameSocket/GameSocket.js';
+import BaseGameHandler from '../BaseGameHandler.ts';
+import eventBus from '../../modules/EventBus';
+import GameSocket from '../../service/GameSocket/GameSocket';
 
 export default class MultiPlayerHandler extends BaseGameHandler {
 	constructor(players = [], arenaClassName) {
@@ -12,27 +12,27 @@ export default class MultiPlayerHandler extends BaseGameHandler {
 		eventBus.on('fieldUpdated', this.fieldUpdater);
 		this.deathHandler = this.handleDeath.bind(this);
 		// eventBus.on('protagonistIsDead', this.deathHandler);
-		this._prevPlayerHeads = [];
-		this._prevPixels = [];
-		this._cachedField = [];
-		this._playersAmount = 0;
+		this.prevPlayerHeads = [];
+		this.prevPixels = [];
+		this.cachedField = [];
+		this.playersAmount = 0;
 	}
 
 	arrayInit(payload) {
-		this._arena.clearMultiField();
+		this.arena.clearMultiField();
 		if (payload) {
-			this._arena.scaleGameField(payload.size.x, payload.size.y);
+			this.arena.scaleGameField(payload.size.x, payload.size.y);
 			payload.field.forEach((array, i) => {
-				this._cachedField.push([]);
+				this.cachedField.push([]);
 				array.forEach((cell, j) => {
-					this._cachedField[i].push(payload.field[i][j].color);
+					this.cachedField[i].push(payload.field[i][j].color);
 				});
 			});
 		}
-		this._cachedField.forEach((array, i) => {
+		this.cachedField.forEach((array, i) => {
 			array.forEach((cell, j) => {
 				if (cell !== '#000000') {
-					this._arena.drawPixel(j, i, cell);
+					this.arena.drawPixel(j, i, cell);
 				}
 			});
 		});
@@ -40,54 +40,70 @@ export default class MultiPlayerHandler extends BaseGameHandler {
 
 	handleDeath(payload) {
 		payload.diff.forEach((cellObject) => {
-			this._arena.clearPixel(cellObject.pos.x, cellObject.pos.y);
+			this.arena.clearPixel(cellObject.pos.x, cellObject.pos.y);
 		});
 	}
 
 	keyControl(event) {
 		const action = this.keyCodeMap[event.keyCode];
-		this._gameSocket.sendDirection(action);
+		this.gameSocket.sendDirection(action);
+	}
+
+	tapControl(event) {
+		if (event.clientX < 200 && event.clientY > 200 && event.clientY < 1000) {
+			const action = 'LEFT';
+			this.gameSocket.sendDirection(action);
+		} else if (event.clientX > this.arena._xMax / 2 && event.clientY > 200 && event.clientY < 1000) {
+			const action = 'RIGHT';
+			this.gameSocket.sendDirection(action);
+		} else if (event.clientY < 200 && event.clientX > 200 && event.clientX < 1000) {
+			const action = 'UP';
+			this.gameSocket.sendDirection(action);
+		} else if (event.clientY > 800 && event.clientX > 200 && event.clientX < 1000) {
+			const action = 'DOWN';
+			this.gameSocket.sendDirection(action);
+		}
 	}
 
 	updateField(data) {
 		const diff = data.payload.diff;
-		this._prevPlayerHeads.forEach((player) => {
-			this._arena.clearPlayerHead(player.position.x, player.position.y, player.move_direction, player.color);
+		this.prevPlayerHeads.forEach((player) => {
+			this.arena.clearPlayerHead(player.position.x, player.position.y, player.move_direction, player.color);
 		});
 		diff.forEach((pixel) => {
-			this._arena.drawPixel(pixel.pos.x, pixel.pos.y, pixel.color);
+			this.arena.drawPixel(pixel.pos.x, pixel.pos.y, pixel.color);
 
-			if (this._cachedField[pixel.pos.y][pixel.pos.x] === '#000000') {
-				this._arena.drawPixel(pixel.pos.x, pixel.pos.y, pixel.color);
-				this._cachedField[pixel.pos.y][pixel.pos.x] = pixel.color;
-			} else if (this._cachedField[pixel.pos.y][pixel.pos.x] !== '#000000' && pixel.color === '#000000') {
-				this._arena.drawPixel([pixel.pos.x, pixel.pos.y, pixel.color]);
-				this._cachedField[pixel.pos.y][pixel.pos.x] = pixel.color;
-			} else if (this._cachedField[pixel.pos.y][pixel.pos.x] !== '#000000' && pixel.color !== '#000000') {
-				this._arena.drawPixel(pixel.pos.x, pixel.pos.y, this._cachedField[pixel.pos.y][pixel.pos.x]);
-				pixel.color = this._cachedField[pixel.pos.y][pixel.pos.x];
+			if (this.cachedField[pixel.pos.y][pixel.pos.x] === '#000000') {
+				this.arena.drawPixel(pixel.pos.x, pixel.pos.y, pixel.color);
+				this.cachedField[pixel.pos.y][pixel.pos.x] = pixel.color;
+			} else if (this.cachedField[pixel.pos.y][pixel.pos.x] !== '#000000' && pixel.color === '#000000') {
+				this.arena.drawPixel([pixel.pos.x, pixel.pos.y, pixel.color]);
+				this.cachedField[pixel.pos.y][pixel.pos.x] = pixel.color;
+			} else if (this.cachedField[pixel.pos.y][pixel.pos.x] !== '#000000' && pixel.color !== '#000000') {
+				this.arena.drawPixel(pixel.pos.x, pixel.pos.y, this.cachedField[pixel.pos.y][pixel.pos.x]);
+				pixel.color = this.cachedField[pixel.pos.y][pixel.pos.x];
 			}
 		});
-		this._cachedField.forEach((array, i) => {
+		this.cachedField.forEach((array, i) => {
 			array.forEach((cell, j) => {
 				if (cell !== '#000000') {
-					this._arena.drawPixel(j, i, cell);
+					this.arena.drawPixel(j, i, cell);
 				}
 			});
 		});
 
 		data.payload.players.forEach((player) => {
 			if (!player.is_dead) {
-				this._arena.drawPlayerHead(player.position.x, player.position.y, player.move_direction);
+				this.arena.drawPlayerHead(player.position.x, player.position.y, player.move_direction);
 			}
 		});
-		this._prevPlayerHeads = data.payload.players;
+		this.prevPlayerHeads = data.payload.players;
 	}
 
 	startGame() {
-		this._arena.loadTextures().then(() => {
+		this.arena.loadTextures().then(() => {
 			super.startGame();
-			this._gameSocket = new GameSocket();
+			this.gameSocket = new GameSocket();
 		});
 	}
 
@@ -95,7 +111,7 @@ export default class MultiPlayerHandler extends BaseGameHandler {
 		eventBus.off('gameFieldResized', this.arrayHandler);
 		eventBus.off('connectedToRoom', this.arrayHandler);
 		eventBus.off('fieldUpdated', this.fieldUpdater);
-		this._gameSocket.endSession();
+		this.gameSocket.endSession();
 		super.stopGame();
 	}
 }

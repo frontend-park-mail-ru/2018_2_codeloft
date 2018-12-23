@@ -1,0 +1,13 @@
+html, body, #root, .app {
+  //background-color: #0C141F;
+  font-family: 'Press Start 2P', cursive;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+}
+
+.main-content {
+  margin-top: 15vh;
+}

@@ -1,0 +1,39 @@
+@import '../../statics/scss/reset.scss';
+
+.leaders-block__users-block {
+  margin-top: 7vmin;
+  margin-bottom: 6vmin;
+  text-align: center;
+  font-size: 5vmin;
+  cursor: default;
+  color: $light-neon-color;
+  animation: neon-text-light 13s steps(1, start) infinite reverse;
+  p {
+    margin-top: 2vmin;
+    margin-bottom: 2vmin;
+  }
+}
+
+.leaders-block__pagination-block {
+  text-align: center;
+  user-select: none;
+  font-size: 5vmin;
+  margin-bottom: 6vmin;
+  a {
+    cursor: pointer;
+    user-select: none;
+    padding: 8px 16px;
+    margin-left: 1px;
+    margin-right: 1px;
+    text-decoration: none;
+    color: $light-neon-color;
+    animation: neon-text-light 13s steps(1, start) infinite reverse;
+    &.active {
+      border: 2px solid $yellow-color;
+      color: $yellow-color;
+      border-radius: 10px;
+      cursor: default;
+      animation: neon-text-dark 13s steps(1, start) infinite reverse;
+    }
+  }
+}

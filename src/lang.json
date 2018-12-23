@@ -134,5 +134,13 @@
   "validator.passwordsEquality": {
     "en": "Passwords don't match",
     "ru": "Пароли не совпадают"
+  },
+  "playAgain": {
+    "en": "Play again",
+    "ru": "Играть заново"
+  },
+  "goBack": {
+    "en": "Go back",
+    "ru": "Назад"
   }
 }

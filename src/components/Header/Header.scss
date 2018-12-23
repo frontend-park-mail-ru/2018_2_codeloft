@@ -1,0 +1,24 @@
+@import "../../statics/scss/reset.scss";
+
+.header {
+  overflow: hidden;
+  padding: 2vmin;
+  user-select: none;
+  box-shadow:0 1px 0 $yellow-color;
+}
+
+.header__logo {
+  font-size: 5vmin;
+  min-font-size: 50px;
+  user-select: none;
+  color: $yellow-color;
+  animation: neon-text-dark 13s steps(1, start) infinite reverse;
+}
+
+@media screen and (max-width: 500px) {
+  .header__logo {
+    display: block;
+    text-align: center;
+    font-size: 10vmin;
+  }
+}

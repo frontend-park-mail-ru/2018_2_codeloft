@@ -1,0 +1,28 @@
+@import "../../statics/scss/reset.scss";
+
+.header-right {
+  float: right;
+  padding-top: 1.5vmin;
+}
+
+.header-right__links {
+  cursor: pointer;
+  padding-left: 3vmin;
+  padding-right: 3vmin;
+  font-size: 3vh;
+  color: $yellow-color;
+  animation: neon-text-dark 13s steps(1, start) infinite reverse;
+}
+
+@media screen and (max-width: 500px) {
+  .header-right__links{
+    //float: none;
+    display: block;
+    //display: inline-block;
+    text-align: center;
+    padding: 2vmin;
+  }
+  .header-right {
+    float: none;
+  }
+}

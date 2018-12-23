@@ -1,0 +1,14 @@
+@import '../../statics/scss/reset.scss';
+
+.about-block__rules-text {
+  margin-top: 7vmin;
+  margin-bottom: 6vmin;
+  text-align: justify;
+  font-size: 4vmin;
+  font-weight: bolder;
+  cursor: default;
+  color: $light-neon-color;
+  font-family: 'Courier New', cursive;
+  margin-left: 20vmin;
+  margin-right: 20vmin;
+}

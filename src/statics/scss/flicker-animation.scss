@@ -1,0 +1,51 @@
+@keyframes neon-text-light {
+  0% {
+    text-shadow: 0 0 10px $light-neon-color;
+  }
+
+  20% {
+    text-shadow: 0 0 20px $light-neon-color;
+  }
+
+  40% {
+    text-shadow: 0 0 40px $light-neon-color;
+  }
+
+  60% {
+    text-shadow: 0 0 60px $light-neon-color;
+  }
+
+  80% {
+    text-shadow: 0 0 80px $light-neon-color;
+  }
+
+  100% {
+    text-shadow: 0 0 100px $light-neon-color;
+  }
+}
+
+@keyframes neon-text-dark {
+  0% {
+    text-shadow: 0 0 10px $dark-neon-color;
+  }
+
+  20% {
+    text-shadow: 0 0 20px $dark-neon-color;
+  }
+
+  40% {
+    text-shadow: 0 0 40px $dark-neon-color;
+  }
+
+  60% {
+    text-shadow: 0 0 60px $dark-neon-color;
+  }
+
+  80% {
+    text-shadow: 0 0 80px $dark-neon-color;
+  }
+
+  100% {
+    text-shadow: 0 0 100px $dark-neon-color;
+  }
+}
